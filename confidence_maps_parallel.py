@@ -295,6 +295,7 @@ def get_max_diff_adjacent_crops(start_id, end_id, proportion, model_name='vgg16'
     return h_activations, l_activations
 
 
+
 def test_maxdiff_crops(start_id, end_id, crop_metric, model_name='vgg16'):
    
     # crop_metric = proportion if CROP_TYPE == 'proportional' else CONSTANT
