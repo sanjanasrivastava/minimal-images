@@ -60,8 +60,10 @@ im2 = (imread("poodle.png")[:,:,:3]).astype(float32)
 #         .fc(1000, relu=False, name='fc8')
 #         .softmax(name='prob'))
 
+
+
 #In Python 3.5, change this to:
-net_data = load(open("bvlc_alexnet.npy", "rb"), encoding="latin1").item()
+#net_data = load(open(alexnet.weights_file, "rb"), encoding="latin1").item()
 #net_data = load("bvlc_alexnet.npy").item()
 
 def conv(input, kernel, biases, k_h, k_w, c_o, s_h, s_w,  padding="VALID", group=1):
@@ -89,8 +91,9 @@ def conv(input, kernel, biases, k_h, k_w, c_o, s_h, s_w,  padding="VALID", group
 class alexnet:
 
     im_size = 227
-
-    def __init__(self, imgs, sess=None, weights='bvlc_alexnet.npy'):
+    weights_file = '../poggio_urop/poggio-urop-data/weights/bvlc_alexnet.npy'
+    
+    def __init__(self, imgs, sess=None, weights=weights_file):
         self.imgs = imgs
         self.net_data = load(open(weights, 'rb'), encoding='latin1').item()
         self.parameters = []

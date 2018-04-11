@@ -349,6 +349,7 @@ def resnet_v2_200(inputs,
 resnet_v2_200.default_image_size = resnet_v2.default_image_size
 
 
+
 class resnet:
 
   im_size = resnet_v2_152.default_image_size

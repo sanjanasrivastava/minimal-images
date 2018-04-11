@@ -75,6 +75,9 @@ def get_class_labels(image_ids):
         print('IMAGE ID NUMBER:', image_id, '; TRUE CLASS:', true_class, '; CLASSNAME:', class_names[true_class])
 
 
+MIN_IMGS_PATH_TO_DATA = '../poggio_urop/poggio-urop-data/'
+MIN_IMGS_PATH_TO_WEIGHTS = MIN_IMGS_PATH_TO_DATA + 'weights/'
+
 # MAPTYPES
 CONFIDENCE_MAPTYPE = 'confidence'
 TOP5_MAPTYPE = 'top5'
@@ -94,7 +97,13 @@ def map_filename(maptype, crop_metric, model, image_scale, image_id):
 
 
 # MAXDIFF CROPS PREFIX
-MAXDIFF_PREFIX = 'maxdiff_crops'
+MAXDIFF_PREFIX = 'maxdiff'
 
-def maxdiff_folder_name(proportion):
-    return IMAGENET_SET + '_' + MAXDIFF_PREFIX + '_' + str(proportion) + '/' 
+# def maxdiff_folder_name(proportion):
+#     return IMAGENET_SET + '_' + MAXDIFF_PREFIX + '_' + str(proportion) + '/'
+
+
+def maxdiff_folder_name(axis, crop_metric, model_name, image_scale, corr, conf):
+    return os.path.join(MAXDIFF_PREFIX, axis, str(crop_metric), model_name, str(image_scale), 'diff' if corr else 'any', conf, '')
+
+

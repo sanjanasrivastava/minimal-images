@@ -14,11 +14,14 @@ from scipy.misc import imread, imresize
 from imagenet_classes import class_names
 
 
+WEIGHTS_FILE = '../poggio_urop/poggio-urop-data/weights/vgg16_weights.npz'
+
+
 class vgg16:
     
     im_size = 224
 
-    def __init__(self, imgs, sess=None, weights='vgg16_weights.npz', reuse=None):
+    def __init__(self, imgs, sess=None, weights=WEIGHTS_FILE, reuse=None):
         self.imgs = imgs
         self.convlayers()
         self.fc_layers()
@@ -263,7 +266,7 @@ class vgg16:
 if __name__ == '__main__':
     sess = tf.Session()
     imgs = tf.placeholder(tf.float32, [None, 224, 224, 3])
-    vgg = vgg16(imgs, 'vgg16_weights.npz', sess)
+    vgg = vgg16(imgs, WEIGHTS_FILE, sess)
 
     # img1 = imread('../ILSVRC2012_img_val/ILSVRC2012_val_00000001.JPEG', mode='RGB')
     img1 = imread('laska.png', mode='RGB')
