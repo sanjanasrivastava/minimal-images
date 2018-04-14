@@ -14,7 +14,7 @@ from vgg16 import vgg16
 
 # DATA PARAMS
 # PATH_TO_DATA = '../../poggio-urop-data/'
-PATH_TO_DATA = '../poggio_urop/poggio-urop-data/'
+PATH_TO_DATA = settings.MIN_IMGS_PATH_TO_DATA 
 
 
 # TEST PARAMS
