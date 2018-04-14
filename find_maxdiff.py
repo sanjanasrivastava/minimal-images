@@ -18,11 +18,14 @@ def get_maxdiff_size_crops(start_id, end_id, crop_metric, model_name, image_scal
     # For each image id in range(start_id, end_id + 1), finds the crop of size crop_metric and the crop ~2 pixels smaller that are maximally different in confidence. If compare_corr is True, it necessarily finds crops where the smaller one is classified incorrectly and the larger one is classified correctly. This uses the top5 maps for the two scales.
 
     crop_type = 'proportional' if crop_metric <= 1. else 'constant'
-    folders = [settings.maxdiff_folder_name('size', crop_metric, model_name, image_scale, compare_corr, conf) for conf in ['high', 'low']]
+    folders = [PATH_TO_DATA + settings.maxdiff_folder_name('size', crop_metric, model_name, image_scale, 'diff' if compare_corr else 'any', conf) for conf in ['high', 'low']]
     for folder in folders:
         if not os.path.exists(folder):
             os.makedirs(folder)
-    print('MADE FOLDER')   
+
+    map_folder = PATH_TO_DATA + settings.maxdiff_folder_name('size', crop_metric, model_name, image_scale, 'map')
+    if not os.path.exists(map_folder):
+        os.makedirs(map_folder)
  
     # with tf.Session() as sess:	# TODO use for testing
     # model = settings.MODELS[model_name]
@@ -42,7 +45,6 @@ def get_maxdiff_size_crops(start_id, end_id, crop_metric, model_name, image_scal
         im = im.resize((int(width * image_scale), int(height * image_scale)))
         width, height = im.size
         im = np.asarray(im)
-        print('GOT IMAGE') 
 
         # Get the small crop_metric, crop sizes for the large and small crop_metrics
         size_dim = height if height <= width else width
@@ -50,7 +52,6 @@ def get_maxdiff_size_crops(start_id, end_id, crop_metric, model_name, image_scal
         small_metric = 0.194 if crop_metric == 0.2 else 0.394	# TODO change to be a calculation and command
         small_size = get_crop_size(size_dim, small_metric, crop_type)
         metrics = [crop_metric, small_metric]        
-        print('GOT METRICS')
 
         # Get the correctness maps (top5, may become a choice between top5 and top1 in the future), and if the call requires diff correctness, check that that's possible
         corr_fns = [PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, metric, model_name, image_scale, image_id) + '.npy' for metric in metrics]	# TODO change to allow choice of top1 or top5
@@ -63,7 +64,6 @@ def get_maxdiff_size_crops(start_id, end_id, crop_metric, model_name, image_scal
                 elif cor_map.all():
                     print('%s has only correctly classified crops.' % image_tag)
                     continue            
-        print('CHECKED FOR VIABILITY')
 
         # Get confidence maps 
         con_fns = [PATH_TO_DATA + settings.map_filename(settings.CONFIDENCE_MAPTYPE, metric, model_name, image_scale, image_id) + '.npy' for metric in metrics]
@@ -86,20 +86,12 @@ def get_maxdiff_size_crops(start_id, end_id, crop_metric, model_name, image_scal
                  'br': lcon - br_sub,
                  'ct': lcon - ct_sub}
 
-        loop_counter = 0
-        print('LCON SIZE:', lcon.size)
-        print('SCON SIZE:', scon.size)
-        for corner in diffs:
-            print('CORNER:', corner, ', DIFF SIZE:', diffs[corner].size)
-        return 
+        # Make map of the largest size change in confidence across all directions of shrinking
+        change_map = np.maximum.reduce(list(diffs.values()))
+        np.save(map_folder + str(image_id), change_map)
+
+        # Find maxdiff pair by searching for maximally different pairs until one with different correctness is found (if diffcor. Else, this will terminate after one loop as the first pair found will be the maximally different one and therefore the right one for anycor.)
         while True:
-            
-            loop_counter += 1
-            if not loop_counter % lcon.size:
-                print('went through one lcon size') 
-            if loop_counter > lcon.size * 4 + 100:
-                print('INFINITE LOOP')
-                return
 
             maxes = {corner: np.unravel_index(np.argmax(diffs[corner]), diffs[corner].shape) for corner in diffs}	# map each corner diff to its argmax (index of maximum confidence diff)
             max_dir = max([corner for corner in maxes], key=lambda corner: diffs[corner][tuple(maxes[corner])])	# get the corner id of the diff whose max change is the highest out of the four max changes 
@@ -111,8 +103,10 @@ def get_maxdiff_size_crops(start_id, end_id, crop_metric, model_name, image_scal
                 lcell, scell = tuple(corner_max), (corner_max[0], corner_max[1] + offset)
             elif max_dir == 'bl':
                 lcell, scell = tuple(corner_max), (corner_max[0] + offset, corner_max[1])
-            else:
+            elif max_dir == 'br':
                 lcell, scell = tuple(corner_max), (corner_max[0] + offset, corner_max[1] + offset)
+            else:
+                lcell, scell = tuple(corner_max), (corner_max[0] + ctoffset, corner_max[1] + ctoffset)
 
             diff_corr = lcor[lcell] != scor[scell]
             if diff_corr or not compare_corr:
@@ -123,17 +117,17 @@ def get_maxdiff_size_crops(start_id, end_id, crop_metric, model_name, image_scal
                 # lcropped = imresize(lcropped, (network.im_size, network.im_size))
                 # scropped = imresize(scropped, (network.im_size, network.im_size))
                 # result = sess.run(network.probs, feed_dict={network.imgs: np.array([lcropped, scropped])})	# run and see if it works later. Without this, the sess isn't actually being used - this is for internal test. 
-                print('SCELL:', scell, 'LCELL:', lcell)
-                return 
+                break 
             else:	# if that location wasn't diffcorr, set the diff's entry to -2. 
                 diffs[max_dir][lcell] = -2.
                 
-        np.save('ltest', lcropped)
-        np.save('stest', scropped)
+        lfolder, sfolder = folders
+        np.save(lfolder + str(image_id), lcropped)
+        np.save(sfolder + str(image_id), scropped)
 
            
 if __name__ == '__main__':
-    get_maxdiff_size_crops(1, 1, 0.2, 'resnet', 1.0)
+    get_maxdiff_size_crops(1, 5, 0.2, 'vgg16', 1.0)
      
                 
 

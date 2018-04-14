@@ -103,7 +103,9 @@ MAXDIFF_PREFIX = 'maxdiff'
 #     return IMAGENET_SET + '_' + MAXDIFF_PREFIX + '_' + str(proportion) + '/'
 
 
-def maxdiff_folder_name(axis, crop_metric, model_name, image_scale, corr, conf):
-    return os.path.join(MAXDIFF_PREFIX, axis, str(crop_metric), model_name, str(image_scale), 'diff' if corr else 'any', conf, '')
-
+def maxdiff_folder_name(axis, crop_metric, model_name, image_scale, corr, conf=None):
+    if conf:    
+        return os.path.join(MAXDIFF_PREFIX, axis, str(crop_metric), model_name, str(image_scale), corr, conf, '')
+    else: 
+        return os.path.join(MAXDIFF_PREFIX, axis, str(crop_metric), model_name, str(image_scale), corr, '')
 
