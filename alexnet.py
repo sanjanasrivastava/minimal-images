@@ -88,12 +88,14 @@ def conv(input, kernel, biases, k_h, k_w, c_o, s_h, s_w,  padding="VALID", group
 # x = tf.placeholder(tf.float32, (None, 227, 227, 3))
 
 
+WEIGHTS_FILE = '../poggio_urop/poggio-urop-data/weights/bvlc_alexnet.npy'
+
+
 class alexnet:
 
     im_size = 227
-    weights_file = '../poggio_urop/poggio-urop-data/weights/bvlc_alexnet.npy'
     
-    def __init__(self, imgs, sess=None, weights=weights_file):
+    def __init__(self, imgs, sess=None, weights=WEIGHTS_FILE):
         self.imgs = imgs
         self.net_data = load(open(weights, 'rb'), encoding='latin1').item()
         self.parameters = []
