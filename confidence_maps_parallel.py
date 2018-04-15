@@ -20,7 +20,7 @@ PATH_TO_DATA = settings.MIN_IMGS_PATH_TO_DATA
 # TEST PARAMS
 CROP_TYPE = 'proportional'          # choose between 'proportional' and 'constant'
 CONSTANT = 224                       # pixel-length of square crop (must be odd)
-BATCH_SIZE = 160
+BATCH_SIZE = 256
 NUM_GPUS = 1
 
 
@@ -45,7 +45,9 @@ def create_confidence_map(start_id, end_id, crop_metric, model_name, image_scale
     model = settings.MODELS[model_name]
 
     # Before anything else happens, so we only set up once despite multiple images, make a network for each GPU
-    sess = tf.Session(config=tf.ConfigProto(log_device_placement=True, allow_soft_placement=True))
+    config = tf.ConfigProto(log_device_placement=True, allow_soft_placement=True)
+    config.gpu_options.allow_growth = True
+    sess = tf.Session(config = config)
     networks = []
     for i in range(NUM_GPUS):
         gpu = 'device:GPU:%d' % i 
@@ -95,7 +97,7 @@ def create_confidence_map(start_id, end_id, crop_metric, model_name, image_scale
         
         overall_start_time = time.clock()
         print('TOTAL CROPS:', total_crops)
-    
+        sys.stdout.flush()
         while crop_index < total_crops:	# While we haven't exhausted crops TODO see if the logic needs to be changed
             all_cropped_imgs = []
             stub_crops = 0		# Initializing to 0 in case there's an image with no stub crops (i.e. number of crops is a multiple of 64)
@@ -127,7 +129,8 @@ def create_confidence_map(start_id, end_id, crop_metric, model_name, image_scale
             end_time = time.clock()
             print ('Time for running one size-' + str(BATCH_SIZE), 'batch:', end_time - start_time, 'seconds')
             print('CROPS COMPLETED SO FAR:', crop_index)
-    
+            sys.stdout.flush()
+
             # plot the confidences in the map. For final iteration, which likely has <BATCH_SIZE meaningful crops, the index list being of shorter length will cause them to be thrown. 
             confidence = prob[:, :, true_class].reshape(BATCH_SIZE * NUM_GPUS)
             for i in range(len(map_indices)):
@@ -155,7 +158,8 @@ def create_confidence_map(start_id, end_id, crop_metric, model_name, image_scale
                 
         overall_end_time = time.clock()
         print('Time for overall cropping and map-building process with size-' + str(BATCH_SIZE), 'batch:', overall_end_time - overall_start_time, 'seconds')
-    
+        sys.stdout.flush()
+
         # Make confidence map, save to confidence map folder
         if make_cmap:
             np.save(PATH_TO_DATA + settings.map_filename(settings.CONFIDENCE_MAPTYPE, crop_metric, model_name, image_scale, image_id), C)
