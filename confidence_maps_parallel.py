@@ -21,7 +21,7 @@ PATH_TO_DATA = settings.MIN_IMGS_PATH_TO_DATA
 CROP_TYPE = 'proportional'          # choose between 'proportional' and 'constant'
 CONSTANT = 224                       # pixel-length of square crop (must be odd)
 BATCH_SIZE = 160
-NUM_GPUS = 8
+NUM_GPUS = 1
 
 
 def get_crop_size(dimension, crop_metric, crop_type):
@@ -60,10 +60,16 @@ def create_confidence_map(start_id, end_id, crop_metric, model_name, image_scale
     image_ids = range(start_id, end_id + 1)    
     
     for image_id in image_ids:
-   
-        image_tag = settings.get_ind_name(image_id)
-        image_filename = PATH_TO_DATA + settings.folder_name('img') + image_tag + ('.png' if image_id == 50001 else'.JPEG') 
-        true_class = true_labels[image_tag] if image_id != 50001 else 266
+
+        f = open('small-dataset-to-imagenet.txt')
+        lines = f.readlines()
+        image_tag = lines[image_id].split(" ", 1)[0]
+        print(image_tag)
+
+        #image_tag = settings.get_ind_name(image_id)
+
+        image_filename = PATH_TO_DATA + settings.folder_name('img') + image_tag #+ ('.png' if image_id == 50001 else'.JPEG')
+        true_class = true_labels[image_tag[:-5]] if image_id != 50001 else 266
         im = Image.open(image_filename)
         if im.mode != 'RGB':
             im = im.convert('RGB')	# make sure bw images are 3-channel, because they get opened in L mode
@@ -191,14 +197,19 @@ def get_max_diff_adjacent_crops(start_id, end_id, proportion, model_name='vgg16'
     l_activations = {}
     for image_id in image_ids:
 
-        image_tag = settings.get_ind_name(image_id)
-        image_filename = PATH_TO_DATA + settings.folder_name('img') + image_tag + ('.png' if image_id == 50001 else '.JPEG') 
+        f = open('small-dataset-to-imagenet.txt')
+        lines = f.readlines()
+        image_tag = lines[image_id].split(" ", 1)[0]
+        print(image_tag)
+
+        #image_tag = settings.get_ind_name(image_id)
+        image_filename = PATH_TO_DATA + settings.folder_name('img') + image_tag #+ ('.png' if image_id == 50001 else '.JPEG')
         image = Image.open(image_filename)
         if image.mode != 'RGB':
             image = image.convert('RGB')
         image = np.asarray(image)
     
-        image_label = image_tag + '_' + str(crop_metric) + '_' + model_name + '_'
+        image_label = image_tag[:-5] + '_' + str(crop_metric) + '_' + model_name + '_'
         correctness_type = 'top5' if use_top5 else 'top1'
         correctness_filename = PATH_TO_DATA + (settings.map_folder_name(settings.TOP5_MAPTYPE, crop_metric) if use_top5 else settings.map_folder_name(settings.TOP1_MAPTYPE, crop_metric)) + image_label + (settings.TOP5_MAPTYPE if use_top5 else settings.TOP1_MAPTYPE) + '.npy'
         cor_map = np.load(correctness_filename)
@@ -251,7 +262,7 @@ def get_max_diff_adjacent_crops(start_id, end_id, proportion, model_name='vgg16'
     
                 cropped = image[cell[0]:cell[0] + crop_size, cell[1]:cell[1] + crop_size]
                 gcropped = image[gcell[0]:gcell[0] + crop_size, gcell[1]:gcell[1] + crop_size]
-                true_value = true_labels[image_tag]
+                true_value = true_labels[image_tag[:-5]]
                 hc  = imresize(gcropped, (network.im_size, network.im_size))
                 lc = imresize(cropped, (network.im_size, network.im_size))
  
@@ -315,9 +326,15 @@ def test_maxdiff_crops(start_id, end_id, crop_metric, model_name='vgg16'):
     h_activations = {}
     l_activations = {}
     for image_id in image_ids:
-        image_tag = settings.get_ind_name(image_id)
-        image_label = image_tag + '_' + str(crop_metric) + '_' # TODO I think I got ahead of myself and put in model name to this function when maxdiff crops haven't been adjusted, but eventually, fix this with the new filesystem
-        true_value = true_labels[image_tag]
+
+        f = open('small-dataset-to-imagenet.txt')
+        lines = f.readlines()
+        image_tag = lines[image_id].split(" ", 1)[0]
+        print(image_tag)
+
+        #image_tag = settings.get_ind_name(image_id)
+        image_label = image_tag[:-5] + '_' + str(crop_metric) + '_' # TODO I think I got ahead of myself and put in model name to this function when maxdiff crops haven't been adjusted, but eventually, fix this with the new filesystem
+        true_value = true_labels[image_tag[:-5]]
         maxdiff_folder = settings.maxdiff_folder_name(crop_metric)
 
         try:
@@ -373,7 +390,7 @@ def test_maxdiff_crops(start_id, end_id, crop_metric, model_name='vgg16'):
         lgrad_vis.save(PATH_TO_DATA + str(image_id) + 'lgrad_vis.JPEG', 'JPEG')
         
         # SANITY CHECK for backprop code
-        image_filename = PATH_TO_DATA + settings.folder_name('img') + image_tag + ('.png' if image_id == 50001 else'.JPEG') 
+        image_filename = PATH_TO_DATA + settings.folder_name('img') + image_tag #+ ('.png' if image_id == 50001 else'.JPEG')
         im = imread(image_filename, mode='RGB')
         im = imresize(im, (network.im_size, network.im_size))
         fullresult = sess.run([network.probs, dy_dx], feed_dict={network.imgs: [im]})
