@@ -14,7 +14,7 @@ from scipy.misc import imread, imresize
 from imagenet_classes import class_names
 
 
-WEIGHTS_FILE = '../poggio_urop/poggio-urop-data/weights/vgg16_weights.npz'
+WEIGHTS_FILE = '/om/user/xboix/share/minimal-images/weights/vgg16_weights.npz'
 
 
 class vgg16:

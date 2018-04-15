@@ -33,6 +33,8 @@ try:
 except ImportError:
   import urllib.request as urllib
 
+WEIGHTS_FILE = '/om/user/xboix/share/minimal-images/weights/inception_v4.ckpt'
+
 
 # from nets import inception_utils
 from caffe_classes import class_names
@@ -373,7 +375,7 @@ class inception:
     with slim.arg_scope(inception_v4_arg_scope()):
       self.logits, _ = inception_v4(self.imgs, num_classes=1001, reuse=reuse, is_training=False)
     self.probs = tf.nn.softmax(self.logits)[:, 1:]
-    init_fn = slim.assign_from_checkpoint_fn('inception_v4.ckpt', slim.get_model_variables())
+    init_fn = slim.assign_from_checkpoint_fn(WEIGHTS_FILE, slim.get_model_variables())
     init_fn(self.sess)
 
 inception_v4_arg_scope = inception_utils.inception_arg_scope
@@ -410,7 +412,7 @@ if __name__ == '__main__':
 #       logits, _ = inception_v4(processed_images, num_classes=1001, is_training=False)  
 #     probabilities = tf.nn.softmax(logits)
 #     
-#     init_fn = slim.assign_from_checkpoint_fn('inception_v4.ckpt', slim.get_model_variables('InceptionV4'))
+#     init_fn = slim.assign_from_checkpoint_fn(WEIGHTS_FILE, slim.get_model_variables('InceptionV4'))
 #     
 #     with tf.Session() as sess:
 #       init_fn(sess)
