@@ -169,7 +169,7 @@ def create_confidence_map(start_id, end_id, crop_metric, model_name, image_scale
         # Save distance maps
         if make_distance:
             np.save(PATH_TO_DATA + settings.map_filename(settings.DISTANCE_MAPTYPE, crop_metric, model_name, image_scale, image_id), D)
- 
+
         print(image_tag)
 
 
@@ -427,7 +427,7 @@ def test_maxdiff_crops(start_id, end_id, crop_metric, model_name='vgg16'):
 
 if __name__ == '__main__':
     create_confidence_map(int(sys.argv[1]), int(sys.argv[2]), float(sys.argv[3]), sys.argv[4], float(sys.argv[5])) 
-
+    print(":)")
  
     # h_activations, l_activations = get_max_diff_adjacent_crops(int(sys.argv[1]), int(sys.argv[2]), float(sys.argv[3]), compare_correctness=True) 
     

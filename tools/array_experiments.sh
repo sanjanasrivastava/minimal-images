@@ -1,12 +1,12 @@
 #!/bin/bash
 #SBATCH -n 2
-#SBATCH --array=0-10
-#SBATCH --job-name=robustness
+#SBATCH --array=0-500
+#SBATCH --job-name=minimal
 #SBATCH --mem=32GB
 #SBATCH --gres=gpu:tesla-k80:1
-#SBATCH -t 5:00:00
+#SBATCH -t 1:00:00
 #SBATCH --workdir=./log/
-#SBATCH --qos=cbmm
+#SBATCH --qos=use-everything
 
 /om2/user/jakubk/miniconda3/envs/torch/bin/python -c 'import torch; print(torch.rand(2,3).cuda())'
 cd /om/user/xboix/src/minimal-images
