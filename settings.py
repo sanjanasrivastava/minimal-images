@@ -75,7 +75,7 @@ def get_class_labels(image_ids):
         print('IMAGE ID NUMBER:', image_id, '; TRUE CLASS:', true_class, '; CLASSNAME:', class_names[true_class])
 
 
-MIN_IMGS_PATH_TO_DATA = '../poggio_urop/poggio-urop-data/'
+MIN_IMGS_PATH_TO_DATA = '/om/user/xboix/share/minimal-images/'
 MIN_IMGS_PATH_TO_WEIGHTS = MIN_IMGS_PATH_TO_DATA + 'weights/'
 
 # MAPTYPES

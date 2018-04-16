@@ -59,6 +59,9 @@ import imagenet
 import resnet_utils
 import settings
 
+WEIGHTS_FILE = '/om/user/xboix/share/minimal-images/weights/resnet_v2_152.ckpt'
+
+
 slim = tf.contrib.slim
 resnet_arg_scope = resnet_utils.resnet_arg_scope
 
@@ -375,7 +378,7 @@ class resnet:
       self.logits, _ = resnet_v2_152(self.imgs, num_classes=1001, reuse=reuse, is_training=False)
     self.logits = self.logits[:, 1:]
     self.probs = tf.nn.softmax(self.logits) # [:, 1:]
-    init_fn = slim.assign_from_checkpoint_fn('resnet_v2_152.ckpt', slim.get_model_variables())
+    init_fn = slim.assign_from_checkpoint_fn(WEIGHTS_FILE, slim.get_model_variables())
     init_fn(self.sess)
 
 

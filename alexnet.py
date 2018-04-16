@@ -88,7 +88,7 @@ def conv(input, kernel, biases, k_h, k_w, c_o, s_h, s_w,  padding="VALID", group
 # x = tf.placeholder(tf.float32, (None, 227, 227, 3))
 
 
-WEIGHTS_FILE = '../poggio_urop/poggio-urop-data/weights/bvlc_alexnet.npy'
+WEIGHTS_FILE = '/om/user/xboix/share/minimal-images/weights/bvlc_alexnet.npy'
 
 
 class alexnet:
