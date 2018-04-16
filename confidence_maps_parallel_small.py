@@ -20,8 +20,8 @@ PATH_TO_DATA = settings.MIN_IMGS_PATH_TO_DATA
 # TEST PARAMS
 CROP_TYPE = 'proportional'          # choose between 'proportional' and 'constant'
 CONSTANT = 224                       # pixel-length of square crop (must be odd)
-BATCH_SIZE = 160
-NUM_GPUS = 8
+BATCH_SIZE = 256
+NUM_GPUS = 1
 
 
 def get_crop_size(dimension, crop_metric, crop_type):
@@ -45,7 +45,9 @@ def create_confidence_map(start_id, end_id, crop_metric, model_name, image_scale
     model = settings.MODELS[model_name]
 
     # Before anything else happens, so we only set up once despite multiple images, make a network for each GPU
-    sess = tf.Session(config=tf.ConfigProto(log_device_placement=True, allow_soft_placement=True))
+    config = tf.ConfigProto(log_device_placement=True, allow_soft_placement=True)
+    config.gpu_options.allow_growth = True
+    sess = tf.Session(config = config)
     networks = []
     for i in range(NUM_GPUS):
         gpu = 'device:GPU:%d' % i 
@@ -60,10 +62,16 @@ def create_confidence_map(start_id, end_id, crop_metric, model_name, image_scale
     image_ids = range(start_id, end_id + 1)    
     
     for image_id in image_ids:
-   
-        image_tag = settings.get_ind_name(image_id)
-        image_filename = PATH_TO_DATA + settings.folder_name('img') + image_tag + ('.png' if image_id == 50001 else'.JPEG') 
-        true_class = true_labels[image_tag] if image_id != 50001 else 266
+
+        f = open('small-dataset-to-imagenet.txt')
+        lines = f.readlines()
+        image_tag = lines[image_id].split(" ", 1)[0]
+        print(image_tag)
+
+        #image_tag = settings.get_ind_name(image_id)
+
+        image_filename = PATH_TO_DATA + settings.folder_name('img') + image_tag #+ ('.png' if image_id == 50001 else'.JPEG')
+        true_class = true_labels[image_tag[:-5]] if image_id != 50001 else 266
         im = Image.open(image_filename)
         if im.mode != 'RGB':
             im = im.convert('RGB')	# make sure bw images are 3-channel, because they get opened in L mode
@@ -78,7 +86,7 @@ def create_confidence_map(start_id, end_id, crop_metric, model_name, image_scale
         # TODO do resizing experiment    im = imresize(im, (width*image_scale, height*image_scale))	# resize image as needed 
     
         crop_size = get_crop_size(height, crop_metric, crop_type) if height <= width else get_crop_size(width, crop_metric, crop_type)
-        crop_size -= 2			# reduce by two pixels for small crop 
+        crop_size -= 2		# reduce size by two pixels for small crops 
         crop_x1s = range(width - crop_size + 1)
         crop_y1s = range(height - crop_size + 1)
         crop_dims = itertools.product(crop_x1s, crop_y1s)
@@ -90,7 +98,7 @@ def create_confidence_map(start_id, end_id, crop_metric, model_name, image_scale
         
         overall_start_time = time.clock()
         print('TOTAL CROPS:', total_crops)
-    
+        sys.stdout.flush()
         while crop_index < total_crops:	# While we haven't exhausted crops TODO see if the logic needs to be changed
             all_cropped_imgs = []
             stub_crops = 0		# Initializing to 0 in case there's an image with no stub crops (i.e. number of crops is a multiple of 64)
@@ -122,7 +130,8 @@ def create_confidence_map(start_id, end_id, crop_metric, model_name, image_scale
             end_time = time.clock()
             print ('Time for running one size-' + str(BATCH_SIZE), 'batch:', end_time - start_time, 'seconds')
             print('CROPS COMPLETED SO FAR:', crop_index)
-    
+            sys.stdout.flush()
+
             # plot the confidences in the map. For final iteration, which likely has <BATCH_SIZE meaningful crops, the index list being of shorter length will cause them to be thrown. 
             confidence = prob[:, :, true_class].reshape(BATCH_SIZE * NUM_GPUS)
             for i in range(len(map_indices)):
@@ -150,7 +159,8 @@ def create_confidence_map(start_id, end_id, crop_metric, model_name, image_scale
                 
         overall_end_time = time.clock()
         print('Time for overall cropping and map-building process with size-' + str(BATCH_SIZE), 'batch:', overall_end_time - overall_start_time, 'seconds')
-    
+        sys.stdout.flush()
+
         # Make confidence map, save to confidence map folder
         if make_cmap:
             np.save(PATH_TO_DATA + settings.map_filename(settings.CONFIDENCE_MAPTYPE, crop_metric, model_name, image_scale, image_id) + '_small', C)
@@ -164,7 +174,7 @@ def create_confidence_map(start_id, end_id, crop_metric, model_name, image_scale
         # Save distance maps
         if make_distance:
             np.save(PATH_TO_DATA + settings.map_filename(settings.DISTANCE_MAPTYPE, crop_metric, model_name, image_scale, image_id) + '_small', D)
- 
+
         print(image_tag)
 
 
@@ -192,14 +202,19 @@ def get_max_diff_adjacent_crops(start_id, end_id, proportion, model_name='vgg16'
     l_activations = {}
     for image_id in image_ids:
 
-        image_tag = settings.get_ind_name(image_id)
-        image_filename = PATH_TO_DATA + settings.folder_name('img') + image_tag + ('.png' if image_id == 50001 else '.JPEG') 
+        f = open('small-dataset-to-imagenet.txt')
+        lines = f.readlines()
+        image_tag = lines[image_id].split(" ", 1)[0]
+        print(image_tag)
+
+        #image_tag = settings.get_ind_name(image_id)
+        image_filename = PATH_TO_DATA + settings.folder_name('img') + image_tag #+ ('.png' if image_id == 50001 else '.JPEG')
         image = Image.open(image_filename)
         if image.mode != 'RGB':
             image = image.convert('RGB')
         image = np.asarray(image)
     
-        image_label = image_tag + '_' + str(crop_metric) + '_' + model_name + '_'
+        image_label = image_tag[:-5] + '_' + str(crop_metric) + '_' + model_name + '_'
         correctness_type = 'top5' if use_top5 else 'top1'
         correctness_filename = PATH_TO_DATA + (settings.map_folder_name(settings.TOP5_MAPTYPE, crop_metric) if use_top5 else settings.map_folder_name(settings.TOP1_MAPTYPE, crop_metric)) + image_label + (settings.TOP5_MAPTYPE if use_top5 else settings.TOP1_MAPTYPE) + '.npy'
         cor_map = np.load(correctness_filename)
@@ -252,7 +267,7 @@ def get_max_diff_adjacent_crops(start_id, end_id, proportion, model_name='vgg16'
     
                 cropped = image[cell[0]:cell[0] + crop_size, cell[1]:cell[1] + crop_size]
                 gcropped = image[gcell[0]:gcell[0] + crop_size, gcell[1]:gcell[1] + crop_size]
-                true_value = true_labels[image_tag]
+                true_value = true_labels[image_tag[:-5]]
                 hc  = imresize(gcropped, (network.im_size, network.im_size))
                 lc = imresize(cropped, (network.im_size, network.im_size))
  
@@ -316,9 +331,15 @@ def test_maxdiff_crops(start_id, end_id, crop_metric, model_name='vgg16'):
     h_activations = {}
     l_activations = {}
     for image_id in image_ids:
-        image_tag = settings.get_ind_name(image_id)
-        image_label = image_tag + '_' + str(crop_metric) + '_' # TODO I think I got ahead of myself and put in model name to this function when maxdiff crops haven't been adjusted, but eventually, fix this with the new filesystem
-        true_value = true_labels[image_tag]
+
+        f = open('small-dataset-to-imagenet.txt')
+        lines = f.readlines()
+        image_tag = lines[image_id].split(" ", 1)[0]
+        print(image_tag)
+
+        #image_tag = settings.get_ind_name(image_id)
+        image_label = image_tag[:-5] + '_' + str(crop_metric) + '_' # TODO I think I got ahead of myself and put in model name to this function when maxdiff crops haven't been adjusted, but eventually, fix this with the new filesystem
+        true_value = true_labels[image_tag[:-5]]
         maxdiff_folder = settings.maxdiff_folder_name(crop_metric)
 
         try:
@@ -374,7 +395,7 @@ def test_maxdiff_crops(start_id, end_id, crop_metric, model_name='vgg16'):
         lgrad_vis.save(PATH_TO_DATA + str(image_id) + 'lgrad_vis.JPEG', 'JPEG')
         
         # SANITY CHECK for backprop code
-        image_filename = PATH_TO_DATA + settings.folder_name('img') + image_tag + ('.png' if image_id == 50001 else'.JPEG') 
+        image_filename = PATH_TO_DATA + settings.folder_name('img') + image_tag #+ ('.png' if image_id == 50001 else'.JPEG')
         im = imread(image_filename, mode='RGB')
         im = imresize(im, (network.im_size, network.im_size))
         fullresult = sess.run([network.probs, dy_dx], feed_dict={network.imgs: [im]})
@@ -411,7 +432,7 @@ def test_maxdiff_crops(start_id, end_id, crop_metric, model_name='vgg16'):
 
 if __name__ == '__main__':
     create_confidence_map(int(sys.argv[1]), int(sys.argv[2]), float(sys.argv[3]), sys.argv[4], float(sys.argv[5])) 
-
+    print(":)")
  
     # h_activations, l_activations = get_max_diff_adjacent_crops(int(sys.argv[1]), int(sys.argv[2]), float(sys.argv[3]), compare_correctness=True) 
     
