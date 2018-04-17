@@ -8,7 +8,8 @@
 #SBATCH --workdir=./log/
 #SBATCH --qos=cbmm
 
-SCALE=0.2
+
+SCALE=0.8
 NETWORK=alexnet
 
 if [ ! -f /om/user/xboix/share/minimal-images/confidence/$SCALE/$NETWORK/1.0/${SLURM_ARRAY_TASK_ID}.npy ]; then
@@ -17,4 +18,3 @@ if [ ! -f /om/user/xboix/share/minimal-images/confidence/$SCALE/$NETWORK/1.0/${S
     singularity exec -B /om:/om -B /cbcl:/cbcl --nv /om/user/xboix/singularity/belledon-tensorflow-keras-master-latest.simg \
     python /om/user/xboix/src/minimal-images/confidence_maps_parallel.py ${SLURM_ARRAY_TASK_ID} ${SLURM_ARRAY_TASK_ID} $SCALE $NETWORK 1
 fi
-

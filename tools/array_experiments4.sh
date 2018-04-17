@@ -8,7 +8,7 @@
 #SBATCH --workdir=./log/
 #SBATCH --qos=cbmm
 
-SCALE=0.2
+SCALE=0.4
 NETWORK=alexnet
 
 if [ ! -f /om/user/xboix/share/minimal-images/confidence/$SCALE/$NETWORK/1.0/${SLURM_ARRAY_TASK_ID}.npy ]; then

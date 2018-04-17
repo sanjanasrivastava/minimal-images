@@ -3,13 +3,14 @@
 #SBATCH --array=0-500
 #SBATCH --job-name=minimal
 #SBATCH --mem=10GB
-#SBATCH --gres=gpu:tesla-k80:1
+#SBATCH --gres=gpu:GEFORCEGTX1080TI:1
 #SBATCH -t 2:00:00
 #SBATCH --workdir=./log/
-#SBATCH --qos=cbmm
+#SBATCH --qos=use-everything
+
 
 SCALE=0.2
-NETWORK=alexnet
+NETWORK=resnet
 
 if [ ! -f /om/user/xboix/share/minimal-images/confidence/$SCALE/$NETWORK/1.0/${SLURM_ARRAY_TASK_ID}.npy ]; then
     /om2/user/jakubk/miniconda3/envs/torch/bin/python -c 'import torch; print(torch.rand(2,3).cuda())'
