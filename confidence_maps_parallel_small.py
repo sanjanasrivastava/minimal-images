@@ -20,7 +20,7 @@ PATH_TO_DATA = settings.MIN_IMGS_PATH_TO_DATA
 # TEST PARAMS
 CROP_TYPE = 'proportional'          # choose between 'proportional' and 'constant'
 CONSTANT = 224                       # pixel-length of square crop (must be odd)
-BATCH_SIZE = 256
+BATCH_SIZE = 160
 NUM_GPUS = 1
 
 
@@ -53,7 +53,10 @@ def create_confidence_map(start_id, end_id, crop_metric, model_name, image_scale
         gpu = 'device:GPU:%d' % i 
         with tf.device(gpu):
             imgs = tf.placeholder(tf.float32, [BATCH_SIZE, model.im_size, model.im_size, 3])
-            network = model(imgs, sess, reuse=None if i == 0 else True)
+            if not model_name == 'alexnet':
+                network = model(imgs, sess, reuse=None if i == 0 else True)
+            else:
+                network = model(imgs, sess)
             networks.append(network)
 
     # Get each map called for!
