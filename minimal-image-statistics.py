@@ -57,7 +57,7 @@ def create_location_minimal_image_maps(image_id, crop_metric, model_name, image_
     num_pos_min_imgs = (M > 0.).sum()
     num_neg_min_imgs = (M < 0.).sum()
  
-    return num_pos_min_imgs, num_neg_min_imgs
+    return num_pos_min_imgs/float(M.size), num_neg_min_imgs/float(M.size)
 
 
 def create_size_minimal_image_maps(image_id, crop_metric, model_name, image_scale, loose):
@@ -91,7 +91,7 @@ def create_size_minimal_image_maps(image_id, crop_metric, model_name, image_scal
     # calculate map statistics
     num_pos_min_imgs = (M > 0.).sum()
     num_neg_min_imgs = (M < 0.).sum()
-    return num_pos_min_imgs, num_neg_min_imgs 
+    return num_pos_min_imgs/float(M.size), num_neg_min_imgs/float(M.size) 
 
 
 
