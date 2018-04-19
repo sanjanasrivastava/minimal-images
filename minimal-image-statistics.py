@@ -59,47 +59,18 @@ def create_location_minimal_image_maps(image_id, crop_metric, model_name, image_
                         M[i, j] = -1.	# ...this is a negative minimal image. If some part of the window is zero, i.e. a surrounding pixel is zero, this is not a minimal image.
                     top5map[i, j] = self	# reset current cell
 
-    # TODO save map
-    
+    #  save map
+    if loose:
+        np.save(PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, image_id) + '_lmap.npy', M)
+    else:
+        np.save(PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, image_id) + '_map.npy', M)
+
     # calculate map statistics
     num_pos_min_imgs = (M > 0.).sum()
     num_neg_min_imgs = (M < 0.).sum()
- 
+
     return num_pos_min_imgs/float(M.size), num_neg_min_imgs/float(M.size)
 
-
-def create_size_minimal_image_maps(image_id, crop_metric, model_name, image_scale, loose):
-
-    l_top5 = np.load(PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, image_id))
-    s_top5 = np.load(PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, image_id) + '_small')
-    
-    r, c = l_top5.shape
-    M = zeros((r, c))
-    
-    for i in range(r):
-        for j in range(c):
-            window = s_top5[i:i + 3, j:j + 3]	# get all the possible shrinks for this crop
-            if loose:
-                if self:	# if the current crop is correctly classified...
-                    if not np.all(window):	# if any cell in the window is incorrectly classified... 
-                        M[i, j] = 1.	# ...the current crop is a positive minimal image. Otherwise, it's not minimal.
-                else:		# if the current crop is incorrectly classified...
-                    if np.any(window):		# if any cell in the window is correctly classified...
-                        M[i, j] = -1.	# ...the current crop is a negative minimal image. Otherwise, it's not minimal.
-            else:	# we are looking for strict minimal image maps 
-                if self: 	# if the current crop is correctly classified...
-                    if not np.any(window):	# if all crops in the window are incorrectly classified...
-                        M[i, j] = 1.	# ...the current crop is a positive minimal image. Otherwise, it's not minimal. 
-                else:		# if the current crop is incorrectly classified...
-                    if np.all(window):	# if all the crops in the window are correctly classified...
-                        M[i, j] = -1.	# ...the current crop is a negative minimal image. Otherwise, it's not minimal.
-    
-    # TODO save map 
-
-    # calculate map statistics
-    num_pos_min_imgs = (M > 0.).sum()
-    num_neg_min_imgs = (M < 0.).sum()
-    return num_pos_min_imgs/float(M.size), num_neg_min_imgs/float(M.size) 
 
 
 results = - np.ones([ 4, 2, 5, 500, 2])
@@ -112,16 +83,19 @@ for idx_metric, crop_metric in enumerate([0.2, 0.4, 0.6, 0.8]):
     print(idx_metric)
     sys.stdout.flush()
     for idx_loose, loose in enumerate([False, True]):
-        for idx_k, k in enumerate([3, 5, 7, 11, 17]):
+        for idx_k, k in enumerate([3]):#enumerate([3, 5, 7, 11, 17]):
             print(k)
             sys.stdout.flush()
             for image_id in range(500):
+                print(image_id)
+                sys.stdout.flush()
+
                 a, b = \
                     create_location_minimal_image_maps(image_id, crop_metric, model_name, image_scale, loose, k)
                 results[idx_metric][idx_loose][idx_k][image_id][0] = a
                 results[idx_metric][idx_loose][idx_k][image_id][1] = b
 
-        np.save('tmp_results_' + model_name +'.npy', results)
+        #np.save('tmp_results_' + model_name +'.npy', results)
 
 
 
