@@ -5,8 +5,8 @@ import sys
 import os.path
 
 
-PATH_TO_DATA = "/om/user/xboix/share/minimal-images/"
-#""./backup/"
+PATH_TO_DATA = "./backup/" #"/om/user/xboix/share/minimal-images/"
+#"
 
 
 def create_location_minimal_image_maps(image_id, crop_metric, model_name, image_scale, loose, k=1):
@@ -70,14 +70,16 @@ def create_location_minimal_image_maps(image_id, crop_metric, model_name, image_
 
 def create_size_minimal_image_maps(image_id, crop_metric, model_name, image_scale, loose):
 
-    l_top5 = np.load(PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, image_id))
-    s_top5 = np.load(PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, image_id) + '_small')
+    l_top5 = np.load(PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, image_id) + '.npy')
+    s_top5 = np.load(PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, image_id) + '_small.npy')
     
     r, c = l_top5.shape
-    M = zeros((r, c))
+    M = np.zeros((r, c))
     
     for i in range(r):
         for j in range(c):
+            self = l_top5[i, j]
+
             window = s_top5[i:i + 3, j:j + 3]	# get all the possible shrinks for this crop
             if loose:
                 if self:	# if the current crop is correctly classified...
@@ -102,7 +104,7 @@ def create_size_minimal_image_maps(image_id, crop_metric, model_name, image_scal
     return num_pos_min_imgs/float(M.size), num_neg_min_imgs/float(M.size) 
 
 
-results = - np.ones([ 4, 2, 5, 500, 2])
+results = - np.ones([ 4, 2, 500, 2])
 
 image_scale = '1.0'
 
@@ -112,16 +114,13 @@ for idx_metric, crop_metric in enumerate([0.2, 0.4, 0.6, 0.8]):
     print(idx_metric)
     sys.stdout.flush()
     for idx_loose, loose in enumerate([False, True]):
-        for idx_k, k in enumerate([3, 5, 7, 11, 17]):
-            print(k)
-            sys.stdout.flush()
-            for image_id in range(500):
-                a, b = \
-                    create_location_minimal_image_maps(image_id, crop_metric, model_name, image_scale, loose, k)
-                results[idx_metric][idx_loose][idx_k][image_id][0] = a
-                results[idx_metric][idx_loose][idx_k][image_id][1] = b
+        for image_id in range(500):
+            a, b = \
+                create_size_minimal_image_maps(image_id, crop_metric, model_name, image_scale, loose)
+            results[idx_metric][idx_loose][image_id][0] = a
+            results[idx_metric][idx_loose][image_id][1] = b
 
-        np.save('tmp_results_' + model_name +'.npy', results)
+        np.save('tmp_results_' + model_name + '_small.npy', results)
 
 
 
