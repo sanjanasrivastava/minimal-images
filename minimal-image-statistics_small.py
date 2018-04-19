@@ -70,9 +70,19 @@ def create_location_minimal_image_maps(image_id, crop_metric, model_name, image_
 
 def create_size_minimal_image_maps(image_id, crop_metric, model_name, image_scale, loose):
 
-    l_top5 = np.load(PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, image_id) + '.npy')
-    s_top5 = np.load(PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, image_id) + '_small.npy')
-    
+    fname = PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, image_id) + '.npy'
+    if not os.path.isfile(fname):
+        return -1, -1
+
+    l_top5 = np.load(fname)
+
+    fname = PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, image_id) + '_small.npy'
+    if not os.path.isfile(fname):
+        return -1, -1
+    s_top5 = np.load(fname)
+
+
+
     r, c = l_top5.shape
     M = np.zeros((r, c))
     
