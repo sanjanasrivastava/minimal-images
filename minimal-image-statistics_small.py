@@ -5,8 +5,8 @@ import sys
 import os.path
 
 
-PATH_TO_DATA = "./backup/" #"/om/user/xboix/share/minimal-images/"
-#"
+PATH_TO_DATA = "/om/user/xboix/share/minimal-images/"
+#""./backup/" #
 
 
 def create_location_minimal_image_maps(image_id, crop_metric, model_name, image_scale, loose, k=1):
