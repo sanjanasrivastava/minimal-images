@@ -10,7 +10,7 @@
 
 
 SCALE=0.8
-NETWORK=alexnet
+NETWORK=inception
 
 echo "$NETWORK"
 echo "SCALE"

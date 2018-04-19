@@ -25,7 +25,6 @@ from scipy.ndimage import filters
 import urllib
 from numpy import random
 
-
 import tensorflow as tf
 
 from caffe_classes import class_names

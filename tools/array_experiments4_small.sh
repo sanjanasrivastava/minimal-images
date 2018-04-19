@@ -9,7 +9,11 @@
 #SBATCH --qos=cbmm
 
 SCALE=0.4
-NETWORK=alexnet
+NETWORK=inception
+
+echo "$NETWORK"
+echo "SCALE"
+
 
 if [ ! -f /om/user/xboix/share/minimal-images/confidence/$SCALE/$NETWORK/1.0/${SLURM_ARRAY_TASK_ID}_small.npy ]; then
     /om2/user/jakubk/miniconda3/envs/torch/bin/python -c 'import torch; print(torch.rand(2,3).cuda())'
