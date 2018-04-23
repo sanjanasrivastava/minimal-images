@@ -78,7 +78,7 @@ def conv(input, kernel, biases, k_h, k_w, c_o, s_h, s_w,  padding="VALID", group
         conv = convolve(input, kernel)
     else:
         input_groups =  tf.split(input, group, 3)   #tf.split(3, group, input)
-        kernel_groups = tf.split(kernel, group, 3)  #tf.split(3, group, kernel) 
+        kernel_groups = tf.split(kernel, group, 3)  #tf.split(3, group, kernel)
         output_groups = [convolve(i, k) for i,k in zip(input_groups, kernel_groups)]
         conv = tf.concat(output_groups, 3)          #tf.concat(3, output_groups)
     return  tf.reshape(tf.nn.bias_add(conv, biases), [-1]+conv.get_shape().as_list()[1:])
@@ -88,6 +88,7 @@ def conv(input, kernel, biases, k_h, k_w, c_o, s_h, s_w,  padding="VALID", group
 
 
 WEIGHTS_FILE = '/om/user/xboix/share/minimal-images/weights/bvlc_alexnet.npy'
+# WEIGHTS_FILE = '../min-img-data/weights/bvlc_alexnet.npy'
 
 
 class alexnet:

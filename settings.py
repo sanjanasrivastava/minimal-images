@@ -109,3 +109,17 @@ def maxdiff_folder_name(axis, crop_metric, model_name, image_scale, corr, conf=N
     else: 
         return os.path.join(MAXDIFF_PREFIX, axis, str(crop_metric), model_name, str(image_scale), corr, '')
 
+
+def convert_id_small_to_imagenetval(image_id):
+
+    with open('small-dataset-to-imagenet.txt', 'r') as small_file:
+        for i in range(image_id + 1):
+            line = small_file.readline()
+
+    suffix = '.JPEG'
+    number_length = 8
+    imagenetval_id = line.split()[0][-(len(suffix) + number_length):-len(suffix)]
+    return int(imagenetval_id)
+
+
+

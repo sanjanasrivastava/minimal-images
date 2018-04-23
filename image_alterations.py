@@ -9,13 +9,13 @@ import xml.etree.ElementTree as ET
 import settings
 
 
-DATA_PATH = '../../poggio-urop-data/'
+DATA_PATH = '../poggio_urop/poggio-urop-data/'
 print sys.argv
 if sys.argv[0] == 'image_alterations.py':   # if the python script is being run directly
     COMMAND_PATH = ''
 else:
     COMMAND_PATH = 'poggio_urop_code/vgg_tensorflow/'   # path from main shell script to here, to be attached to anything this file references
-BOUNDINBOX_FILE = COMMAND_PATH + settings.IMAGENET_SET + '_' + settings.DATASET + '_bbx_dimensions.json'
+BOUNDINBOX_FILE = settings.IMAGENET_SET + '_' + settings.DATASET + '_bbx_dimensions.json'
 
 
 ## GENERAL FUNCTIONS
@@ -31,7 +31,7 @@ def folder_name(datatype):
     folder name with command path and data path attached, because all functions here deal with data files
     '''
 
-    return COMMAND_PATH + DATA_PATH + settings.folder_name(datatype)
+    return DATA_PATH + settings.folder_name(datatype)
 
 
 def fill_datatype(num_images, datatype):
@@ -89,7 +89,7 @@ def get_boundinbox(img_name, dimensions_dict):
     TODO
     '''
 
-    tree = ET.parse(folder_name('bbx') + '/' + img_name + '.xml')
+    tree = ET.parse(folder_name('bbx') + img_name + '.xml')
     root = tree.getroot()
 
     # Get image name
@@ -406,33 +406,36 @@ def highlight_best_crop(img_id):
 
 if __name__ == '__main__':
 
-    if COMMAND_PATH:    # If being called from the control script
+    # if COMMAND_PATH:    # If being called from the control script
+    #
+    #     if sys.argv[1] == 'test':
+    #         num_images = sys.argv[2]
+    #         datatype = sys.argv[3]
+    #         fill_datatype(num_images, datatype)
+    #
+    #     elif sys.argv[1] == 'random':
+    #
+    #         os.mkdir(folder_name('randind'))
+    #         img_id = int(sys.argv[2])
+    #         img_name = settings.get_ind_name(img_id)
+    #         random_crops(img_name, int(sys.argv[3]))
+    #
+    #     elif sys.argv[1] == 'randompt2':
+    #
+    #         highlight_random_crops(int(sys.argv[2]))
+    #
+    #     elif sys.argv[1] == 'best':
+    #         for img_id in range(int(sys.argv[2]), int(sys.argv[3]) + 1):
+    #             os.mkdir(folder_name('randind' + '%08d' % img_id))
+    #             img_name = settings.get_ind_name(img_id)
+    #             random_crops(img_name, int(sys.argv[4]))
+    #
+    # else:   # For testing
+    #     pass
 
-        if sys.argv[1] == 'test':
-            num_images = sys.argv[2]
-            datatype = sys.argv[3]
-            fill_datatype(num_images, datatype)
+    # collect_all_boundinbox_data(50000)
 
-        elif sys.argv[1] == 'random':
-
-            os.mkdir(folder_name('randind'))
-            img_id = int(sys.argv[2])
-            img_name = settings.get_ind_name(img_id)
-            random_crops(img_name, int(sys.argv[3]))
-
-        elif sys.argv[1] == 'randompt2':
-
-            highlight_random_crops(int(sys.argv[2]))
-
-        elif sys.argv[1] == 'best':
-            for img_id in range(int(sys.argv[2]), int(sys.argv[3]) + 1):
-                os.mkdir(folder_name('randind' + '%08d' % img_id))
-                img_name = settings.get_ind_name(img_id)
-                random_crops(img_name, int(sys.argv[4]))
-
-    else:   # For testing
-
-        pass
+    pass
 
 
 

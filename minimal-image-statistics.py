@@ -1,11 +1,17 @@
+import json
 import numpy as np
-import settings
+import os.path
+from PIL import Image
+import random
+from scipy.misc import imresize
 import sys
 
-import os.path
+import confidence_maps_parallel as c_m_p
+import settings
 
 
 PATH_TO_DATA = "/om/user/xboix/share/minimal-images/"
+PATH_TO_DATA = '../min-img-data/'
 #""./backup/"
 
 
@@ -72,30 +78,79 @@ def create_location_minimal_image_maps(image_id, crop_metric, model_name, image_
     return num_pos_min_imgs/float(M.size), num_neg_min_imgs/float(M.size)
 
 
+BBX_FILE = 'ILSVRC2012_val_bbx_dimensions.json'
 
-results = - np.ones([ 4, 2, 5, 500, 2])
 
-image_scale = '1.0'
+def minimal_image_distribution(num_imgs, crop_metric, model_name, image_scale, loose):
 
-model_name = sys.argv[1:][0]
+    resize_dim = 150
+    minimal_image_aggregation = np.zeros((resize_dim, resize_dim))
 
-for idx_metric, crop_metric in enumerate([0.2, 0.4, 0.6, 0.8]):
-    print(idx_metric)
-    sys.stdout.flush()
-    for idx_loose, loose in enumerate([False, True]):
-        for idx_k, k in enumerate([3]):#enumerate([3, 5, 7, 11, 17]):
-            print(k)
-            sys.stdout.flush()
-            for image_id in range(500):
-                print(image_id)
-                sys.stdout.flush()
+    img_ids = random.sample(range(100), num_imgs)     # for testing on my machine: only a subset of the maps. TODO remove for full job
 
-                a, b = \
-                    create_location_minimal_image_maps(image_id, crop_metric, model_name, image_scale, loose, k)
-                results[idx_metric][idx_loose][idx_k][image_id][0] = a
-                results[idx_metric][idx_loose][idx_k][image_id][1] = b
+    for smalldataset_id in img_ids:
 
-        #np.save('tmp_results_' + model_name +'.npy', results)
+        # get bbx dimensions
+        imagenetval_id = settings.convert_id_small_to_imagenetval(smalldataset_id)
+        image_tag = settings.get_ind_name(imagenetval_id)
+        with open(BBX_FILE, 'r') as bbx_file:
+            all_bbxs = json.load(bbx_file)
+            crop_dims = [bbx[0] for bbx in all_bbxs[image_tag]]     # get all x1, y1, x2, y2 crops
+
+        minimal_map_f = PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, smalldataset_id)
+        minimal_map_f = minimal_map_f + '_' + ('l' if loose else '') + 'map'
+        minimal_map = np.load(minimal_map_f + '.npy')
+
+        image_filename = PATH_TO_DATA + settings.folder_name('img') + image_tag + '.JPEG'
+        try:                                    # for testing on my machine: if the image is not on my machine, move on. TODO remove for full job
+            im = Image.open(image_filename)
+        except OSError:
+            continue
+        width, height = im.size
+        crop_type = 'proportional' if crop_metric <= 1. else 'constant'
+        crop_size = c_m_p.get_crop_size(height, crop_metric, crop_type) if height <= width else c_m_p.get_crop_size(width, crop_metric, crop_type)
+        for x1, y1, x2, y2 in crop_dims:
+            print crop_size
+            print x1, y1, x2, y2
+            minmap_sub = minimal_map[y1:y2 - crop_size + 1, x1:x2 - crop_size + 1]
+            print minmap_sub.shape
+            minmap_sub = imresize(minmap_sub, (resize_dim, resize_dim))
+            minimal_image_aggregation += minmap_sub
+
+    vis = (minimal_image_aggregation - np.min(minimal_image_aggregation))
+    vis /= np.max(vis)
+    vis *= 255.
+    Image.fromarray(vis).show()
+
+    return minimal_image_aggregation
+
+
+minimal_image_distribution(100, 0.2, 'resnet', 1.0, True)
+
+
+# results = - np.ones([ 4, 2, 5, 500, 2])
+#
+# image_scale = '1.0'
+#
+# model_name = sys.argv[1:][0]
+#
+# for idx_metric, crop_metric in enumerate([0.2, 0.4, 0.6, 0.8]):
+#     print(idx_metric)
+#     sys.stdout.flush()
+#     for idx_loose, loose in enumerate([False, True]):
+#         for idx_k, k in enumerate([3]):#enumerate([3, 5, 7, 11, 17]):
+#             print(k)
+#             sys.stdout.flush()
+#             for image_id in range(500):
+#                 print(image_id)
+#                 sys.stdout.flush()
+#
+#                 a, b = \
+#                     create_location_minimal_image_maps(image_id, crop_metric, model_name, image_scale, loose, k)
+#                 results[idx_metric][idx_loose][idx_k][image_id][0] = a
+#                 results[idx_metric][idx_loose][idx_k][image_id][1] = b
+#
+#         #np.save('tmp_results_' + model_name +'.npy', results)
 
 
 
