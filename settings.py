@@ -110,6 +110,8 @@ def maxdiff_folder_name(axis, crop_metric, model_name, image_scale, corr, conf=N
         return os.path.join(MAXDIFF_PREFIX, axis, str(crop_metric), model_name, str(image_scale), corr, '')
 
 
+### SMALL DATASET
+
 def convert_id_small_to_imagenetval(image_id):
 
     with open('small-dataset-to-imagenet.txt', 'r') as small_file:
@@ -120,6 +122,19 @@ def convert_id_small_to_imagenetval(image_id):
     number_length = 8
     imagenetval_id = line.split()[0][-(len(suffix) + number_length):-len(suffix)]
     return int(imagenetval_id)
+
+
+SMALL_DATASET_SIZE = 500
+
+def get_bbx_dims(all_bbxs, smalldataset_id):
+    imagenetval_id = convert_id_small_to_imagenetval(smalldataset_id)
+    image_tag = get_ind_name(imagenetval_id)
+    crop_dims = [bbx[0] for bbx in all_bbxs[image_tag]]
+    return crop_dims
+
+
+
+
 
 
 
