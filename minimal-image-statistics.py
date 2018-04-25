@@ -136,6 +136,27 @@ def minimal_image_distribution(num_imgs, crop_metric, model_name, image_scale, l
     return minimal_image_aggregation
 
 
+def minmap_bbx_mask(minmap_shape, bbx_dims, crop_size):
+
+    '''
+    returns mask of minmap shape with 1s in bbx pixels, 0s elsewhere
+    '''
+
+    mask = np.zeros(minmap.shape)
+    for x1, y1, x2, y2 in bbx_dims:
+        bbx_region_mask[y1:y2 - crop_size + 1, x1:x2 - crop_size + 1] = 1.
+    return mask
+
+
+def total_min_imgs(minmap):
+  
+    '''
+    returns size (3,) array with num general min imgs, num pos min imgs, num neg min imgs
+    '''
+   
+    return np.array([np.sum(minmap != 0), np.sum(minmap > 0.), np.sum(minmap < 0.)]
+
+
 def percent_min_img_in_bbx(crop_metric, model_name, image_scale, loose, axis):
     '''
     defaults to calculating for all images 
@@ -154,19 +175,17 @@ def percent_min_img_in_bbx(crop_metric, model_name, image_scale, loose, axis):
     for smalldataset_id in smalldataset_ids: 
         
         # get minimal image map 
-        minimal_map_filename = PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_cale, smalldataset_id)
-        minimal_map_filename = minimal_map_filename + '_' ('small_' if axis == 'scale' else '') + ('l' if loose else '') + 'map'
+        minimal_map_filename = PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, smalldataset_id)
+        minimal_map_filename = minimal_map_filename + '_' + ('small_' if axis == 'scale' else '') + ('l' if loose else '') + 'map'
         minmap = np.load(minimal_map_filename + '.npy')
 
         # get total min img counts - total general, total positive, total negative
-        totals = np.array([np.sum(minmap != 0.), np.sum(minmap > 0.), np.sum(minmap < 0.)])
+        totals = total_min_imgs(minmap)
 
         # construct mask of minmap size with 1s in bbx regions, 0s otherwise, mask minmap so that minimal images outside the bbx region look like non-minimal images
-        bbx_region_mask = np.zeros(minmap.shape)
         bbx_dims = settings.get_bbx_dims(all_bbxs, smalldataset_id)
         crop_size = get_crop_size(smalldataset_id, crop_metric) 
-        for x1, y1, x2, y2 in bbx_dims:
-            bbx_region_mask[y1:y2 - crop_size + 1, x1:x2 - crop_size + 1] = 1.
+        bbx_region_mask = minmap_bbx_mask(minmap.shape, bbx_dims, crop_size)
         bbx_minmap = minmap * bbx_region_mask
         
         # get min img counts within bbx regions - total general, total positive, total negative
@@ -181,9 +200,42 @@ def percent_min_img_in_bbx(crop_metric, model_name, image_scale, loose, axis):
 
     
 def num_min_imgs_vs_bbx_coverage(crop_metric, model_name, image_scale, loose, axis):
+    
+    '''
+    defaults to calculating for all images     
 
-           
+    returns a dict mapping smalldataset_id to (proportion of image that is bbx, array([num pos min imgs, num neg min imgs])) 
+    '''        
+    
+    smalldataset_ids = range(settings.SMALL_DATASET_SIZE)
+    with open(BBX_FILE, 'r') as bbx_file:
+        all_bbxs = json.load(bbx_file)
+    
+    id_to_measurements = {} 
+    for smalldataset_id in smalldataset_ids:
         
+        # get minimal image map 
+        minimal_map_filename = PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, smalldataset_id)
+        minimal_map_filename = minimal_map_filename + '_' + ('small_' if axis == 'scale' else '') + ('l' if loose else '') + 'map'
+        minmap = np.load(minimal_map_filename + '.npy')
+        
+        # get total min img counts - total general, total positive, total negative
+        totals = total_min_imgs(minmap)
+      
+        # get bbx mask, apply, and get proportion of image that is bbx
+        bbx_dims = settings.get_bbx_dims(all_bbxs, smalldataset_id)
+        crop_size = get_crop_size(smalldataset_id, crop_metric)
+        bbx_region_mask = minmap_bbx_mask(minmap.shape, bbx_dims, crop_size)
+        proportion = np.sum(bbx_region_mask) / float(minmap.size)
+
+        # map smalldataset_id to measurements
+        id_to_measurements[smalldataset_id] = (proportion, totals)
+
+    return id_to_measurements
+
+
+
+    
         
  
 
