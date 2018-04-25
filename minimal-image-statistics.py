@@ -196,6 +196,8 @@ def percent_min_img_in_bbx(crop_metric, model_name, image_scale, loose, axis):
 
         result[smalldataset_id] = percentages
 
+    np.save('percent-min-img-in-bbx.npy', result)
+
     return result
 
     
@@ -230,6 +232,9 @@ def num_min_imgs_vs_bbx_coverage(crop_metric, model_name, image_scale, loose, ax
 
         # map smalldataset_id to measurements
         id_to_measurements[smalldataset_id] = (proportion, totals)
+
+    with open('id-to-measurements.json', 'w') as writefile:
+        json.dump(id_to_measurements, writefile)
 
     return id_to_measurements
 
