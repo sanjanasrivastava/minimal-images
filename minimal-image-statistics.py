@@ -136,7 +136,7 @@ def minimal_image_distribution(num_imgs, crop_metric, model_name, image_scale, l
     return minimal_image_aggregation
 
 
-def min_img_in_bbx(crop_metric, model_name, image_scale, loose, axis):
+def percent_min_img_in_bbx(crop_metric, model_name, image_scale, loose, axis):
     '''
     defaults to calculating for all images 
     loose: boolean indicating loose if True else strict
@@ -178,8 +178,11 @@ def min_img_in_bbx(crop_metric, model_name, image_scale, loose, axis):
         result[smalldataset_id] = percentages
 
     return result
+
     
-        
+def num_min_imgs_vs_bbx_coverage(crop_metric, model_name, image_scale, loose, axis):
+
+           
         
         
  
