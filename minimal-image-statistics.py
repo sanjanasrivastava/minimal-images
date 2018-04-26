@@ -1,9 +1,10 @@
 import json
 import numpy as np
 import os.path
-from PIL import Image
+from PIL import Image, ImageDraw
 import random
 from scipy.misc import imresize
+# from skimage.transform import resize
 import sys
 
 import confidence_maps_parallel as c_m_p
@@ -86,8 +87,8 @@ def minimal_image_distribution(num_imgs, crop_metric, model_name, image_scale, l
     resize_dim = 150
     minimal_image_aggregation = np.zeros((resize_dim, resize_dim))
 
-    img_ids = random.sample(range(100), num_imgs)     # for testing on my machine: only a subset of the maps. TODO remove for full job
-
+    # img_ids = random.sample(range(100), num_imgs)     # for testing on my machine: only a subset of the maps. TODO remove for full job
+    img_ids = range(3)
     for smalldataset_id in img_ids:
 
         # get bbx dimensions
@@ -110,11 +111,14 @@ def minimal_image_distribution(num_imgs, crop_metric, model_name, image_scale, l
         crop_type = 'proportional' if crop_metric <= 1. else 'constant'
         crop_size = c_m_p.get_crop_size(height, crop_metric, crop_type) if height <= width else c_m_p.get_crop_size(width, crop_metric, crop_type)
         for x1, y1, x2, y2 in crop_dims:
-            print crop_size
-            print x1, y1, x2, y2
-            minmap_sub = minimal_map[y1:y2 - crop_size + 1, x1:x2 - crop_size + 1]
-            print minmap_sub.shape
-            minmap_sub = imresize(minmap_sub, (resize_dim, resize_dim))
+            draw_bbx(im, (x1, y1, x2, y2))
+            half_offset = int(crop_size / 2)
+            r, c = minimal_map.shape
+            vis_minmap(minimal_map)
+            minmap_sub = minimal_map[max(y1 - half_offset, 0):min(y2 - half_offset, r), max(x1 - half_offset, 0):min(x2 - half_offset, c)]
+            vis_minmap(minmap_sub)
+            minmap_sub = imresize(minmap_sub, (resize_dim, resize_dim)).astype(np.float64)
+            vis_minmap(minmap_sub)
             minimal_image_aggregation += minmap_sub
 
     vis = (minimal_image_aggregation - np.min(minimal_image_aggregation))
@@ -125,7 +129,20 @@ def minimal_image_distribution(num_imgs, crop_metric, model_name, image_scale, l
     return minimal_image_aggregation
 
 
-minimal_image_distribution(100, 0.2, 'resnet', 1.0, True)
+def vis_minmap(minmap):
+    vis = minmap - np.min(minmap)
+    vis /= np.max(vis)
+    vis *= 255.
+    Image.fromarray(vis).show()
+
+
+def draw_bbx(im, dims):
+    draw = ImageDraw.Draw(im)
+    draw.rectangle([(dims[0], dims[1]), (dims[2], dims[3])], outline="rgb(255,0,0)")
+    im.show()
+
+
+minimal_image_distribution(2, 0.2, 'resnet', 1.0, True)
 
 
 # results = - np.ones([ 4, 2, 5, 500, 2])
