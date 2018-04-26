@@ -152,7 +152,9 @@ def total_min_imgs(minmap):
     returns size (3,) array with num general min imgs, num pos min imgs, num neg min imgs
     '''
    
-    return np.array([np.sum(minmap != 0), np.sum(minmap > 0.), np.sum(minmap < 0.)])
+    totals = np.array([np.sum(minmap != 0), np.sum(minmap > 0.), np.sum(minmap < 0.)]).astype(np.float64)
+    np.place(totals, totals==0., 1.)
+    return totals
 
 
 def percent_min_img_in_bbx(crop_metric, model_name, image_scale, strictness, axis):
@@ -170,14 +172,16 @@ def percent_min_img_in_bbx(crop_metric, model_name, image_scale, strictness, axi
 
     result = np.zeros((settings.SMALL_DATASET_SIZE, 3))
 
-    for smalldataset_id in smalldataset_ids: 
-        if smalldataset_id in settings.INTRACTABLE_IMAGES:
+    for smalldataset_id in smalldataset_ids:
+        intractable_images = settings.get_intractable_images(PATH_TO_DATA, crop_metric, model_name, image_scale) 
+        if smalldataset_id in intractable_images:
             continue 
        
         # get minimal image map 
-        minimal_map_filename = PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, smalldataset_id)
-        minimal_map_filename = minimal_map_filename + '_' + ('small_' if axis == 'scale' else '') + ('l' if strictness == 'loose' else '') + 'map'
-        minmap = np.load(minimal_map_filename + '.npy')
+        # minimal_map_filename = PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, smalldataset_id)
+        # minimal_map_filename = minimal_map_filename + '_' + ('small_' if axis == 'scale' else '') + ('l' if strictness == 'loose' else '') + 'map'
+        minimal_map_filename = PATH_TO_DATA + settings.min_img_map_filename(crop_metric, model_name, image_scale, strictness, axis, smalldataset_id)
+        minmap = np.load(minimal_map_filename) 
 
         # get total min img counts - total general, total positive, total negative
         totals = total_min_imgs(minmap)
@@ -218,13 +222,15 @@ def num_min_imgs_vs_bbx_coverage(crop_metric, model_name, image_scale, strictnes
     
     id_to_measurements = {} 
     for smalldataset_id in smalldataset_ids:
-        if smalldataset_id in settings.INTRACTABLE_IMAGES:
+        intractable_images = settings.get_intractable_images(PATH_TO_DATA, crop_metric, model_name, image_scale) 
+        if smalldataset_id in intractable_images:
             continue 
         
         # get minimal image map 
-        minimal_map_filename = PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, smalldataset_id)
-        minimal_map_filename = minimal_map_filename + '_' + ('small_' if axis == 'scale' else '') + ('l' if strictness == 'loose' else '') + 'map'
-        minmap = np.load(minimal_map_filename + '.npy')
+        # minimal_map_filename = PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, smalldataset_id)
+        # minimal_map_filename = minimal_map_filename + '_' + ('small_' if axis == 'scale' else '') + ('l' if strictness == 'loose' else '') + 'map'
+        minimal_map_filename = PATH_TO_DATA + settings.min_img_map_filename(crop_metric, model_name, image_scale, strictness, axis, smalldataset_id)
+        minmap = np.load(minimal_map_filename)
         
         # get total min img counts - total general, total positive, total negative
         totals = [int(total) for total in total_min_imgs(minmap)]
@@ -241,7 +247,6 @@ def num_min_imgs_vs_bbx_coverage(crop_metric, model_name, image_scale, strictnes
     folder = PATH_TO_OUTPUT_DATA + settings.make_stats_foldername(crop_metric, model_name, image_scale, strictness, axis)
     if not os.path.exists(folder):
         os.makedirs(folder)
-    np.save(folder + 'percent-min-img-in-bbx.npy', result)
     with open(folder + 'id-to-measurements.json', 'w') as writefile:
         json.dump(id_to_measurements, writefile)
 
