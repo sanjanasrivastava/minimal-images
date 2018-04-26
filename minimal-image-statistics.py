@@ -239,7 +239,9 @@ def num_min_imgs_vs_bbx_coverage(crop_metric, model_name, image_scale, loose, ax
     return id_to_measurements
 
 
-
+if __name__ == '__main__':
+    percent_min_img_in_bbx(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), bool(sys.argv[4]), sys.argv[5])
+    num_min_imgs_vs_bbx_coverage(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), bool(sys.argv[4]), sys.argv[5])
     
         
  
