@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1403df6a-f044-4c1c-bcc0-1981a0ca2753" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools/make_stats.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/minimal-image-statistics.py" afterPath="$PROJECT_DIR$/minimal-image-statistics.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings.py" afterPath="$PROJECT_DIR$/settings.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/array_experiments_10804.sh" afterPath="$PROJECT_DIR$/tools/array_experiments_10804.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/min-img-stat-vis.py" afterPath="$PROJECT_DIR$/min-img-stat-vis.py" />
     </list>
     <ignored path="minimal-images.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,23 +23,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="minimal-image-statistics.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/minimal-image-statistics.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8794788">
-              <caret line="36" column="11" selection-start-line="36" selection-start-column="11" selection-end-line="36" selection-end-column="11" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="min-img-stat-vis.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="min-img-stat-vis.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/min-img-stat-vis.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.1465798">
+              <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -68,13 +52,13 @@
         <option value="$PROJECT_DIR$/image_alterations.py" />
         <option value="$PROJECT_DIR$/alexnet.py" />
         <option value="$PROJECT_DIR$/tools/array_experiments.sh" />
-        <option value="$PROJECT_DIR$/min-img-stat-vis.py" />
         <option value="$PROJECT_DIR$/minimal-image-statistics.py" />
+        <option value="$PROJECT_DIR$/min-img-stat-vis.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="537" />
+    <option name="x" value="105" />
     <option name="y" value="23" />
     <option name="width" value="1326" />
     <option name="height" value="1027" />
@@ -133,7 +117,7 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
-  <component name="RunManager" selected="Python.minimal-image-statistics">
+  <component name="RunManager" selected="Python.min-img-stat-vis">
     <configuration default="false" name="minimal-image-statistics" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -181,6 +165,23 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="minimal-images" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/alexnet.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="min-img-stat-vis" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="minimal-images" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/min-img-stat-vis.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -318,16 +319,18 @@
       <option name="USE_KEYWORD" value="false" />
       <method />
     </configuration>
-    <list size="3">
+    <list size="4">
       <item index="0" class="java.lang.String" itemvalue="Python.minimal-image-statistics" />
       <item index="1" class="java.lang.String" itemvalue="Python.image_alterations" />
       <item index="2" class="java.lang.String" itemvalue="Python.alexnet" />
+      <item index="3" class="java.lang.String" itemvalue="Python.min-img-stat-vis" />
     </list>
     <recent_temporary>
-      <list size="3">
-        <item index="0" class="java.lang.String" itemvalue="Python.minimal-image-statistics" />
-        <item index="1" class="java.lang.String" itemvalue="Python.alexnet" />
-        <item index="2" class="java.lang.String" itemvalue="Python.image_alterations" />
+      <list size="4">
+        <item index="0" class="java.lang.String" itemvalue="Python.min-img-stat-vis" />
+        <item index="1" class="java.lang.String" itemvalue="Python.minimal-image-statistics" />
+        <item index="2" class="java.lang.String" itemvalue="Python.alexnet" />
+        <item index="3" class="java.lang.String" itemvalue="Python.image_alterations" />
       </list>
     </recent_temporary>
   </component>
@@ -345,7 +348,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="537" y="23" width="1326" height="1027" extended-state="0" />
+    <frame x="105" y="23" width="1326" height="1027" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24962293" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -622,21 +625,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/min-img-stat-vis.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/minimal-image-statistics.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8794788">
-          <caret line="36" column="11" selection-start-line="36" selection-start-column="11" selection-end-line="36" selection-end-column="11" />
+        <state vertical-scroll-proportion="0.46416938">
+          <caret line="19" column="7" selection-start-line="19" selection-start-column="7" selection-end-line="19" selection-end-column="7" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/min-img-stat-vis.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.1465798">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
