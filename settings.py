@@ -125,6 +125,7 @@ def convert_id_small_to_imagenetval(image_id):
 
 
 SMALL_DATASET_SIZE = 500
+INTRACTABLE_IMAGES = set([223, 104, 164, 158, 139])
 
 def get_bbx_dims(all_bbxs, smalldataset_id):
     imagenetval_id = convert_id_small_to_imagenetval(smalldataset_id)

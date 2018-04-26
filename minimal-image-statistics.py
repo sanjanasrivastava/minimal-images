@@ -11,7 +11,7 @@ import settings
 
 
 PATH_TO_DATA = "/om/user/xboix/share/minimal-images/"
-PATH_TO_DATA = '../min-img-data/'
+# PATH_TO_DATA = '../min-img-data/'	# uncomment only when working on my laptop
 #""./backup/"
 
 
@@ -121,10 +121,7 @@ def minimal_image_distribution(num_imgs, crop_metric, model_name, image_scale, l
         crop_type = 'proportional' if crop_metric <= 1. else 'constant'
         crop_size = c_m_p.get_crop_size(height, crop_metric, crop_type) if height <= width else c_m_p.get_crop_size(width, crop_metric, crop_type)
         for x1, y1, x2, y2 in crop_dims:
-            print crop_size
-            print x1, y1, x2, y2
             minmap_sub = minimal_map[y1:y2 - crop_size + 1, x1:x2 - crop_size + 1]
-            print minmap_sub.shape
             minmap_sub = imresize(minmap_sub, (resize_dim, resize_dim))
             minimal_image_aggregation += minmap_sub
 
@@ -142,9 +139,9 @@ def minmap_bbx_mask(minmap_shape, bbx_dims, crop_size):
     returns mask of minmap shape with 1s in bbx pixels, 0s elsewhere
     '''
 
-    mask = np.zeros(minmap.shape)
+    mask = np.zeros(minmap_shape)
     for x1, y1, x2, y2 in bbx_dims:
-        bbx_region_mask[y1:y2 - crop_size + 1, x1:x2 - crop_size + 1] = 1.
+        mask[y1:y2 - crop_size + 1, x1:x2 - crop_size + 1] = 1.
     return mask
 
 
@@ -154,7 +151,7 @@ def total_min_imgs(minmap):
     returns size (3,) array with num general min imgs, num pos min imgs, num neg min imgs
     '''
    
-    return np.array([np.sum(minmap != 0), np.sum(minmap > 0.), np.sum(minmap < 0.)]
+    return np.array([np.sum(minmap != 0), np.sum(minmap > 0.), np.sum(minmap < 0.)])
 
 
 def percent_min_img_in_bbx(crop_metric, model_name, image_scale, loose, axis):
@@ -173,7 +170,9 @@ def percent_min_img_in_bbx(crop_metric, model_name, image_scale, loose, axis):
     result = np.zeros((settings.SMALL_DATASET_SIZE, 3))
 
     for smalldataset_id in smalldataset_ids: 
-        
+        if smalldataset_id in settings.INTRACTABLE_IMAGES:
+            continue 
+       
         # get minimal image map 
         minimal_map_filename = PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, smalldataset_id)
         minimal_map_filename = minimal_map_filename + '_' + ('small_' if axis == 'scale' else '') + ('l' if loose else '') + 'map'
@@ -206,7 +205,7 @@ def num_min_imgs_vs_bbx_coverage(crop_metric, model_name, image_scale, loose, ax
     '''
     defaults to calculating for all images     
 
-    returns a dict mapping smalldataset_id to (proportion of image that is bbx, array([num pos min imgs, num neg min imgs])) 
+    returns a dict mapping smalldataset_id to (proportion of image that is bbx, [num pos min imgs, num neg min imgs]) 
     '''        
     
     smalldataset_ids = range(settings.SMALL_DATASET_SIZE)
@@ -215,6 +214,8 @@ def num_min_imgs_vs_bbx_coverage(crop_metric, model_name, image_scale, loose, ax
     
     id_to_measurements = {} 
     for smalldataset_id in smalldataset_ids:
+        if smalldataset_id in settings.INTRACTABLE_IMAGES:
+            continue 
         
         # get minimal image map 
         minimal_map_filename = PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, smalldataset_id)
@@ -222,7 +223,7 @@ def num_min_imgs_vs_bbx_coverage(crop_metric, model_name, image_scale, loose, ax
         minmap = np.load(minimal_map_filename + '.npy')
         
         # get total min img counts - total general, total positive, total negative
-        totals = total_min_imgs(minmap)
+        totals = [int(total) for total in total_min_imgs(minmap)]
       
         # get bbx mask, apply, and get proportion of image that is bbx
         bbx_dims = settings.get_bbx_dims(all_bbxs, smalldataset_id)

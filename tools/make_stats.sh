@@ -14,5 +14,5 @@ LOOSE=True
 AXIS=shift
 
 cd /om/user/sanjanas/minimal-images
-singularity exec -B /om:/om -B /cbcl:/cbcl --nv /home/sanjanas/belledon-tensorflow-keras-master-latest.simg \
+singularity exec -B /om:/om -B /cbcl:/cbcl --nv /om/user/sanjanas/belledon-tensorflow-keras-master-latest.simg \
 python /om/user/sanjanas/minimal-images/minimal-image-statistics.py $SCALE $NETWORK 1 $LOOSE $AXIS 
