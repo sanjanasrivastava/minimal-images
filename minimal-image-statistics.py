@@ -213,7 +213,7 @@ def num_min_imgs_vs_bbx_coverage(crop_metric, model_name, image_scale, strictnes
     '''
     defaults to calculating for all images     
 
-    returns a dict mapping smalldataset_id to (proportion of image that is bbx, [num pos min imgs, num neg min imgs]) 
+    returns a dict mapping smalldataset_id to (proportion of image that is bbx, [num min imgs, num pos min imgs, num neg min imgs])
     '''        
     
     smalldataset_ids = range(settings.SMALL_DATASET_SIZE)
