@@ -134,6 +134,11 @@ def get_bbx_dims(all_bbxs, smalldataset_id):
     return crop_dims
 
 
+def make_stats_foldername(crop_metric, model_name, image_scale, strictness, axis):
+    return os.path.join(crop_metric, model_name, image_scale, strictness, axis, '')
+
+
+
 
 
 

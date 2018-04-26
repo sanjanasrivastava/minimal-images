@@ -13,6 +13,7 @@ import settings
 PATH_TO_DATA = "/om/user/xboix/share/minimal-images/"
 # PATH_TO_DATA = '../min-img-data/'	# uncomment only when working on my laptop
 #""./backup/"
+PATH_TO_OUTPUT_DATA = '../min-img-data/'
 
 
 def create_location_minimal_image_maps(image_id, crop_metric, model_name, image_scale, loose, k=1):
@@ -92,7 +93,7 @@ def get_crop_size(smalldataset_id, crop_metric):
     return crop_size
 
 
-def minimal_image_distribution(num_imgs, crop_metric, model_name, image_scale, loose):
+def minimal_image_distribution(num_imgs, crop_metric, model_name, image_scale, strictness):
 
     resize_dim = 150
     minimal_image_aggregation = np.zeros((resize_dim, resize_dim))
@@ -109,7 +110,7 @@ def minimal_image_distribution(num_imgs, crop_metric, model_name, image_scale, l
             crop_dims = [bbx[0] for bbx in all_bbxs[image_tag]]     # get all x1, y1, x2, y2 crops
 
         minimal_map_f = PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, smalldataset_id)
-        minimal_map_f = minimal_map_f + '_' + ('l' if loose else '') + 'map'
+        minimal_map_f = minimal_map_f + '_' + ('l' if strictness == 'loose' else '') + 'map'
         minimal_map = np.load(minimal_map_f + '.npy')
 
         image_filename = PATH_TO_DATA + settings.folder_name('img') + image_tag + '.JPEG'
@@ -154,10 +155,10 @@ def total_min_imgs(minmap):
     return np.array([np.sum(minmap != 0), np.sum(minmap > 0.), np.sum(minmap < 0.)])
 
 
-def percent_min_img_in_bbx(crop_metric, model_name, image_scale, loose, axis):
+def percent_min_img_in_bbx(crop_metric, model_name, image_scale, strictness, axis):
     '''
     defaults to calculating for all images 
-    loose: boolean indicating loose if True else strict
+    strictness: 'strict' or 'loose' 
     axis: 'shift' or 'scale'
 
     returns a matrix shape (500, 3), where row i is a three-array: the percentage of min imgs in bbx for image i, the percentage of positive min imgs in bbx for image i, the percentage of negative min imgs in bbx for image i 
@@ -175,7 +176,7 @@ def percent_min_img_in_bbx(crop_metric, model_name, image_scale, loose, axis):
        
         # get minimal image map 
         minimal_map_filename = PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, smalldataset_id)
-        minimal_map_filename = minimal_map_filename + '_' + ('small_' if axis == 'scale' else '') + ('l' if loose else '') + 'map'
+        minimal_map_filename = minimal_map_filename + '_' + ('small_' if axis == 'scale' else '') + ('l' if strictness == 'loose' else '') + 'map'
         minmap = np.load(minimal_map_filename + '.npy')
 
         # get total min img counts - total general, total positive, total negative
@@ -195,12 +196,15 @@ def percent_min_img_in_bbx(crop_metric, model_name, image_scale, loose, axis):
 
         result[smalldataset_id] = percentages
 
-    np.save('percent-min-img-in-bbx.npy', result)
+    folder = PATH_TO_OUTPUT_DATA + settings.make_stats_foldername(crop_metric, model_name, image_scale, strictness, axis)
+    if not os.path.exists(folder):
+        os.makedirs(folder)
+    np.save(folder + 'percent-min-img-in-bbx.npy', result)
 
     return result
 
     
-def num_min_imgs_vs_bbx_coverage(crop_metric, model_name, image_scale, loose, axis):
+def num_min_imgs_vs_bbx_coverage(crop_metric, model_name, image_scale, strictness, axis):
     
     '''
     defaults to calculating for all images     
@@ -219,7 +223,7 @@ def num_min_imgs_vs_bbx_coverage(crop_metric, model_name, image_scale, loose, ax
         
         # get minimal image map 
         minimal_map_filename = PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, smalldataset_id)
-        minimal_map_filename = minimal_map_filename + '_' + ('small_' if axis == 'scale' else '') + ('l' if loose else '') + 'map'
+        minimal_map_filename = minimal_map_filename + '_' + ('small_' if axis == 'scale' else '') + ('l' if strictness == 'loose' else '') + 'map'
         minmap = np.load(minimal_map_filename + '.npy')
         
         # get total min img counts - total general, total positive, total negative
@@ -234,15 +238,19 @@ def num_min_imgs_vs_bbx_coverage(crop_metric, model_name, image_scale, loose, ax
         # map smalldataset_id to measurements
         id_to_measurements[smalldataset_id] = (proportion, totals)
 
-    with open('id-to-measurements.json', 'w') as writefile:
+    folder = PATH_TO_OUTPUT_DATA + settings.make_stats_foldername(crop_metric, model_name, image_scale, strictness, axis)
+    if not os.path.exists(folder):
+        os.makedirs(folder)
+    np.save(folder + 'percent-min-img-in-bbx.npy', result)
+    with open(folder + 'id-to-measurements.json', 'w') as writefile:
         json.dump(id_to_measurements, writefile)
 
     return id_to_measurements
 
 
 if __name__ == '__main__':
-    percent_min_img_in_bbx(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), bool(sys.argv[4]), sys.argv[5])
-    num_min_imgs_vs_bbx_coverage(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), bool(sys.argv[4]), sys.argv[5])
+    percent_min_img_in_bbx(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
+    num_min_imgs_vs_bbx_coverage(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
 
 
 # results = - np.ones([ 4, 2, 5, 500, 2])
