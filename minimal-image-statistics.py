@@ -1,10 +1,9 @@
 import json
 import numpy as np
 import os.path
-from PIL import Image, ImageDraw
+from PIL import Image
 import random
 from scipy.misc import imresize
-# from skimage.transform import resize
 import sys
 
 import confidence_maps_parallel as c_m_p
@@ -12,7 +11,7 @@ import settings
 
 
 PATH_TO_DATA = "/om/user/xboix/share/minimal-images/"
-PATH_TO_DATA = '../min-img-data/'
+# PATH_TO_DATA = '../min-img-data/'	# uncomment only when working on my laptop
 #""./backup/"
 
 
@@ -82,6 +81,17 @@ def create_location_minimal_image_maps(image_id, crop_metric, model_name, image_
 BBX_FILE = 'ILSVRC2012_val_bbx_dimensions.json'
 
 
+def get_crop_size(smalldataset_id, crop_metric):
+    imagenetval_id = settings.convert_id_small_to_imagenetval(smalldataset_id)
+    image_tag = settings.get_ind_name(imagenetval_id)
+    image_filename = PATH_TO_DATA + settings.folder_name('img') + image_tag + '.JPEG'
+    im = Image.open(image_filename)
+    width, height = im.size
+    crop_type = 'proportional' if crop_metric <= 1. else 'constant'
+    crop_size = c_m_p.get_crop_size(height, crop_metric, crop_type) if height <= width else c_m_p.get_crop_size(width, crop_metric, crop_type)
+    return crop_size
+
+
 def minimal_image_distribution(num_imgs, crop_metric, model_name, image_scale, loose):
 
     resize_dim = 150
@@ -111,14 +121,8 @@ def minimal_image_distribution(num_imgs, crop_metric, model_name, image_scale, l
         crop_type = 'proportional' if crop_metric <= 1. else 'constant'
         crop_size = c_m_p.get_crop_size(height, crop_metric, crop_type) if height <= width else c_m_p.get_crop_size(width, crop_metric, crop_type)
         for x1, y1, x2, y2 in crop_dims:
-            draw_bbx(im, (x1, y1, x2, y2))
-            half_offset = int(crop_size / 2)
-            r, c = minimal_map.shape
-            vis_minmap(minimal_map)
-            minmap_sub = minimal_map[max(y1 - half_offset, 0):min(y2 - half_offset, r), max(x1 - half_offset, 0):min(x2 - half_offset, c)]
-            vis_minmap(minmap_sub)
-            minmap_sub = imresize(minmap_sub, (resize_dim, resize_dim)).astype(np.float64)
-            vis_minmap(minmap_sub)
+            minmap_sub = minimal_map[y1:y2 - crop_size + 1, x1:x2 - crop_size + 1]
+            minmap_sub = imresize(minmap_sub, (resize_dim, resize_dim))
             minimal_image_aggregation += minmap_sub
 
     vis = (minimal_image_aggregation - np.min(minimal_image_aggregation))
@@ -129,20 +133,116 @@ def minimal_image_distribution(num_imgs, crop_metric, model_name, image_scale, l
     return minimal_image_aggregation
 
 
-def vis_minmap(minmap):
-    vis = minmap - np.min(minmap)
-    vis /= np.max(vis)
-    vis *= 255.
-    Image.fromarray(vis).show()
+def minmap_bbx_mask(minmap_shape, bbx_dims, crop_size):
+
+    '''
+    returns mask of minmap shape with 1s in bbx pixels, 0s elsewhere
+    '''
+
+    mask = np.zeros(minmap_shape)
+    for x1, y1, x2, y2 in bbx_dims:
+        mask[y1:y2 - crop_size + 1, x1:x2 - crop_size + 1] = 1.
+    return mask
 
 
-def draw_bbx(im, dims):
-    draw = ImageDraw.Draw(im)
-    draw.rectangle([(dims[0], dims[1]), (dims[2], dims[3])], outline="rgb(255,0,0)")
-    im.show()
+def total_min_imgs(minmap):
+  
+    '''
+    returns size (3,) array with num general min imgs, num pos min imgs, num neg min imgs
+    '''
+   
+    return np.array([np.sum(minmap != 0), np.sum(minmap > 0.), np.sum(minmap < 0.)])
 
 
-minimal_image_distribution(2, 0.2, 'resnet', 1.0, True)
+def percent_min_img_in_bbx(crop_metric, model_name, image_scale, loose, axis):
+    '''
+    defaults to calculating for all images 
+    loose: boolean indicating loose if True else strict
+    axis: 'shift' or 'scale'
+
+    returns a matrix shape (500, 3), where row i is a three-array: the percentage of min imgs in bbx for image i, the percentage of positive min imgs in bbx for image i, the percentage of negative min imgs in bbx for image i 
+    '''
+   
+    smalldataset_ids = range(settings.SMALL_DATASET_SIZE)
+    with open(BBX_FILE, 'r') as bbx_file:
+        all_bbxs = json.load(bbx_file)
+
+    result = np.zeros((settings.SMALL_DATASET_SIZE, 3))
+
+    for smalldataset_id in smalldataset_ids: 
+        if smalldataset_id in settings.INTRACTABLE_IMAGES:
+            continue 
+       
+        # get minimal image map 
+        minimal_map_filename = PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, smalldataset_id)
+        minimal_map_filename = minimal_map_filename + '_' + ('small_' if axis == 'scale' else '') + ('l' if loose else '') + 'map'
+        minmap = np.load(minimal_map_filename + '.npy')
+
+        # get total min img counts - total general, total positive, total negative
+        totals = total_min_imgs(minmap)
+
+        # construct mask of minmap size with 1s in bbx regions, 0s otherwise, mask minmap so that minimal images outside the bbx region look like non-minimal images
+        bbx_dims = settings.get_bbx_dims(all_bbxs, smalldataset_id)
+        crop_size = get_crop_size(smalldataset_id, crop_metric) 
+        bbx_region_mask = minmap_bbx_mask(minmap.shape, bbx_dims, crop_size)
+        bbx_minmap = minmap * bbx_region_mask
+        
+        # get min img counts within bbx regions - total general, total positive, total negative
+        bbx_minimgs = np.array([np.sum(bbx_minmap != 0.), np.sum(bbx_minmap > 0.), np.sum(bbx_minmap < 0.)])
+        
+        # get percentages
+        percentages = bbx_minimgs / totals 
+
+        result[smalldataset_id] = percentages
+
+    np.save('percent-min-img-in-bbx.npy', result)
+
+    return result
+
+    
+def num_min_imgs_vs_bbx_coverage(crop_metric, model_name, image_scale, loose, axis):
+    
+    '''
+    defaults to calculating for all images     
+
+    returns a dict mapping smalldataset_id to (proportion of image that is bbx, [num pos min imgs, num neg min imgs]) 
+    '''        
+    
+    smalldataset_ids = range(settings.SMALL_DATASET_SIZE)
+    with open(BBX_FILE, 'r') as bbx_file:
+        all_bbxs = json.load(bbx_file)
+    
+    id_to_measurements = {} 
+    for smalldataset_id in smalldataset_ids:
+        if smalldataset_id in settings.INTRACTABLE_IMAGES:
+            continue 
+        
+        # get minimal image map 
+        minimal_map_filename = PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, smalldataset_id)
+        minimal_map_filename = minimal_map_filename + '_' + ('small_' if axis == 'scale' else '') + ('l' if loose else '') + 'map'
+        minmap = np.load(minimal_map_filename + '.npy')
+        
+        # get total min img counts - total general, total positive, total negative
+        totals = [int(total) for total in total_min_imgs(minmap)]
+      
+        # get bbx mask, apply, and get proportion of image that is bbx
+        bbx_dims = settings.get_bbx_dims(all_bbxs, smalldataset_id)
+        crop_size = get_crop_size(smalldataset_id, crop_metric)
+        bbx_region_mask = minmap_bbx_mask(minmap.shape, bbx_dims, crop_size)
+        proportion = np.sum(bbx_region_mask) / float(minmap.size)
+
+        # map smalldataset_id to measurements
+        id_to_measurements[smalldataset_id] = (proportion, totals)
+
+    with open('id-to-measurements.json', 'w') as writefile:
+        json.dump(id_to_measurements, writefile)
+
+    return id_to_measurements
+
+
+if __name__ == '__main__':
+    percent_min_img_in_bbx(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), bool(sys.argv[4]), sys.argv[5])
+    num_min_imgs_vs_bbx_coverage(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), bool(sys.argv[4]), sys.argv[5])
 
 
 # results = - np.ones([ 4, 2, 5, 500, 2])
@@ -168,7 +268,6 @@ minimal_image_distribution(2, 0.2, 'resnet', 1.0, True)
 #                 results[idx_metric][idx_loose][idx_k][image_id][1] = b
 #
 #         #np.save('tmp_results_' + model_name +'.npy', results)
-
 
 
 

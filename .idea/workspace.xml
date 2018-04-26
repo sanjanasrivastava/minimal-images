@@ -2,13 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1403df6a-f044-4c1c-bcc0-1981a0ca2753" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/min-img-stat-vis.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/high-act-sample" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/low-act-sample" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/minimal-images.iml" afterPath="$PROJECT_DIR$/.idea/minimal-images.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools/make_stats.sh" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/minimal-image-statistics.py" afterPath="$PROJECT_DIR$/minimal-image-statistics.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings.py" afterPath="$PROJECT_DIR$/settings.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/array_experiments_10804.sh" afterPath="$PROJECT_DIR$/tools/array_experiments_10804.sh" />
     </list>
     <ignored path="minimal-images.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -29,10 +27,22 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="min-img-stat-vis.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="minimal-image-statistics.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/minimal-image-statistics.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.8794788">
+              <caret line="36" column="11" selection-start-line="36" selection-start-column="11" selection-end-line="36" selection-end-column="11" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="min-img-stat-vis.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/min-img-stat-vis.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.024429968">
+            <state vertical-scroll-proportion="0.0">
               <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
               <folding />
             </state>
@@ -57,14 +67,14 @@
         <option value="$PROJECT_DIR$/settings.py" />
         <option value="$PROJECT_DIR$/image_alterations.py" />
         <option value="$PROJECT_DIR$/alexnet.py" />
-        <option value="$PROJECT_DIR$/minimal-image-statistics.py" />
         <option value="$PROJECT_DIR$/tools/array_experiments.sh" />
         <option value="$PROJECT_DIR$/min-img-stat-vis.py" />
+        <option value="$PROJECT_DIR$/minimal-image-statistics.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="251" />
+    <option name="x" value="537" />
     <option name="y" value="23" />
     <option name="width" value="1326" />
     <option name="height" value="1027" />
@@ -335,7 +345,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="251" y="23" width="1326" height="1027" extended-state="0" />
+    <frame x="537" y="23" width="1326" height="1027" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24962293" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -380,8 +390,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="101" column="76" selection-start-line="101" selection-start-column="76" selection-end-line="101" selection-end-column="76" />
           <folding>
-            <element signature="e#0#11#0" expanded="false" />
-            <element signature="e#444#4058#0" expanded="false" />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -431,8 +440,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="139" column="27" selection-start-line="139" selection-start-column="27" selection-end-line="139" selection-end-column="27" />
           <folding>
-            <element signature="e#0#11#0" expanded="false" />
-            <element signature="e#444#4058#0" expanded="false" />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -473,8 +481,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#11#0" expanded="false" />
-            <element signature="e#444#4058#0" expanded="false" />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -499,8 +506,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#11#0" expanded="false" />
-            <element signature="e#444#4058#0" expanded="false" />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -584,17 +590,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/minimal-image-statistics.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.016129032">
-          <caret line="101" column="76" selection-start-line="101" selection-start-column="76" selection-end-line="101" selection-end-column="76" />
-          <folding>
-            <element signature="e#0#11#0" expanded="false" />
-            <element signature="e#444#4058#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/image_alterations.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.016129032">
@@ -629,9 +624,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/min-img-stat-vis.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.024429968">
+        <state vertical-scroll-proportion="0.0">
           <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/minimal-image-statistics.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8794788">
+          <caret line="36" column="11" selection-start-line="36" selection-start-column="11" selection-end-line="36" selection-end-column="11" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
