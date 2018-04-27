@@ -276,6 +276,7 @@ def get_all_correctness(model_name):
     imagenetval_tags = settings.convert_smalldataset_ids_to_imagenetval_tags_multiple(smalldataset_ids)                     # get corresponding imagenet val ids
 
     images = [Image.open(PATH_TO_DATA + settings.folder_name('img') + img_tag + '.JPEG') for img_tag in imagenetval_tags]   # get image objects
+    images = [im.convert('RGB') for im in images if im.mode != 'RGB']                                                       # ensure that all are 3-channel
     bbxs = [images[i].crop(all_bbxs[imagenetval_tags[i]][0][0]) for i in inds]                                              # just doing the first bbx...
     images = [imresize(im, (model.im_size, model.im_size)) for im in images]                                                # resize images and bbxs for classification
     bbxs = [imresize(im, (model.im_size, model.im_size)) for im in bbxs]
