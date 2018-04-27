@@ -291,7 +291,7 @@ def get_all_correctness(model_name):
         while counter < settings.SMALL_DATASET_SIZE:
             batch = images[counter:min(counter + BATCH_SIZE, settings.SMALL_DATASET_SIZE)]      # get the next BATCH_SIZE images (or until the end)
             counter += BATCH_SIZE                                                               # next step will start from +BATCH_SIZE
-            prob = sess.run(network.prob, feed_dict={network.imgs: batch})
+            prob = sess.run(network.probs, feed_dict={network.imgs: batch})
             print(prob)
 
 
