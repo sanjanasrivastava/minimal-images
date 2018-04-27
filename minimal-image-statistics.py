@@ -319,8 +319,8 @@ def get_all_correctness(model_name):
 if __name__ == '__main__':
     # percent_min_img_in_bbx(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
     # num_min_imgs_vs_bbx_coverage(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
-    # get_all_correctness('vgg16')
-    get_all_correctness('inception')
+    get_all_correctness('vgg16')
+    # get_all_correctness('inception')
 
 
 
