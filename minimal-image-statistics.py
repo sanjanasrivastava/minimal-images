@@ -289,14 +289,17 @@ def get_all_correctness(model_name):
 
         # classify all images
         counter = 0
+        all_img_results = []
         while counter < settings.SMALL_DATASET_SIZE:
             batch = images[counter:min(counter + BATCH_SIZE, settings.SMALL_DATASET_SIZE)]      # get the next BATCH_SIZE images (or until the end)
             counter += BATCH_SIZE                                                               # next step will start from +BATCH_SIZE
             if counter > settings.SMALL_DATASET_SIZE:                                           # if batch is smaller than BATCH_SIZE...
                 num_stubs = BATCH_SIZE - len(batch)
                 batch.extend([batch[-1] for __ in range(num_stubs)])                            # extend the last crop into num_stubs spots
-            prob = sess.run(network.probs, feed_dict={network.imgs: batch})[0]
+            prob = sess.run(network.probs, feed_dict={network.imgs: batch})
             print(prob.shape)
+
+
 
 
 
