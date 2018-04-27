@@ -124,6 +124,17 @@ def convert_id_small_to_imagenetval(image_id):
     return int(imagenetval_id)
 
 
+def convert_smalldataset_ids_to_imagenetval_tags_multiple(smalldataset_ids):
+
+    with open('small-dataset-to-imagenet.txt', 'r') as small_file:
+        lines = list(small_file.readlines())
+
+    suffix = '.JPEG'
+    lines = [line.split()[0][:-len(suffix)] for line in lines]                     # get a list of the image tags
+    imagenetval_tags = [lines[i] for i in smalldataset_ids]
+    return imagenetval_tags
+
+
 SMALL_DATASET_SIZE = 500
 INTRACTABLE_IMAGES = set([223, 104, 164, 158, 139])
 

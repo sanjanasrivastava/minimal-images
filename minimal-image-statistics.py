@@ -5,6 +5,7 @@ from PIL import Image
 import random
 from scipy.misc import imresize
 import sys
+import tensorflow as tf
 
 import confidence_maps_parallel as c_m_p
 import settings
@@ -253,9 +254,59 @@ def num_min_imgs_vs_bbx_coverage(crop_metric, model_name, image_scale, strictnes
     return id_to_measurements
 
 
+BATCH_SIZE = 160
+
+def get_all_correctness(model_name):
+
+    '''
+    Saves a json file containing a dict mapping small dataset ID numbers to (bool indicating full
+    image correctly classified, bbx correctly classified)
+    '''
+
+    # open requisite parameters
+    with open('caffe_ilsvrc12/' + settings.DATASET + '-labels.json', 'r') as labels_file:
+        true_labels = json.load(labels_file)
+    with open(BBX_FILE, 'r') as bbx_file:
+        all_bbxs = json.load(bbx_file)
+    model = settings.MODELS[model_name]
+
+    all_correctness = {}
+    inds = range(settings.SMALL_DATASET_SIZE)
+    smalldataset_ids = inds                                                                                                 # get all smalldataset_ids
+    imagenetval_tags = settings.convert_smalldataset_ids_to_imagenetval_tags_multiple(smalldataset_ids)                     # get corresponding imagenet val ids
+
+    images = [Image.open(PATH_TO_DATA + settings.folder_name('img') + img_tag + '.JPEG') for img_tag in imagenetval_tags]   # get image objects
+    bbxs = [images[i].crop(all_bbxs[imagenetval_tags[i]][0][0]) for i in inds]                                              # just doing the first bbx...
+    images = [imresize(im, (model.im_size, model.im_size)) for im in images]                                                # resize images and bbxs for classification
+    bbxs = [imresize(im, (model.im_size, model.im_size)) for im in bbxs]
+
+    imagenet_to_small = {imagenetval_tags[i]: smalldataset_ids[i] for i in range(len(smalldataset_ids))}
+
+    with tf.Session()  as sess:
+        imgs = tf.placeholder(tf.float32, [BATCH_SIZE, model.im_size, model.im_size, 3])
+        network = model(imgs, sess, reuse=None)                 # it's only ever the first use since we're only using one GPU
+
+        # classify all images
+        counter = 0
+        while counter < settings.SMALL_DATASET_SIZE:
+            batch = images[counter:min(counter + BATCH_SIZE, settings.SMALL_DATASET_SIZE)]      # get the next BATCH_SIZE images (or until the end)
+            counter += BATCH_SIZE                                                               # next step will start from +BATCH_SIZE
+            prob = sess.run(model.probs, feed_dict={model.imgs: batch})
+            print(prob)
+
+
+
+
+
+    # with open('small-dataset-classification-correctness.json', 'w') as writefile:
+
+
+
 if __name__ == '__main__':
-    percent_min_img_in_bbx(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
-    num_min_imgs_vs_bbx_coverage(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
+    # percent_min_img_in_bbx(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
+    # num_min_imgs_vs_bbx_coverage(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
+    get_all_correctness('resnet')
+
 
 
 # results = - np.ones([ 4, 2, 5, 500, 2])
