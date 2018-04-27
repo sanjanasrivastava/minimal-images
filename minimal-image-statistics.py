@@ -281,6 +281,8 @@ def get_all_correctness(model_name):
     images = [imresize(im, (model.im_size, model.im_size)) for im in images]                                                # resize images and bbxs for classification
     bbxs = [imresize(im, (model.im_size, model.im_size)) for im in bbxs]
 
+    true_classes = [true_labels[img_tag] for img_tag in imagenetval_tags]
+
     imagenet_to_small = {imagenetval_tags[i]: smalldataset_ids[i] for i in range(len(smalldataset_ids))}
 
     with tf.Session()  as sess:
@@ -292,12 +294,21 @@ def get_all_correctness(model_name):
         all_img_results = []
         while counter < settings.SMALL_DATASET_SIZE:
             batch = images[counter:min(counter + BATCH_SIZE, settings.SMALL_DATASET_SIZE)]      # get the next BATCH_SIZE images (or until the end)
-            counter += BATCH_SIZE                                                               # next step will start from +BATCH_SIZE
-            if counter > settings.SMALL_DATASET_SIZE:                                           # if batch is smaller than BATCH_SIZE...
+            new_counter = counter + BATCH_SIZE                                                  # next step will start from +BATCH_SIZE
+            if new_counter > settings.SMALL_DATASET_SIZE:                                       # if batch is smaller than BATCH_SIZE...
                 num_stubs = BATCH_SIZE - len(batch)
                 batch.extend([batch[-1] for __ in range(num_stubs)])                            # extend the last crop into num_stubs spots
             prob = sess.run(network.probs, feed_dict={network.imgs: batch})
-            print(prob.shape)
+            sorted_classes = prob.argsort(axis=1)
+            top5 = sorted_classes[:, -5:]
+            all_img_results.extend([true_classes[counter + i] in top5[i] for i in range(BATCH_SIZE)])       # get if each top5 vector includes the true class of that image
+
+            counter = new_counter
+
+        print('LEN ALL IMG RESULTS:', len(all_img_results))
+        print(all_img_results)
+
+
 
 
 
