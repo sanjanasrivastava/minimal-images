@@ -313,7 +313,7 @@ def get_all_correctness(model_name):
     all_correctness = {smalldataset_ids[i]: [int(image_results[i]), int(bbx_results[i])] for i in inds}       # map smalldataset_ids to image result and bbx result
 
     with open(PATH_TO_OUTPUT_DATA + model_name + '-small-dataset-classification-correctness.json', 'w') as writefile:
-        json.dump(writefile, all_correctness)
+        json.dump(all_correctness, writefile)
 
 
 if __name__ == '__main__':
