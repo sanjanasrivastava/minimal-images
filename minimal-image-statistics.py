@@ -296,7 +296,7 @@ def get_all_correctness(model_name):
             counter = 0
             all_img_results = []
             while counter < settings.SMALL_DATASET_SIZE:
-                batch = images[counter:min(counter + BATCH_SIZE, settings.SMALL_DATASET_SIZE)]      # get the next BATCH_SIZE images (or until the end)
+                batch = data[counter:min(counter + BATCH_SIZE, settings.SMALL_DATASET_SIZE)]      # get the next BATCH_SIZE images (or until the end)
                 new_counter = counter + BATCH_SIZE                                                  # next step will start from +BATCH_SIZE
                 num_stubs = 0
                 if new_counter > settings.SMALL_DATASET_SIZE:                                       # if batch is smaller than BATCH_SIZE...
