@@ -295,8 +295,8 @@ def get_all_correctness(model_name):
             if counter > settings.SMALL_DATASET_SIZE:                                           # if batch is smaller than BATCH_SIZE...
                 num_stubs = BATCH_SIZE - len(batch)
                 batch.extend([batch[-1] for __ in range(num_stubs)])                            # extend the last crop into num_stubs spots
-            prob = sess.run(network.probs, feed_dict={network.imgs: batch})
-            print(prob)
+            prob = sess.run(network.probs, feed_dict={network.imgs: batch})[0]
+            print(prob.shape)
 
 
 
