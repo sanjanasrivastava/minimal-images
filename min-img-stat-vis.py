@@ -35,7 +35,7 @@ all_strict_df = pd.concat(all_strict_data)
 all_df = pd.concat([all_loose_df, all_strict_df])
 
 ax = sns.boxplot(x='minimal image axis', y='percent of minimal images inside bbx', hue='model', data=all_df)
-# plt.show()
+plt.show()
 
 
 # Number of minimal images vs. proportion of image that is bbx; separated by model; crop metric 0.2
@@ -59,20 +59,19 @@ def vis_num_min_imgs_vs_prop_in_bbx_models(crop_metric, image_scale, strictness,
     for model in nums:
         for smalldataset_id in nums[model]:
             entry = nums[model][smalldataset_id]
-            print(entry)
             entry[0] = discrete_sizes(entry[0])
             nums_discretesize[model] = entry
 
-    # loose_nums_discretesize = {model: [discrete_sizes(loose_nums[model][0]), loose_nums[model][1]] for model in loose_nums}
     loose_nums_df = pd.concat([pd.DataFrame(data={'model': model,
                                      'proportion of image in bbx': [nums[model][smalldataset_id][0] for smalldataset_id in nums[model]],
                                      'number of minimal images': [nums[model][smalldataset_id][1][0] for smalldataset_id in nums[model]]})
                      for model in nums])
-    # print(loose_nums_df)
     ax = sns.pointplot(x='proportion of image in bbx', y='number of minimal images', hue='model', data=loose_nums_df, order=['XS', 'S', 'M', 'L', 'XL'])
+    ax.set_title('Number of ' + (strictness + ' ' + axis).title() + ' Minimal Images vs. Relative Size of Bound-in Box')
     plt.show()
 
-vis_num_min_imgs_vs_prop_in_bbx_models(0.2, 1.0, 'loose', 'shift')
+# vis_num_min_imgs_vs_prop_in_bbx_models(0.2, 1.0, 'loose', 'scale')
+# vis_num_min_imgs_vs_prop_in_bbx_models(0.2, 1.0, 'strict', 'scale')
 
 
 
