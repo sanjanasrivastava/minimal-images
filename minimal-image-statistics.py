@@ -311,7 +311,7 @@ def get_all_correctness(model_name):
             results.append(all_img_results)
 
     image_results, bbx_results = results
-    all_correctness = {smalldataset_ids[i]: [int(image_results[i]), int(bbx_results[i])] for i in inds}       # map smalldataset_ids to image result and bbx result
+    all_correctness = {smalldataset_ids[i]: [image_results[i], bbx_results[i]] for i in inds}       # map smalldataset_ids to image result and bbx result
 
     with open(PATH_TO_OUTPUT_DATA + model_name + '-small-dataset-classification-correctness.json', 'w') as writefile:
         json.dump(all_correctness, writefile)
@@ -319,9 +319,10 @@ def get_all_correctness(model_name):
 
 if __name__ == '__main__':
     # percent_min_img_in_bbx(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
-    num_min_imgs_vs_bbx_coverage(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
-    # get_all_correctness('vgg16')
-    # get_all_correctness('inception')
+    # num_min_imgs_vs_bbx_coverage(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
+    get_all_correctness('vgg16')
+    get_all_correctness('inception')
+    get_all_correctness('resnet')
     # pass
 
 

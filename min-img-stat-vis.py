@@ -69,21 +69,26 @@ def vis_num_min_imgs_vs_prop_in_bbx_models(crop_metric, image_scale, strictness,
             nums_discretesize[model] = entry
 
     loose_nums_df = pd.concat([pd.DataFrame(data={'model': model,
-                                     'proportion of image in bbx': [nums[model][smalldataset_id][0] for smalldataset_id in nums[model]],
-                                     'number of minimal images': [nums[model][smalldataset_id][1][0] for smalldataset_id in nums[model]]})
+                                     'object size': [nums[model][smalldataset_id][0] for smalldataset_id in nums[model]],
+                                     'percent of images that are minimal': [nums[model][smalldataset_id][1][0] / float(nums[model][smalldataset_id][1][3]) for smalldataset_id in nums[model]]})
                      for model in nums])
-    ax = sns.pointplot(x='proportion of image in bbx', y='number of minimal images', hue='model', data=loose_nums_df, order=['XS', 'S', 'M', 'L', 'XL'])
+    ax = sns.pointplot(x='object size', y='percent of images that are minimal', hue='model', data=loose_nums_df, order=['XS', 'S', 'M', 'L', 'XL'])
     ax.set_title('Number of ' + (strictness + ' ' + axis).title() + ' Minimal Images vs. Relative Size of Bound-in Box')
     plt.show()
 
 
+def test_error(model_name):
+
+    # by object size
+    id_to_measurements = json.load(open(PATH_TO_STATS + '0.2/resnet/1.0/loose/shift/id-to-measurements.json'))        # just take any - all we want is the proportion in bbx
+    object_proportions = {smalldataset_id: id_to_measurements[smalldataset_id][0] for smalldataset_id in id_to_measurements}      # mapping of smalldataset_id to object proportion
+    object_sizes = {smalldataset_id: discrete_sizes(object_proportions[smalldataset_id]) for smalldataset_id in object_proportions}
 
 
 
-# vis_num_min_imgs_vs_prop_in_bbx_models(0.2, 1.0, 'loose', 'scale')
-# vis_num_min_imgs_vs_prop_in_bbx_models(0.2, 1.0, 'strict', 'scale')
 
 
+if __name__ == '__main__':
 
-
-
+    vis_num_min_imgs_vs_prop_in_bbx_models(0.2, 1.0, 'loose', 'scale')
+    vis_num_min_imgs_vs_prop_in_bbx_models(0.2, 1.0, 'strict', 'scale')
