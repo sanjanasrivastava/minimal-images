@@ -306,8 +306,7 @@ def get_all_correctness(model_name):
 
             counter = new_counter
 
-        print('LEN ALL IMG RESULTS:', len(all_img_results))
-        print(all_img_results)
+        print('ERROR:', float(sum(all_img_results))/len(all_img_results))
 
 
 
