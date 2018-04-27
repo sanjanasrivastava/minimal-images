@@ -214,7 +214,7 @@ def num_min_imgs_vs_bbx_coverage(crop_metric, model_name, image_scale, strictnes
     '''
     defaults to calculating for all images     
 
-    returns a dict mapping smalldataset_id to (proportion of image that is bbx, [num min imgs, num pos min imgs, num neg min imgs])
+    returns a dict mapping smalldataset_id to (proportion of image that is bbx, [num min imgs, num pos min imgs, num neg min imgs, num pixels])
     '''        
     
     smalldataset_ids = range(settings.SMALL_DATASET_SIZE)
@@ -235,6 +235,7 @@ def num_min_imgs_vs_bbx_coverage(crop_metric, model_name, image_scale, strictnes
         
         # get total min img counts - total general, total positive, total negative
         totals = [int(total) for total in total_min_imgs(minmap)]
+        totals.append(minmap.size)
       
         # get bbx mask, apply, and get proportion of image that is bbx
         bbx_dims = settings.get_bbx_dims(all_bbxs, smalldataset_id)
@@ -318,9 +319,10 @@ def get_all_correctness(model_name):
 
 if __name__ == '__main__':
     # percent_min_img_in_bbx(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
-    # num_min_imgs_vs_bbx_coverage(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
-    get_all_correctness('vgg16')
+    num_min_imgs_vs_bbx_coverage(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
+    # get_all_correctness('vgg16')
     # get_all_correctness('inception')
+    # pass
 
 
 
