@@ -270,7 +270,6 @@ def get_all_correctness(model_name):
         all_bbxs = json.load(bbx_file)
     model = settings.MODELS[model_name]
 
-    all_correctness = {}
     inds = range(settings.SMALL_DATASET_SIZE)
     smalldataset_ids = inds                                                                                                 # get all smalldataset_ids
     imagenetval_tags = settings.convert_smalldataset_ids_to_imagenetval_tags_multiple(smalldataset_ids)                     # get corresponding imagenet val ids
@@ -310,20 +309,11 @@ def get_all_correctness(model_name):
                 counter = new_counter
             results.append(all_img_results)
 
+    image_results, bbx_results = results
+    all_correctness = {smalldataset_ids[i]: (image_results[i], bbx_results[i]) for i in inds}       # map smalldataset_ids to image result and bbx result
 
-        print('IMG ACCURACY:', float(sum(results[0]))/len(results[0]))
-        print('BBX ACCURACY:', float(sum(results[1]))/len(results[1]))
-
-
-
-
-
-
-
-
-
-    # with open('small-dataset-classification-correctness.json', 'w') as writefile:
-
+    with open(PATH_TO_OUTPUT_DATA + model_name + '-small-dataset-classification-correctness.json', 'w') as writefile:
+        json.dump(writefile, all_correctness)
 
 
 if __name__ == '__main__':
