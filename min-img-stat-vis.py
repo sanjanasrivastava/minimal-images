@@ -77,12 +77,21 @@ def vis_num_min_imgs_vs_prop_in_bbx_models(crop_metric, image_scale, strictness,
     plt.show()
 
 
-def test_error(model_name):
+def test_error(model_name, crop='img'):
+
+    # if crop == 'bbx', check bbx test performance instead of full image test performance
 
     # by object size
-    id_to_measurements = json.load(open(PATH_TO_STATS + '0.2/resnet/1.0/loose/shift/id-to-measurements.json'))        # just take any - all we want is the proportion in bbx
+    with open(PATH_TO_STATS + '0.2/resnet/1.0/loose/shift/id-to-measurements.json', 'r') as measurementsfile:
+        id_to_measurements = json.load(measurementsfile)        # just take any - all we want is the proportion in bbx
     object_proportions = {smalldataset_id: id_to_measurements[smalldataset_id][0] for smalldataset_id in id_to_measurements}      # mapping of smalldataset_id to object proportion
     object_sizes = {smalldataset_id: discrete_sizes(object_proportions[smalldataset_id]) for smalldataset_id in object_proportions}
+
+    with open(PATH_TO_STATS + model_name + '-small-dataset-classification-correctness.json') as resultsfile:
+        classification_results = json.load(resultsfile)
+
+    results = []
+    if crop == 'img':
 
 
 

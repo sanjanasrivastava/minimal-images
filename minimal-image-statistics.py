@@ -285,7 +285,7 @@ def get_all_correctness(model_name):
 
     imagenet_to_small = {imagenetval_tags[i]: smalldataset_ids[i] for i in range(len(smalldataset_ids))}
 
-    with tf.Session()  as sess:
+    with tf.Session() as sess:
         imgs = tf.placeholder(tf.float32, [BATCH_SIZE, model.im_size, model.im_size, 3])
         network = model(imgs, sess, reuse=None)                 # it's only ever the first use since we're only using one GPU
 
@@ -320,8 +320,8 @@ def get_all_correctness(model_name):
 if __name__ == '__main__':
     # percent_min_img_in_bbx(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
     # num_min_imgs_vs_bbx_coverage(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
-    get_all_correctness('vgg16')
-    get_all_correctness('inception')
+    # get_all_correctness('vgg16')
+    # get_all_correctness('inception')
     get_all_correctness('resnet')
     # pass
 
