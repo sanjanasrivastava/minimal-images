@@ -306,7 +306,8 @@ def get_all_correctness(model_name):
 
             counter = new_counter
 
-        print('ERROR:', float(sum(all_img_results))/len(all_img_results))
+        print('ACCURACY:', float(sum(all_img_results))/len(all_img_results))
+        print('NUM TRUES:', sum(1 if all_img_results[i] else 0 for i in range(500)))
 
 
 
