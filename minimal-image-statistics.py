@@ -341,7 +341,8 @@ def crop_correctness_in_bbx(crop_metric, model_name, image_scale):
 
     all_img_pct_correct_in_bbx = {}
     for smalldataset_id in range(settings.SMALL_DATASET_SIZE):
-        if smalldataset_id in intractable_images:
+        if not os.path.exists(PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale)):
+            print(smalldataset_id)
             continue
         top5map = np.load(PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, smalldataset_id) + '.npy')
         bbx_dims = settings.get_bbx_dims(all_bbxs, smalldataset_id)
