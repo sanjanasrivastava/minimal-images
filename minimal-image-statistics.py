@@ -341,7 +341,7 @@ def crop_correctness_in_bbx(crop_metric, model_name, image_scale):
 
     all_img_pct_correct_in_bbx = {}
     for smalldataset_id in range(settings.SMALL_DATASET_SIZE):
-        top5filename = PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, smalldataset_id + '.npy')
+        top5filename = PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, smalldataset_id) + '.npy'
         if not os.path.exists(top5filename):
             print(smalldataset_id)
             continue
