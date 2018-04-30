@@ -348,15 +348,15 @@ def crop_correctness_in_bbx(crop_metric, model_name, image_scale):
         pct_correct_in_bbx = 0
         crop_size = get_crop_size(smalldataset_id, crop_metric)
         for x1, y1, x2, y2 in bbx_dims:
-            yoffset = y2 - crop_size + 1 if y2 - crop_size + 1 > y1 else y1 + 2     # if the bbx is thinner than the crop size, just take the row/column (+2 because of [) indexing in numpy)
-            xoffset = x2 - crop_size + 1 if x2 - crop_size + 1 > x1 else x1 + 2
-            bbx = top5map[y1:yoffset, x1:xoffset]         # get bbx section of top5 map
+            offset = int(crop_size / 2)
+	        _map_height, _map_width = top5map.shape
+	        bbx = top5map[max(0, y1 - offset):min(_map_height, y2 - offset), max(0, x1 - offset):min(_map_width, x2 - offset)]
             pct_correct_in_bbx += np.sum(bbx > 0.) / bbx.size                   # calculate how much of bbx is classified correctly
             if bbx.size == 0:
                 print('SMALL DATASET ID:', smalldataset_id)
                 # print('CROP SIZE:', crop_size)
-                print('ACTUAL DIMS:', 'x1 - ', x1, 'y1 - ', y1, 'x2 - ', x2, 'y2 - ', y2)
-                print('ADJUST DIMS:', 'x1 - ', x1, 'y1 - ', y1, 'x2 - ', xoffset, 'y2 - ', yoffset)
+                # print('ACTUAL DIMS:', 'x1 - ', x1, 'y1 - ', y1, 'x2 - ', x2, 'y2 - ', y2)
+                # print('ADJUST DIMS:', 'x1 - ', x1, 'y1 - ', y1, 'x2 - ', xoffset, 'y2 - ', yoffset)
                 print('MAP SHAPE:', top5map.shape[1], top5map.shape[0])
                 print('\n')
         pct_correct_in_bbx /= len(bbx_dims)                                     # average percentage - it's all the same type of object
