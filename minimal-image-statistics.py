@@ -89,7 +89,7 @@ def get_crop_size(smalldataset_id, crop_metric):
     image_filename = PATH_TO_DATA + settings.folder_name('img') + image_tag + '.JPEG'
     im = Image.open(image_filename)
     width, height = im.size
-    print('IMAGE SHAPE:', width, height)
+    # print('IMAGE SHAPE:', width, height)
     crop_type = 'proportional' if crop_metric <= 1. else 'constant'
     crop_size = c_m_p.get_crop_size(height, crop_metric, crop_type) if height <= width else c_m_p.get_crop_size(width, crop_metric, crop_type)
     return crop_size
