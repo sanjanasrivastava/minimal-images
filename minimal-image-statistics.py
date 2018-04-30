@@ -338,7 +338,7 @@ def crop_correctness_in_bbx(crop_metric, model_name, image_scale):
 
     all_img_pct_correct_in_bbx = {}
     for smalldataset_id in range(settings.SMALL_DATASET_SIZE):
-        top5map = np.load(settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, smalldataset_id) + '.npy')
+        top5map = np.load(PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, smalldataset_id) + '.npy')
         bbx_dims = settings.get_bbx_dims(all_bbxs, smalldataset_id)
 
         pct_correct_in_bbx = 0
@@ -350,7 +350,7 @@ def crop_correctness_in_bbx(crop_metric, model_name, image_scale):
 
         all_img_pct_correct_in_bbx[smalldataset_id] = pct_correct_in_bbx
 
-    with open(os.path.join('stats', crop_metric, model_name, image_scale, 'all-img-pct-correct-in-bbx.json'), 'r') as f:
+    with open(PATH_TO_OUTPUT_DATA + os.path.join('stats', crop_metric, model_name, image_scale, 'all-img-pct-correct-in-bbx.json'), 'r') as f:
         json.dump(all_img_pct_correct_in_bbx, f)
 
 
