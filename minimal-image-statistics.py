@@ -351,15 +351,12 @@ def crop_correctness_in_bbx(crop_metric, model_name, image_scale):
             offset = int(crop_size / 2)
             _map_height, _map_width = top5map.shape
             mx1, my1, mx2, my2 = max(0, x1 - offset), max(0, y1 - offset), min(_map_width, x2 - offset), min(_map_height, y2 - offset)
-            if mx1 > mx2 - 2:       # deal with the issue of bbxs that are entirely outside of the map boundaries in at least one dimension
-                if mx1 - 2 < 0:
-                    mx2 = mx1 + 2
-                else:
+
+            # bbxs that are entirely outside of the map boundary in at least one dimension
+            if x1 >= _map_width or y1 >= _map_height:
+                if mx1 > mx2 - 2:       # move back to get one row 
                     mx1 = mx2 - 2
-            if my1 > my2 - 2:
-                if my1 - 2 < 0:
-                    my1 = my2 - 2
-                else:
+                if my1 > my2 - 2:
                     my1 = my2 - 2
             bbx = top5map[my1:my2, mx1:mx2]
             pct_correct_in_bbx += np.sum(bbx > 0.) / bbx.size                   # calculate how much of bbx is classified correctly
