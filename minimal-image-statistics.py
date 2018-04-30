@@ -89,6 +89,7 @@ def get_crop_size(smalldataset_id, crop_metric):
     image_filename = PATH_TO_DATA + settings.folder_name('img') + image_tag + '.JPEG'
     im = Image.open(image_filename)
     width, height = im.size
+    print('IMAGE SHAPE:', width, height)
     crop_type = 'proportional' if crop_metric <= 1. else 'constant'
     crop_size = c_m_p.get_crop_size(height, crop_metric, crop_type) if height <= width else c_m_p.get_crop_size(width, crop_metric, crop_type)
     return crop_size
@@ -356,7 +357,7 @@ def crop_correctness_in_bbx(crop_metric, model_name, image_scale):
                 # print('CROP SIZE:', crop_size)
                 print('ACTUAL DIMS:', 'x1 - ', x1, 'y1 - ', y1, 'x2 - ', x2, 'y2 - ', y2)
                 print('ADJUST DIMS:', 'x1 - ', x1, 'y1 - ', y1, 'x2 - ', xoffset, 'y2 - ', yoffset)
-                print('MAP SHAPE:', top5map.shape)
+                print('MAP SHAPE:', top5map.shape[1], top5map.shape[0])
                 print('\n')
         pct_correct_in_bbx /= len(bbx_dims)                                     # average percentage - it's all the same type of object
 
