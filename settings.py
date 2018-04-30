@@ -172,13 +172,16 @@ def get_intractable_images(path_to_data, crop_metric, model_name, image_scale):
     for smalldataset_id in range(500):
         for strictness in strictnesses:
             for axis in axes:
-                if not os.path.exists(path_to_data + min_img_map_filename(crop_metric, model_name, image_scale, strictness, axis, smalldataset_id)):
+                path = path_to_data + min_img_map_filename(crop_metric, model_name, image_scale, strictness, axis, smalldataset_id)
+                if not os.path.exists(path):
+                    if smalldataset_id == 460:
+                        print(path)
                     intractable_images.add(smalldataset_id)
     return intractable_images
 
 
 if __name__ == '__main__':
-    print(get_intractable_images('/om/user/xboix/share/minimal-images/', 0.2, 'vgg16', 1.0))
+    print(get_intractable_images('/om/user/xboix/share/minimal-images/', 0.4, 'resnet', 1.0))
 
 
 
