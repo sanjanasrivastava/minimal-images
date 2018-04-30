@@ -350,20 +350,21 @@ def crop_correctness_in_bbx(crop_metric, model_name, image_scale):
         for x1, y1, x2, y2 in bbx_dims:
             offset = int(crop_size / 2)
             _map_height, _map_width = top5map.shape
-            bbx = top5map[max(0, y1 - offset):min(_map_height, y2 - offset), max(0, x1 - offset):min(_map_width, x2 - offset)]
+            mx1, my1, mx2, my2 = max(0, x1 - offset), max(0, y1 - offset), min(_map_width, x2 - offset), min(_map_height, y2 - offset)
+            bbx = top5map[my1:my2, mx1:mx2]
             pct_correct_in_bbx += np.sum(bbx > 0.) / bbx.size                   # calculate how much of bbx is classified correctly
             if bbx.size == 0:
                 print('SMALL DATASET ID:', smalldataset_id)
-                # print('CROP SIZE:', crop_size)
-                # print('ACTUAL DIMS:', 'x1 - ', x1, 'y1 - ', y1, 'x2 - ', x2, 'y2 - ', y2)
-                # print('ADJUST DIMS:', 'x1 - ', x1, 'y1 - ', y1, 'x2 - ', xoffset, 'y2 - ', yoffset)
+                print('CROP SIZE:', crop_size)
+                print('ACTUAL DIMS:', 'x1 - ', x1, 'y1 - ', y1, 'x2 - ', x2, 'y2 - ', y2)
+                print('ADJUST DIMS:', 'x1 - ', mx1, 'y1 - ', my1, 'x2 - ', mx2, 'y2 - ', my2)
                 print('MAP SHAPE:', top5map.shape[1], top5map.shape[0])
                 print('\n')
         pct_correct_in_bbx /= len(bbx_dims)                                     # average percentage - it's all the same type of object
 
         all_img_pct_correct_in_bbx[smalldataset_id] = pct_correct_in_bbx
 
-    with open(PATH_TO_OUTPUT_DATA + os.path.join('stats', str(crop_metric), str(model_name), str(image_scale), 'all-img-pct-correct-in-bbx.json'), 'r') as f:
+    with open(PATH_TO_OUTPUT_DATA + os.path.join('stats', str(crop_metric), str(model_name), str(image_scale), 'all-img-pct-correct-in-bbx.json'), 'w') as f:
         json.dump(all_img_pct_correct_in_bbx, f)
 
 
