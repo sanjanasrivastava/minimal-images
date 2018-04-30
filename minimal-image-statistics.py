@@ -349,8 +349,8 @@ def crop_correctness_in_bbx(crop_metric, model_name, image_scale):
         crop_size = get_crop_size(smalldataset_id, crop_metric)
         for x1, y1, x2, y2 in bbx_dims:
             offset = int(crop_size / 2)
-	        _map_height, _map_width = top5map.shape
-	        bbx = top5map[max(0, y1 - offset):min(_map_height, y2 - offset), max(0, x1 - offset):min(_map_width, x2 - offset)]
+            _map_height, _map_width = top5map.shape
+            bbx = top5map[max(0, y1 - offset):min(_map_height, y2 - offset), max(0, x1 - offset):min(_map_width, x2 - offset)]
             pct_correct_in_bbx += np.sum(bbx > 0.) / bbx.size                   # calculate how much of bbx is classified correctly
             if bbx.size == 0:
                 print('SMALL DATASET ID:', smalldataset_id)
