@@ -139,6 +139,18 @@ SMALL_DATASET_SIZE = 500
 INTRACTABLE_IMAGES = set([223, 104, 164, 158, 139])
 
 def get_bbx_dims(all_bbxs, smalldataset_id):
+
+    '''
+    Parameters
+    ----------
+    all_bbxs: (dict) dictionary mapping imagenetval tags to bbx information from toolkit
+    smalldataset_id: (int) id for image in small dataset
+
+    Returns
+    -------
+    list of bbx dimensions in (x1, y1, x2, y2) format for smalldataset_id image
+    '''
+
     imagenetval_id = convert_id_small_to_imagenetval(smalldataset_id)
     image_tag = get_ind_name(imagenetval_id)
     crop_dims = [bbx[0] for bbx in all_bbxs[image_tag]]

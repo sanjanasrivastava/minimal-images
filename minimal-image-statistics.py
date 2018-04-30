@@ -317,12 +317,51 @@ def get_all_correctness(model_name):
         json.dump(all_correctness, writefile)
 
 
+def crop_correctness_in_bbx(crop_metric, model_name, image_scale):
+
+    '''
+    Parameters
+    ----------
+    crop_metric: (float) crop metric for size being used
+    model_name: (str) model name being used
+    image_scale: (float) image scale being used
+
+    Saves json file titled stats/<crop_metric>/<model_name>/<image_scale>/correct-min-imgs-in-bbx.json. File maps
+    smalldataset_id to percent error of crops in bbx.
+    Deals with multiple bbxs by masking and taking average percent correctness across bbxs. Chose to do this, instead of
+    masking to isolate one big bbx region, because it seems like we're going for percent correct crops per object, so
+    averaging across bbxs seems more appropriate. TODO confirm
+    '''
+
+    with open(BBX_FILE, 'r') as bbx_file:
+        all_bbxs = json.load(bbx_file)
+
+    all_img_pct_correct_in_bbx = {}
+    for smalldataset_id in range(settings.SMALL_DATASET_SIZE):
+        top5map = np.load(settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, smalldataset_id))
+        bbx_dims = settings.get_bbx_dims(all_bbxs, smalldataset_id)
+
+        pct_correct_in_bbx = 0
+        crop_size = get_crop_size(smalldataset_id, crop_metric)
+        for x1, y1, x2, y2 in bbx_dims:
+            bbx = top5map[y1:y2 - crop_size + 1, x1:x2 - crop_size + 1]         # get bbx section of top5 map
+            pct_correct_in_bbx += np.sum(bbx > 0.) / bbx.size                   # calculate how much of bbx is classified correctly
+        pct_correct_in_bbx /= len(bbx_dims)                                     # average percentage - it's all the same type of object
+
+        all_img_pct_correct_in_bbx[smalldataset_id] = pct_correct_in_bbx
+
+    with open(os.path.join('stats', crop_metric, model_name, image_scale, 'all-img-pct-correct-in-bbx.json'), 'r') as f:
+        json.dump(all_img_pct_correct_in_bbx, f)
+
+
+
 if __name__ == '__main__':
     # percent_min_img_in_bbx(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
     # num_min_imgs_vs_bbx_coverage(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
     # get_all_correctness('vgg16')
     # get_all_correctness('inception')
-    get_all_correctness('resnet')
+    # get_all_correctness('resnet')
+    crop_correctness_in_bbx(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]))
     # pass
 
 
