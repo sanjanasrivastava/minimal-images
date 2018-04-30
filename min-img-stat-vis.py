@@ -1,6 +1,7 @@
 import json
 import matplotlib.pyplot as plt
 import numpy as np
+import os
 import pandas as pd
 import seaborn as sns
 
@@ -170,9 +171,45 @@ def pct_minimal_images_vs_correctness(crop_metric, image_scale, strictness, axis
     plt.show()
 
 
+def pct_correct_in_bbx():
+
+    '''
+    Shows a plot of percent correctness within bbx as a function of crop size, hued by model
+    '''
+
+    crop_metrics = [0.2, 0.4, 0.6, 0.8]
+    model_names = ['vgg16', 'resnet', 'inception']
+    image_scale = 1.0
+
+    # need DF with x = crop size; y = percent correct within bbx; hue = model. I want to do a scatter plot or box plot, not a point or bar plot.
+    # DF also needs id field for images just to keep things straight.
+    all_dfs = []
+    for crop_metric in crop_metrics:
+        for model_name in model_names:
+            with open(PATH_TO_STATS + os.path.join(str(crop_metric), model_name, str(image_scale), 'all-img-pct-correct-in-bbx.json'), 'r') as f:
+                pct_correct = json.load(f)
+                num_imgs = len(pct_correct)
+            pct_correct_df = pd.DataFrame.from_dict(pct_correct, orient='index')
+            pct_correct_df['model'] = np.array([model_name] * num_imgs)
+            pct_correct_df['crop size'] = np.array([crop_metric] * num_imgs)
+            all_dfs.append(pct_correct_df)
+
+    all_pct_correct_df = pd.concat(all_dfs)
+    all_pct_correct_df = all_pct_correct_df.rename(index=str, columns={0: 'percent correct minimal images within bound-in box'})
+
+    ax = sns.violinplot(x='crop size', y='percent correct minimal images within bound-in box', hue='model', data=all_pct_correct_df)
+    plt.show()
+
+
+
+
+
+
+
 
 if __name__ == '__main__':
 
     # vis_num_min_imgs_vs_prop_in_bbx_models(0.2, 1.0, 'loose', 'scale')
     # vis_num_min_imgs_vs_prop_in_bbx_models(0.2, 1.0, 'strict', 'scale')
-    pct_minimal_images_vs_correctness(0.2, 1.0, 'loose', 'scale')
+    # pct_minimal_images_vs_correctness(0.2, 1.0, 'loose', 'scale')
+    pct_correct_in_bbx()
