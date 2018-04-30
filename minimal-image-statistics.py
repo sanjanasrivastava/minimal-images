@@ -352,11 +352,12 @@ def crop_correctness_in_bbx(crop_metric, model_name, image_scale):
             bbx = top5map[y1:yoffset, x1:xoffset]         # get bbx section of top5 map
             pct_correct_in_bbx += np.sum(bbx > 0.) / bbx.size                   # calculate how much of bbx is classified correctly
             if bbx.size == 0:
-                print('SMALL DATASET ID:', smalldataset_id)
-                print('CROP SIZE:', crop_size)
-                print('ACTUAL DIMS:', 'x1 - ', x1, 'y1 - ', y1, 'x2 - ', x2, 'y2 - ', y2)
-                print('ADJUST DIMS:', 'x1 - ', x1, 'y1 - ', y1, 'x2 - ', xoffset, 'y2 - ', yoffset)
-                # crash
+                # print('SMALL DATASET ID:', smalldataset_id)
+                # print('CROP SIZE:', crop_size)
+                # print('ACTUAL DIMS:', 'x1 - ', x1, 'y1 - ', y1, 'x2 - ', x2, 'y2 - ', y2)
+                # print('ADJUST DIMS:', 'x1 - ', x1, 'y1 - ', y1, 'x2 - ', xoffset, 'y2 - ', yoffset)
+                print(bbx)
+                print('\n\n')
         pct_correct_in_bbx /= len(bbx_dims)                                     # average percentage - it's all the same type of object
 
         all_img_pct_correct_in_bbx[smalldataset_id] = pct_correct_in_bbx
