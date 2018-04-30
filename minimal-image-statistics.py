@@ -351,11 +351,13 @@ def crop_correctness_in_bbx(crop_metric, model_name, image_scale):
             pct_correct_in_bbx += np.sum(bbx > 0.) / bbx.size                   # calculate how much of bbx is classified correctly
             if bbx.size == 0:
                 print('SMALL DATASET ID:', smalldataset_id)
+                print('x1:', x1, 'y1:', y1, 'x2 bbx:', x2 - crop_size + 1, 'y2:', y2 - crop_size + 1)
+                crash
         pct_correct_in_bbx /= len(bbx_dims)                                     # average percentage - it's all the same type of object
 
         all_img_pct_correct_in_bbx[smalldataset_id] = pct_correct_in_bbx
 
-    with open(PATH_TO_OUTPUT_DATA + os.path.join('stats', crop_metric, model_name, image_scale, 'all-img-pct-correct-in-bbx.json'), 'r') as f:
+    with open(PATH_TO_OUTPUT_DATA + os.path.join('stats', str(crop_metric), str(model_name), str(image_scale), 'all-img-pct-correct-in-bbx.json'), 'r') as f:
         json.dump(all_img_pct_correct_in_bbx, f)
 
 
