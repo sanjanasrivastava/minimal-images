@@ -354,7 +354,7 @@ def crop_correctness_in_bbx(crop_metric, model_name, image_scale):
 
             # bbxs that are entirely outside of the map boundary in at least one dimension
             if x1 >= _map_width or y1 >= _map_height:
-                if mx1 > mx2 - 2:       # move back to get one row 
+                if mx1 > mx2 - 2:       # move back to get one row
                     mx1 = mx2 - 2
                 if my1 > my2 - 2:
                     my1 = my2 - 2
