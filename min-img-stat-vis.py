@@ -12,7 +12,9 @@ PATH_TO_DATA = '../min-img-data/'
 PATH_TO_STATS = PATH_TO_DATA + 'stats/'
 PATH_TO_CLASSIFICATION_RESULTS = PATH_TO_DATA + 'classification_results/'
 
+crop_metrics = [0.2, 0.4, 0.6, 0.8]
 models = ['vgg16', 'resnet', 'inception']
+image_scale = 1.0
 
 
 # Percent minimal images inside/outside bbx vs. model; crop metric 0.2
@@ -177,15 +179,11 @@ def pct_correct_in_bbx():
     Shows a plot of percent correctness within bbx as a function of crop size, hued by model
     '''
 
-    crop_metrics = [0.2, 0.4, 0.6, 0.8]
-    model_names = ['vgg16', 'resnet', 'inception']
-    image_scale = 1.0
-
     # need DF with x = crop size; y = percent correct within bbx; hue = model. I want to do a scatter plot or box plot, not a point or bar plot.
     # DF also needs id field for images just to keep things straight.
     all_dfs = []
     for crop_metric in crop_metrics:
-        for model_name in model_names:
+        for model_name in models:
             with open(PATH_TO_STATS + os.path.join(str(crop_metric), model_name, str(image_scale), 'all-img-pct-correct-in-bbx.json'), 'r') as f:
                 pct_correct = json.load(f)
                 num_imgs = len(pct_correct)
@@ -198,13 +196,10 @@ def pct_correct_in_bbx():
     all_pct_correct_df = all_pct_correct_df.rename(index=str, columns={0: 'percent correct minimal images within bound-in box'})
 
     ax = sns.violinplot(x='crop size', y='percent correct minimal images within bound-in box', hue='model', data=all_pct_correct_df)
+    # ax.set_ylim((0, 1))
+    plt.figure()
+    ax2 = sns.boxplot(x='crop size', y='percent correct minimal images within bound-in box', hue='model', data=all_pct_correct_df)
     plt.show()
-
-
-
-
-
-
 
 
 if __name__ == '__main__':

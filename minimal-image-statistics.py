@@ -314,6 +314,8 @@ def get_all_correctness(model_name):
     image_results, bbx_results = results
     all_correctness = {smalldataset_ids[i]: [image_results[i], bbx_results[i]] for i in inds}       # map smalldataset_ids to image result and bbx result
 
+    print('TEST ACCURACY:', float(sum(all_correctness[smalldataset_id][0] for smalldataset_id in smalldataset_ids)) / settings.SMALL_DATASET_SIZE)
+
     with open(PATH_TO_OUTPUT_DATA + model_name + '-small-dataset-classification-correctness.json', 'w') as writefile:
         json.dump(all_correctness, writefile)
 
@@ -337,13 +339,11 @@ def crop_correctness_in_bbx(crop_metric, model_name, image_scale):
     with open(BBX_FILE, 'r') as bbx_file:
         all_bbxs = json.load(bbx_file)
     intractable_images = settings.get_intractable_images(PATH_TO_DATA, crop_metric, model_name, image_scale)
-    print(intractable_images)
 
     all_img_pct_correct_in_bbx = {}
     for smalldataset_id in range(settings.SMALL_DATASET_SIZE):
         top5filename = PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, smalldataset_id) + '.npy'
         if not os.path.exists(top5filename):
-            print(smalldataset_id)
             continue
         top5map = np.load(top5filename)
         bbx_dims = settings.get_bbx_dims(all_bbxs, smalldataset_id)
@@ -384,9 +384,9 @@ if __name__ == '__main__':
     # percent_min_img_in_bbx(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
     # num_min_imgs_vs_bbx_coverage(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
     # get_all_correctness('vgg16')
-    # get_all_correctness('inception')
+    get_all_correctness(sys.argv[1])
     # get_all_correctness('resnet')
-    crop_correctness_in_bbx(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]))
+    # crop_correctness_in_bbx(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]))
     # pass
 
 
