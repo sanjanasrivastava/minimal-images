@@ -335,7 +335,7 @@ def test_get_all_correctness(model_name):
             if img.mode != 'RGB':
                 img = img.convert('RGB')
             img = imresize(img, (model.im_size, model.im_size))
-            true_class = img_filenames_to_true_label[img_filename]
+            true_class = int(img_filenames_to_true_label[img_filename])
 
             prob = sess.run(network.probs, feed_dict={network.imgs: [img]})
             sorted_classes = prob.argsort()
