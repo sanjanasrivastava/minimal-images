@@ -340,12 +340,14 @@ def test_get_all_correctness(model_name):
             prob = sess.run(network.probs, feed_dict={network.imgs: [img]})
             sorted_classes = prob.argsort()
             print(sorted_classes)
-            top5 = sorted_classes[:, -5:]
+            top5 = sorted_classes[:, -5:][0]
             print('TRUE:')
             print(true_class, settings.class_label_to_readable_text(true_class))
             print('PREDICTED:')
             for pred in top5:
                 print(pred, settings.class_label_to_readable_text(pred))
+            print('CORRECT:', true_class in top5)
+            print('\n')
 
 
 
