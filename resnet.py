@@ -366,10 +366,10 @@ class resnet:
   @classmethod
   def preprocess(cls, images):
     
-#     images = images[:, :, :, :3].astype(np.float32)
-#     images = np.divide(images, 255.)
-#     images = np.subtract(images, 0.5)
-#     images = np.multiply(images, 2.0)
+    # images = images[:, :, :, :3].astype(np.float32)
+    # images = np.divide(images, 255.)
+    # images = np.subtract(images, 0.5)
+    # images = np.multiply(images, 2.0)
     return images
 
   def model(self, reuse):
