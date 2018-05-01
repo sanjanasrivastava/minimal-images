@@ -320,6 +320,29 @@ def get_all_correctness(model_name):
         json.dump(all_correctness, writefile)
 
 
+def test_get_all_correctness(model_name):
+
+    with open('small-dataset-to-imagenet.txt', 'r') as datafile:
+        records = [record.split() for record in list(datafile.readlines())]
+    img_filenames_to_true_label = {record[0]: record[1] for record in records[:10]}                   # TODO limiting to 10 for testing
+    model = settings.MODELS[model_name]
+
+    with tf.Session() as sess:
+        imgs = tf.placeholder(tf.float32, [1, model.im_size, model.im_size, 3])
+        network = model(imgs, sess, reuse=None)
+        for img_filename in img_filenames_to_true_label:
+            img = Image.open(PATH_TO_DATA + settings.folder_name + img_filename)        # get the image
+            true_class = img_filenames_to_true_label[img_filename]
+
+            prob = sess.run(network.probs, feed_dict={network.imgs: [img]})
+            sorted_classes = prob.argsort()
+            top5 = sorted_classes[:, -5:]
+            print(top5)
+
+
+
+
+
 def crop_correctness_in_bbx(crop_metric, model_name, image_scale):
 
     '''
@@ -384,7 +407,7 @@ if __name__ == '__main__':
     # percent_min_img_in_bbx(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
     # num_min_imgs_vs_bbx_coverage(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
     # get_all_correctness('vgg16')
-    get_all_correctness(sys.argv[1])
+    test_get_all_correctness(sys.argv[1])
     # get_all_correctness('resnet')
     # crop_correctness_in_bbx(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]))
     # pass

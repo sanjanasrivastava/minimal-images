@@ -199,6 +199,9 @@ def pct_correct_in_bbx():
     # ax.set_ylim((0, 1))
     plt.figure()
     ax2 = sns.boxplot(x='crop size', y='percent correct minimal images within bound-in box', hue='model', data=all_pct_correct_df)
+    plt.figure()
+    ax3 = sns.pointplot(x='crop size', y='percent correct minimal images within bound-in box', hue='model', data=all_pct_correct_df)
+
     plt.show()
 
 

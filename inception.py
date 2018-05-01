@@ -35,7 +35,6 @@ except ImportError:
 
 WEIGHTS_FILE = '/om/user/xboix/share/minimal-images/weights/inception_v4.ckpt'
 
-
 # from nets import inception_utils
 from caffe_classes import class_names
 import imagenet
