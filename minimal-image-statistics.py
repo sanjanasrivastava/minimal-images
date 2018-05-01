@@ -342,10 +342,10 @@ def test_get_all_correctness(model_name):
             print(sorted_classes)
             top5 = sorted_classes[:, -5:]
             print('TRUE:')
-            settings.class_label_to_readable_text(true_class)
+            print(true_class, settings.class_label_to_readable_text(true_class))
             print('PREDICTED:')
             for pred in top5:
-                settings.class_label_to_readable_text(pred)
+                print(pred, settings.class_label_to_readable_text(pred))
 
 
 
