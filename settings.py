@@ -75,6 +75,10 @@ def get_class_labels(image_ids):
         print('IMAGE ID NUMBER:', image_id, '; TRUE CLASS:', true_class, '; CLASSNAME:', class_names[true_class])
 
 
+def class_label_to_readable_text(class_label):
+    return class_names[class_label]
+
+
 MIN_IMGS_PATH_TO_DATA = '/om/user/xboix/share/minimal-images/'
 MIN_IMGS_PATH_TO_WEIGHTS = MIN_IMGS_PATH_TO_DATA + 'weights/'
 
