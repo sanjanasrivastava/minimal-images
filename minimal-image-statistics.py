@@ -331,7 +331,7 @@ def test_get_all_correctness(model_name):
         imgs = tf.placeholder(tf.float32, [1, model.im_size, model.im_size, 3])
         network = model(imgs, sess, reuse=None)
         for img_filename in img_filenames_to_true_label:
-            img = Image.open(PATH_TO_DATA + settings.folder_name + img_filename)        # get the image
+            img = Image.open(PATH_TO_DATA + settings.folder_name('img') + img_filename)        # get the image
             true_class = img_filenames_to_true_label[img_filename]
 
             prob = sess.run(network.probs, feed_dict={network.imgs: [img]})
