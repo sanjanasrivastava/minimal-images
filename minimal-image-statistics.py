@@ -288,7 +288,7 @@ def get_all_correctness(model_name):
 
     with tf.Session() as sess:
         imgs = tf.placeholder(tf.float32, [BATCH_SIZE, model.im_size, model.im_size, 3])
-        network = model(imgs, sess, reuse=None)                 # it's only ever the first use since we're only using one GPU
+        network = model(imgs, sess, reuse=True)                 # it's only ever the first use since we're only using one GPU
 
         # classify all images, then bbxs
         datas = [images, bbxs]
