@@ -7,10 +7,11 @@
 #SBATCH --workdir=./log/
 #SBATCH --qos=use-everything
 
-declare -a MODELS=("resnet" "inception")
+declare -a MODELS=("inception" "resnet")
 
 cd /om/user/sanjanas/minimal-images
 for MODEL in "${MODELS[@]}"; do
+    echo $MODEL
     singularity exec -B /om:/om -B /cbcl:/cbcl --nv /om/user/sanjanas/belledon-tensorflow-keras-master-latest.simg \
     python minimal-image-statistics.py $MODEL
 done 
