@@ -349,9 +349,6 @@ def test_get_all_correctness(model_name):
             print('CORRECT:', true_class in top5)
             print('\n')
 
-# from inception import inception
-import imagenet
-from caffe_classes import class_names
 
 def test_get_all_correctness2(model_name):
 
@@ -359,7 +356,7 @@ def test_get_all_correctness2(model_name):
 
     model = settings.MODELS[model_name]
 
-    ids = [1, 101, 201, 301]
+    ids = range(settings.SMALL_DATASET_SIZE)
     images = []
 
     with open('small-dataset-to-imagenet.txt', 'r') as datafile:
@@ -386,16 +383,6 @@ def test_get_all_correctness2(model_name):
     preds = preds_all[:, -5:]
     accuracy = sum(1. if true_labels[i] in preds[i] else 0. for i in range(len(true_labels))) / len(true_labels)
     print('ACCURACY:', accuracy)
-
-    # for i in range(len(ids)):
-    #   im_id = ids[i]
-    #   prob = probabilities[i]
-    #   # settings.get_class_labels([settings.convert_id_small_to_imagenetval(ids[i])])
-    #   print('TRUE LABEL:', true_labels[i])
-    #   inds = np.argsort(prob)[::-1]
-    #   print(inds[0:5])
-    #   for j in range(5):
-    #     print(class_names[inds[j]])
 
 
 def crop_correctness_in_bbx(crop_metric, model_name, image_scale):
