@@ -368,7 +368,7 @@ def test_get_all_correctness2(model_name):
     all_successes = 0
     for __ in range(rounds):
         images = []
-        for img_filename in img_filenames:
+        for img_filename in img_filenames[rounds * BATCH_SIZE: (rounds + 1) * BATCH_SIZE]:
             image = imread(PATH_TO_DATA + 'ILSVRC2012_img_val/' + img_filename, mode='RGB')
             image = imresize(image, (model.im_size, model.im_size))
             images.append(image)
