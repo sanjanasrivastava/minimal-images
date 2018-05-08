@@ -3,7 +3,7 @@ import numpy as np
 import os.path
 from PIL import Image
 import random
-from scipy.misc import imresize
+from scipy.misc import imresize, imread
 import sys
 import tensorflow as tf
 
@@ -349,6 +349,43 @@ def test_get_all_correctness(model_name):
             print('CORRECT:', true_class in top5)
             print('\n')
 
+from resnet import resnet
+from inception import inception
+import imagenet
+from caffe_classes import class_names
+
+def test_get_all_correctness2(model_name):
+
+    image_size = inception.im_size
+
+    ids = [1, 13, 26, 29]
+    images = []
+    for i in ids:
+      image = imread(PATH_TO_DATA + 'ILSVRC2012_img_val/' + settings.get_ind_name(i) + '.JPEG', mode='RGB')
+      image = imresize(image, (image_size, image_size))
+      images.append(image)
+
+    imgs = tf.placeholder(tf.float32, [None, image_size, image_size, 3])
+
+    images = np.array(images)
+    with tf.Session() as sess:
+      network = inception(imgs, sess)
+      processed_images = inception.preprocess(images)
+      probabilities = np.array(sess.run(network.probs, feed_dict={network.imgs: processed_images}))
+
+
+    names = imagenet.create_readable_names_for_imagenet_labels()
+    print(probabilities.shape)
+
+    for i in range(len(ids)):
+      im_id = ids[i]
+      prob = probabilities[i]
+      settings.get_class_labels(range(im_id, im_id + 1))
+      inds = np.argsort(prob)[::-1]
+      print(inds[0:5])
+      for j in range(5):
+        print(class_names[inds[j]])
+
 
 def crop_correctness_in_bbx(crop_metric, model_name, image_scale):
 
@@ -414,7 +451,7 @@ if __name__ == '__main__':
     # percent_min_img_in_bbx(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
     # num_min_imgs_vs_bbx_coverage(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
     # get_all_correctness('vgg16')
-    test_get_all_correctness(sys.argv[1])
+    test_get_all_correctness2(sys.argv[1])
     # get_all_correctness('resnet')
     # crop_correctness_in_bbx(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]))
     # pass

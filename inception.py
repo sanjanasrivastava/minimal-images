@@ -422,14 +422,6 @@ if __name__ == '__main__':
 
   names = imagenet.create_readable_names_for_imagenet_labels()
   print(probabilities.shape)
-  # im_id = 1
-  # for prob in probabilities:
-  #   settings.get_class_labels(range(im_id, im_id + 1))
-  #   im_id += 1
-  #   inds = np.argsort(prob)[::-1]
-  #   print(inds[0:5])
-  #   for j in range(5):
-  #      print(class_names[inds[j]])
 
   for i in range(len(ids)):
     im_id = ids[i]
