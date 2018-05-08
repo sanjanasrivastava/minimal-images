@@ -384,7 +384,7 @@ def test_get_all_correctness2(model_name):
 
     preds_all = np.argsort(probabilities, axis=1)
     preds = preds_all[:, -5:]
-    accuracy = sum(1. if true_labels[i] in preds[i] for i in range(len(true_labels))) / len(true_labels)
+    accuracy = sum(1. if true_labels[i] in preds[i] else 0. for i in range(len(true_labels))) / len(true_labels)
     print('ACCURACY:', accuracy)
 
     # for i in range(len(ids)):
