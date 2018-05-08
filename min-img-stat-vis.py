@@ -64,7 +64,7 @@ def discrete_sizes(proportion_of_im_in_bbx):
 
 def vis_num_min_imgs_vs_prop_in_bbx_models(crop_metric, image_scale, strictness, axis):
 
-    sns.set_style('darkgrid')
+    sns.set_style('whitegrid')
 
     nums = {model: json.load(open(PATH_TO_STATS + str(crop_metric) + '/' + model + '/1.0/' + strictness + '/' + axis + '/id-to-measurements.json')) for model in models}
     nums_discretesize = {}

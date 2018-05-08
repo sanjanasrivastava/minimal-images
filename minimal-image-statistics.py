@@ -350,9 +350,6 @@ def test_get_all_correctness(model_name):
             print('\n')
 
 
-
-
-
 def crop_correctness_in_bbx(crop_metric, model_name, image_scale):
 
     '''
