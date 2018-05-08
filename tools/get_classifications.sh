@@ -7,7 +7,7 @@
 #SBATCH --workdir=./log/
 #SBATCH --qos=use-everything
 
-declare -a MODELS=("inception" "resnet" "vgg16")
+declare -a MODELS=("inception")
 # declare -a MODELS=("inception" "resnet")
 
 cd /om/user/sanjanas/minimal-images
