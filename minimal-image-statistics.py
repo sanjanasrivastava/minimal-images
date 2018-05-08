@@ -349,8 +349,7 @@ def test_get_all_correctness(model_name):
             print('CORRECT:', true_class in top5)
             print('\n')
 
-from resnet import resnet
-from inception import inception
+# from inception import inception
 import imagenet
 from caffe_classes import class_names
 
@@ -358,7 +357,8 @@ def test_get_all_correctness2(model_name):
 
     print('TESTING')
 
-    image_size = inception.im_size
+    model = settings.MODELS[model_name]
+    image_size = model.im_size  # inception.im_size
 
     ids = [1, 13, 26, 29]
     images = []
@@ -371,8 +371,8 @@ def test_get_all_correctness2(model_name):
 
     images = np.array(images)
     with tf.Session() as sess:
-      network = inception(imgs, sess, reuse=None)
-      processed_images = inception.preprocess(images)
+      network = model(imgs, sess, reuse=None)       # inception(imgs, sess, reuse=None)
+      processed_images = model.preprocess(images)   # inception.preprocess(images)
       probabilities = np.array(sess.run(network.probs, feed_dict={network.imgs: processed_images}))
 
 
