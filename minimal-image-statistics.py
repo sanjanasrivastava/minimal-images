@@ -381,13 +381,12 @@ def test_get_all_correctness2(model_name):
       probabilities = np.array(sess.run(network.probs, feed_dict={network.imgs: processed_images}))
 
 
-    names = imagenet.create_readable_names_for_imagenet_labels()
     print(probabilities.shape)
 
     for i in range(len(ids)):
       im_id = ids[i]
       prob = probabilities[i]
-      settings.get_class_labels(range(im_id, im_id + 1))
+      settings.get_class_labels(settings.convert_smalldataset_ids_to_imagenetval_tags_multiple(ids))
       inds = np.argsort(prob)[::-1]
       print(inds[0:5])
       for j in range(5):
