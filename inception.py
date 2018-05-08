@@ -393,8 +393,9 @@ if __name__ == '__main__':
   image_size = inception_v4.default_image_size
 #   with tf.Graph().as_default():
 
+  ids = [1, 13, 26, 29]
   images = []
-  for i in [1, 13, 26, 29]:
+  for i in ids:
     image = imread(PATH_TO_DATA + 'ILSVRC2012_img_val/' + settings.get_ind_name(i) + '.JPEG', mode='RGB')
     image = imresize(image, (image_size, image_size))
     images.append(image)
@@ -421,13 +422,21 @@ if __name__ == '__main__':
 
   names = imagenet.create_readable_names_for_imagenet_labels()
   print(probabilities.shape)
-  im_id = 1
-  for prob in probabilities:
+  # im_id = 1
+  # for prob in probabilities:
+  #   settings.get_class_labels(range(im_id, im_id + 1))
+  #   im_id += 1
+  #   inds = np.argsort(prob)[::-1]
+  #   print(inds[0:5])
+  #   for j in range(5):
+  #      print(class_names[inds[j]])
+
+  for i in range(len(ids)):
+    im_id = ids[i]
+    prob = probabilities[i]
     settings.get_class_labels(range(im_id, im_id + 1))
-    im_id += 1
     inds = np.argsort(prob)[::-1]
     print(inds[0:5])
     for j in range(5):
-       print(class_names[inds[j]])
-
+      print(class_names[inds[j]])
 
