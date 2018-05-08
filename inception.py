@@ -395,7 +395,7 @@ if __name__ == '__main__':
 
   images = []
   for i in range(1, 10):
-    image = imread(PATH_TO_DATA + '/ILSVRC2012_val_0000000' + str(i) + '.JPEG', mode='RGB')
+    image = imread(PATH_TO_DATA + 'ILSVRC2012_val_0000000' + str(i) + '.JPEG', mode='RGB')
     image = imresize(image, (image_size, image_size))
     images.append(image)
 
