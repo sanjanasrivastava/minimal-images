@@ -373,7 +373,7 @@ def test_get_all_correctness2(model_name):
             image = imresize(image, (model.im_size, model.im_size))
             images.append(image)
 
-        imgs = tf.placeholder(tf.float32, [len(ids), model.im_size, model.im_size, 3])
+        imgs = tf.placeholder(tf.float32, [BATCH_SIZE, model.im_size, model.im_size, 3])
 
         images = np.array(images)
         with tf.Session() as sess:
@@ -455,7 +455,9 @@ if __name__ == '__main__':
     # percent_min_img_in_bbx(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
     # num_min_imgs_vs_bbx_coverage(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
     # get_all_correctness('vgg16')
-    test_get_all_correctness2(sys.argv[1])
+    test_get_all_correctness2('inception')
+    test_get_all_correctness2('resnet')
+    test_get_all_correctness2('vgg16')
     # get_all_correctness('resnet')
     # crop_correctness_in_bbx(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]))
     # pass
