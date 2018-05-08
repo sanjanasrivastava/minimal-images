@@ -359,7 +359,7 @@ def test_get_all_correctness2(model_name):
 
     model = settings.MODELS[model_name]
 
-    ids = [1, 13, 26, 29]
+    ids = [1, 101, 201, 301]
     images = []
 
     with open('small-dataset-to-imagenet.txt', 'r') as datafile:
