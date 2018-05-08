@@ -386,7 +386,7 @@ def test_get_all_correctness2(model_name):
     for i in range(len(ids)):
       im_id = ids[i]
       prob = probabilities[i]
-      settings.get_class_labels([settings.convert_id_small_to_imagenetval(im_id) for im_id in ids])
+      settings.get_class_labels([settings.convert_id_small_to_imagenetval(ids[i])])
       inds = np.argsort(prob)[::-1]
       print(inds[0:5])
       for j in range(5):
