@@ -380,18 +380,22 @@ def test_get_all_correctness2(model_name):
       processed_images = model.preprocess(images)   # inception.preprocess(images)
       probabilities = np.array(sess.run(network.probs, feed_dict={network.imgs: processed_images}))
 
-
     print(probabilities.shape)
 
-    for i in range(len(ids)):
-      im_id = ids[i]
-      prob = probabilities[i]
-      # settings.get_class_labels([settings.convert_id_small_to_imagenetval(ids[i])])
-      print('TRUE LABEL:', true_labels[i])
-      inds = np.argsort(prob)[::-1]
-      print(inds[0:5])
-      for j in range(5):
-        print(class_names[inds[j]])
+    preds_all = np.argsort(probabilities, axis=1)
+    preds = preds_all[:, -5:]
+    accuracy = sum(1. if true_labels[i] in preds[i] for i in range(len(true_labels))) / len(true_labels)
+    print('ACCURACY:', accuracy)
+
+    # for i in range(len(ids)):
+    #   im_id = ids[i]
+    #   prob = probabilities[i]
+    #   # settings.get_class_labels([settings.convert_id_small_to_imagenetval(ids[i])])
+    #   print('TRUE LABEL:', true_labels[i])
+    #   inds = np.argsort(prob)[::-1]
+    #   print(inds[0:5])
+    #   for j in range(5):
+    #     print(class_names[inds[j]])
 
 
 def crop_correctness_in_bbx(crop_metric, model_name, image_scale):
