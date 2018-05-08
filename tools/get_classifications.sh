@@ -14,5 +14,6 @@ cd /om/user/sanjanas/minimal-images
 for MODEL in "${MODELS[@]}"; do
     echo $MODEL
     singularity exec -B /om:/om -B /cbcl:/cbcl --nv /om/user/sanjanas/belledon-tensorflow-keras-master-latest.simg \
-    python minimal-image-statistics.py $MODEL
+    # python minimal-image-statistics.py $MODEL
+    python inception.py
 done 

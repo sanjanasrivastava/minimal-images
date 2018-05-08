@@ -33,6 +33,7 @@ try:
 except ImportError:
   import urllib.request as urllib
 
+PATH_TO_DATA = '/om/user/xboix/share/minimal-images/'
 WEIGHTS_FILE = '/om/user/xboix/share/minimal-images/weights/inception_v4.ckpt'
 
 # from nets import inception_utils
@@ -394,7 +395,7 @@ if __name__ == '__main__':
 
   images = []
   for i in range(1, 10):
-    image = imread('../../poggio-urop-data/ILSVRC2012_img_val/ILSVRC2012_val_0000000' + str(i) + '.JPEG', mode='RGB')
+    image = imread(PATH_TO_DATA + '/ILSVRC2012_val_0000000' + str(i) + '.JPEG', mode='RGB')
     image = imresize(image, (image_size, image_size))
     images.append(image)
 
