@@ -372,7 +372,7 @@ def test_get_all_correctness2(model_name):
         image = imresize(image, (model.im_size, model.im_size))
         images.append(image)
 
-    imgs = tf.placeholder(tf.float32, [None, model.im_size, model.im_size, 3])
+    imgs = tf.placeholder(tf.float32, [len(ids), model.im_size, model.im_size, 3])
 
     images = np.array(images)
     with tf.Session() as sess:
