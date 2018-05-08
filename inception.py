@@ -394,8 +394,8 @@ if __name__ == '__main__':
 #   with tf.Graph().as_default():
 
   images = []
-  for i in range(1, 10):
-    image = imread(PATH_TO_DATA + 'ILSVRC2012_img_val/ILSVRC2012_val_0000000' + str(i) + '.JPEG', mode='RGB')
+  for i in [1, 13, 26, 29]:
+    image = imread(PATH_TO_DATA + 'ILSVRC2012_img_val/' + settings.get_ind_name(i) + '.JPEG', mode='RGB')
     image = imresize(image, (image_size, image_size))
     images.append(image)
 
