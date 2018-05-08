@@ -256,7 +256,7 @@ def num_min_imgs_vs_bbx_coverage(crop_metric, model_name, image_scale, strictnes
     return id_to_measurements
 
 
-BATCH_SIZE = 250    # keep it to be a factor of 500 for my own sanity. these GPUs are more powerful.
+BATCH_SIZE = 500    # these GPUs are more powerful. They complain, but they work.
 
 def get_all_correctness(model_name):
 
@@ -363,32 +363,28 @@ def test_get_all_correctness2(model_name):
     img_filenames = [records[i][0] for i in range(len(records)) if i in ids]        # get just the images with smalldataset_id in ids
     true_labels = [int(records[i][1]) for i in range(len(records)) if i in ids]     # get their true labels
 
-    rounds = int(len(ids) / float(BATCH_SIZE))
 
-    all_successes = 0
-    for __ in range(rounds):
-        images = []
-        for img_filename in img_filenames[rounds * BATCH_SIZE: (rounds + 1) * BATCH_SIZE]:
-            image = imread(PATH_TO_DATA + 'ILSVRC2012_img_val/' + img_filename, mode='RGB')
-            image = imresize(image, (model.im_size, model.im_size))
-            images.append(image)
+    images = []
+    for img_filename in img_filenames:
+        image = imread(PATH_TO_DATA + 'ILSVRC2012_img_val/' + img_filename, mode='RGB')
+        image = imresize(image, (model.im_size, model.im_size))
+        images.append(image)
 
-        imgs = tf.placeholder(tf.float32, [BATCH_SIZE, model.im_size, model.im_size, 3])
+    imgs = tf.placeholder(tf.float32, [BATCH_SIZE, model.im_size, model.im_size, 3])
 
-        images = np.array(images)
-        with tf.Session() as sess:
-          network = model(imgs, sess, reuse=None)       # inception(imgs, sess, reuse=None)
-          processed_images = model.preprocess(images)   # inception.preprocess(images)
-          probabilities = np.array(sess.run(network.probs, feed_dict={network.imgs: processed_images}))
+    images = np.array(images)
+    with tf.Session() as sess:
+      network = model(imgs, sess, reuse=None)       # inception(imgs, sess, reuse=None)
+      processed_images = model.preprocess(images)   # inception.preprocess(images)
+      probabilities = np.array(sess.run(network.probs, feed_dict={network.imgs: processed_images}))
 
-        print(probabilities.shape)
+    print(probabilities.shape)
 
-        preds_all = np.argsort(probabilities, axis=1)
-        preds = preds_all[:, -5:]
-        successes = sum(1. if true_labels[i] in preds[i] else 0. for i in range(len(true_labels)))
-        all_successes += successes
+    preds_all = np.argsort(probabilities, axis=1)
+    preds = preds_all[:, -5:]
+    successes = sum(1. if true_labels[i] in preds[i] else 0. for i in range(len(true_labels)))
 
-    print('ACCURACY:', float(all_successes) / len(ids))
+    print('ACCURACY:', float(successes) / len(ids))
 
 
 def crop_correctness_in_bbx(crop_metric, model_name, image_scale):
