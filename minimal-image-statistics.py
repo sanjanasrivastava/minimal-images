@@ -358,16 +358,21 @@ def test_get_all_correctness2(model_name):
     print('TESTING')
 
     model = settings.MODELS[model_name]
-    image_size = model.im_size  # inception.im_size
 
     ids = [1, 13, 26, 29]
     images = []
-    for i in ids:
-      image = imread(PATH_TO_DATA + 'ILSVRC2012_img_val/' + settings.get_ind_name(i) + '.JPEG', mode='RGB')
-      image = imresize(image, (image_size, image_size))
-      images.append(image)
 
-    imgs = tf.placeholder(tf.float32, [None, image_size, image_size, 3])
+    with open('small-dataset-to-imagenet.txt', 'r') as datafile:
+        records = [record.split() for record in list(datafile.readlines())]
+    img_filenames = [records[i][0] for i in range(len(records)) if i in ids]        # get just the images with smalldataset_id in ids
+    true_labels = [int(records[i][1]) for i in range(len(records)) if i in ids]     # get their true labels
+
+    for img_filename in img_filenames:
+        image = imread(PATH_TO_DATA + 'ILSVRC2012_img_val/' + img_filename, mode='RGB')
+        image = imresize(image, (model.im_size, model.im_size))
+        images.append(image)
+
+    imgs = tf.placeholder(tf.float32, [None, model.im_size, model.im_size, 3])
 
     images = np.array(images)
     with tf.Session() as sess:
