@@ -356,6 +356,8 @@ from caffe_classes import class_names
 
 def test_get_all_correctness2(model_name):
 
+    print('TESTING')
+
     image_size = inception.im_size
 
     ids = [1, 13, 26, 29]
@@ -369,7 +371,7 @@ def test_get_all_correctness2(model_name):
 
     images = np.array(images)
     with tf.Session() as sess:
-      network = inception(imgs, sess)
+      network = inception(imgs, sess, reuse=None)
       processed_images = inception.preprocess(images)
       probabilities = np.array(sess.run(network.probs, feed_dict={network.imgs: processed_images}))
 
