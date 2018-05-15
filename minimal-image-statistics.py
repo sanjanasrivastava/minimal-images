@@ -511,7 +511,7 @@ if __name__ == '__main__':
     # test_get_all_correctness2('inception')
     # test_get_all_correctness2('resnet')
     # test_get_all_correctness2('vgg16')
-    get_all_correctness('resnet')
+    get_all_correctness('vgg16')
     # crop_correctness_in_bbx(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]))
     # pass
 
