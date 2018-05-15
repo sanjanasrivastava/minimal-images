@@ -280,7 +280,8 @@ def get_all_correctness(model_name):
     images = []
     bbxs = []
     for img_filename in img_filenames:
-        image = Image.open(PATH_TO_DATA + 'ILSVRC2012_img_val/' + img_filename, mode='RGB')
+        image = Image.open(PATH_TO_DATA + 'ILSVRC2012_img_val/' + img_filename)
+        image = image.convert('RGB') if image.mode != 'RGB' else image
         bbx = image.crop(all_bbxs[img_filename[:-5][0][0]])                             # get first boundinbox for this image tag, and crop by dims (the first element of that bbx's list)
         image = imresize(image, (model.im_size, model.im_size))
         bbx = imresize(bbx, (model.im_size, model.im_size))
