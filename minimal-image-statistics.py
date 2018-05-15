@@ -311,6 +311,9 @@ def get_all_correctness(model_name):
     print('IMAGE TEST ACCURACY:', sum(all_correctness[i][0] for i in ids) / float(len(ids)))
     print('BBX TEST ACCURACY:', sum(all_correctness[i][1] for i in ids) / float(len(ids)))
 
+    with open(PATH_TO_OUTPUT_DATA + model_name + '-small-dataset-classification-correctness.json', 'w') as writefile:
+        json.dump(all_correctness, writefile)
+
 
 def get_all_correctness2(model_name):
 
