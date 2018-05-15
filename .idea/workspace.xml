@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1403df6a-f044-4c1c-bcc0-1981a0ca2753" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/min-img-stat-vis.py" afterPath="$PROJECT_DIR$/min-img-stat-vis.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/minimal-image-statistics.py" afterPath="$PROJECT_DIR$/minimal-image-statistics.py" />
     </list>
     <ignored path="minimal-images.iws" />
@@ -29,9 +26,13 @@
       <file leaf-file-name="minimal-image-statistics.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/minimal-image-statistics.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5524862">
-              <caret line="450" column="69" selection-start-line="450" selection-start-column="69" selection-end-line="450" selection-end-column="69" />
-              <folding />
+            <state vertical-scroll-proportion="0.039863326">
+              <caret line="258" column="16" selection-start-line="258" selection-start-column="16" selection-end-line="258" selection-end-column="16" />
+              <folding>
+                <element signature="e#12388#16191#0" expanded="false" />
+                <element signature="e#16241#17608#0" expanded="false" />
+                <element signature="e#19139#22114#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -65,9 +66,9 @@
         <option value="$PROJECT_DIR$/image_alterations.py" />
         <option value="$PROJECT_DIR$/alexnet.py" />
         <option value="$PROJECT_DIR$/tools/array_experiments.sh" />
-        <option value="$PROJECT_DIR$/minimal-image-statistics.py" />
         <option value="$PROJECT_DIR$/min-img-stat-vis.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/minimal-image-statistics.py" />
       </list>
     </option>
   </component>
@@ -682,9 +683,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/minimal-image-statistics.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5524862">
-          <caret line="450" column="69" selection-start-line="450" selection-start-column="69" selection-end-line="450" selection-end-column="69" />
-          <folding />
+        <state vertical-scroll-proportion="0.039863326">
+          <caret line="258" column="16" selection-start-line="258" selection-start-column="16" selection-end-line="258" selection-end-column="16" />
+          <folding>
+            <element signature="e#12388#16191#0" expanded="false" />
+            <element signature="e#16241#17608#0" expanded="false" />
+            <element signature="e#19139#22114#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

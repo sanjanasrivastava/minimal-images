@@ -256,7 +256,7 @@ def num_min_imgs_vs_bbx_coverage(crop_metric, model_name, image_scale, strictnes
     return id_to_measurements
 
 
-BATCH_SIZE = 250    # these GPUs are more powerful. They complain, but they work. keep it a factor of 500 pls
+BATCH_SIZE = 500    # these GPUs are more powerful. They complain, but they work. keep it a factor of 500 pls
 
 def get_all_correctness(model_name):
 
