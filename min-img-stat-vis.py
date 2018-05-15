@@ -83,7 +83,8 @@ def vis_num_min_imgs_vs_prop_in_bbx_models(crop_metric, image_scale, strictness,
                                      'percent of images that are minimal': [nums[model][smalldataset_id][1][0] / float(nums[model][smalldataset_id][1][3]) for smalldataset_id in nums[model]]})
                      for model in models])
     ax = sns.pointplot(x='object size', y='percent of images that are minimal', hue='model', data=nums_df, order=['XS', 'S', 'M', 'L', 'XL'])
-    ax.set_title('Number of ' + (strictness + ' ' + axis).title() + ' Minimal Images vs. Relative Size of Bound-in Box')
+    ax.set_title('Number of ' + (strictness + ' ' + axis).title() + ' Minimal Images vs. Relative Size of Bound-in Box '
+                                                                    '(Crop Size = ' + str(crop_metric) + ')')
 
     plotdata = []
     datalines = ax.get_lines()
@@ -145,7 +146,8 @@ def pct_minimal_images_vs_correctness(crop_metric, image_scale, strictness, axis
 
     # bar (violin) chart with one zone being correct, one zone being incorrect, and the average (distribution of) minimal images for each of those?
 
-    sns.set_style('darkgrid')
+    sns.set_style('whitegrid'
+                  '')
     nums = {model: json.load(open(PATH_TO_STATS + '0.2/' + model + '/1.0/' + strictness + '/' + axis + '/id-to-measurements.json')) for model in models}
 
     # make df: x -> correct or incorrect. y -> pct of image that is minimal. hue -> model. df with those three columns.
@@ -166,12 +168,11 @@ def pct_minimal_images_vs_correctness(crop_metric, image_scale, strictness, axis
 
     data = pd.concat(all_dfs)
     ax = sns.barplot(x='correctly classified', y='percent of image that is minimal', hue='model', data=data)
-    ax.set_title('Percent of Image Consisting of ' + (strictness + ' ' + axis).title() + ' Minimal Images vs. Correctness of Image Classification')
+    ax.set_title('Percent of Image Consisting of ' + (strictness + ' ' + axis).title() + ' Minimal Images vs. Correctness of Image Classification (Crop Size = ' + str(crop_metric) + ')')
     plt.figure()
     ax2 = sns.violinplot(x='correctly classified', y='percent of image that is minimal', hue='model', data=data)
-    ax2.set_title('Percent of Image Consisting of ' + (strictness + ' ' + axis).title() + ' Minimal Images vs. Correctness of Image Classification')
+    ax2.set_title('Percent of Image Consisting of ' + (strictness + ' ' + axis).title() + ' Minimal Images vs. Correctness of Image Classification (Crop Size = ' + str(crop_metric) + ')')
     plt.show()
-
 
 def pct_correct_in_bbx():
 
@@ -209,5 +210,5 @@ if __name__ == '__main__':
 
     # vis_num_min_imgs_vs_prop_in_bbx_models(0.2, 1.0, 'loose', 'scale')
     # vis_num_min_imgs_vs_prop_in_bbx_models(0.2, 1.0, 'strict', 'scale')
-    # pct_minimal_images_vs_correctness(0.2, 1.0, 'loose', 'scale')
-    pct_correct_in_bbx()
+    pct_minimal_images_vs_correctness(0.2, 1.0, 'loose', 'scale')
+    # pct_correct_in_bbx()
