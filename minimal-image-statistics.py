@@ -266,6 +266,59 @@ def get_all_correctness(model_name):
     '''
 
     # open requisite parameters
+    with open(BBX_FILE, 'r') as bbx_file:
+        all_bbxs = json.load(bbx_file)
+    model = settings.MODELS[model_name]
+
+    ids = range(settings.SMALL_DATASET_SIZE)
+    with open('small-dataset-to-imagenet.txt', 'r') as datafile:
+        records = [record.split() for record in list(datafile.readlines())]
+    img_filenames = [records[i][0] for i in range(len(records)) if i in ids]            # get all image filenames
+    true_labels = [int(records[i][1]) for i in range(len(records)) if i in ids]         # get all image true labels
+
+    # get each image and boundin box, resized to model.im_size square
+    images = []
+    bbxs = []
+    for img_filename in img_filenames:
+        image = imread(PATH_TO_DATA + 'ILSVRC2012_img_val/' + img_filename, mode='RGB')
+        bbx = image.crop(all_bbxs[img_filename[:-5][0][0]])                             # get first boundinbox for this image tag, and crop by dims (the first element of that bbx's list)
+        image = imresize(image, (model.im_size, model.im_size))
+        bbx = imresize(image, (model.im_size, model.im_size))
+        images.append(image)
+        bbxs.append(bbx)
+
+    images = np.array(images)
+    bbxs = np.array(bbxs)
+
+    # run model
+    imgs = tf.placeholder(tf.float32, [BATCH_SIZE, model.im_size, model.im_size, 3])
+    with tf.Session() as sess:
+        network = model(imgs, sess, reuse=None)
+        processed_images = model.preprocess(images)
+        processed_bbxs = model.preprocess(bbxs)
+        image_probs = np.array(sess.run(network.probs, feed_dict={network.imgs: processed_images}))
+        bbx_probs = np.array(sess.run(network.probs, feed_dict={network.imgs: processed_bbxs}))
+
+    image_preds_all = np.argsort(image_probs, axis=1)
+    bbx_preds_all = np.argsort(bbx_probs, axis=1)
+    image_preds = image_preds_all[:, -5:]
+    bbx_preds = bbx_preds_all[:, -5:]
+    image_successes = [1 if true_labels[i] in image_preds[i] else 0 for i in ids]
+    bbx_successes = [1 if true_labels[i] in bbx_preds[i] else 0 for i in ids]
+
+    all_correctness = {i: [image_successes[i], bbx_successes[i]] for i in ids}
+    print('IMAGE TEST ACCURACY:', sum(all_correctness[i][0] for i in ids) / float(len(ids)))
+    print('BBX TEST ACCURACY:', sum(all_correctness[i][1] for i in ids) / float(len(ids)))
+
+
+def get_all_correctness2(model_name):
+
+    '''
+    Saves a json file containing a dict mapping small dataset ID numbers to (bool indicating full
+    image correctly classified, bbx correctly classified)
+    '''
+
+    # open requisite parameters
     with open('caffe_ilsvrc12/' + settings.DATASET + '-labels.json', 'r') as labels_file:
         true_labels = json.load(labels_file)
     with open(BBX_FILE, 'r') as bbx_file:
@@ -451,10 +504,10 @@ if __name__ == '__main__':
     # percent_min_img_in_bbx(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
     # num_min_imgs_vs_bbx_coverage(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
     # get_all_correctness('vgg16')
-    test_get_all_correctness2('inception')
+    # test_get_all_correctness2('inception')
     # test_get_all_correctness2('resnet')
-    test_get_all_correctness2('vgg16')
-    # get_all_correctness('resnet')
+    # test_get_all_correctness2('vgg16')
+    get_all_correctness('inception')
     # crop_correctness_in_bbx(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]))
     # pass
 
