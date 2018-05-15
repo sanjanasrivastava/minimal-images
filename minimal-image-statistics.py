@@ -311,11 +311,11 @@ def get_all_correctness(model_name):
     print('IMAGE TEST ACCURACY:', sum(all_correctness[i][0] for i in ids) / float(len(ids)))
     print('BBX TEST ACCURACY:', sum(all_correctness[i][1] for i in ids) / float(len(ids)))
 
-    with open(PATH_TO_OUTPUT_DATA + model_name + '-small-dataset-classification-correctness.json', 'w') as writefile:
-        json.dump(all_correctness, writefile)
+    # with open(PATH_TO_OUTPUT_DATA + model_name + '-small-dataset-classification-correctness.json', 'w') as writefile:
+    #     json.dump(all_correctness, writefile)
 
 
-def get_all_correctness2(model_name):
+def _get_all_correctness2(model_name):
 
     '''
     Saves a json file containing a dict mapping small dataset ID numbers to (bool indicating full
@@ -377,7 +377,7 @@ def get_all_correctness2(model_name):
         json.dump(all_correctness, writefile)
 
 
-def test_get_all_correctness(model_name):
+def _test_get_all_correctness(model_name):
 
     with open('small-dataset-to-imagenet.txt', 'r') as datafile:
         records = [record.split() for record in list(datafile.readlines())]
@@ -407,7 +407,7 @@ def test_get_all_correctness(model_name):
             print('\n')
 
 
-def test_get_all_correctness2(model_name):
+def _test_get_all_correctness2(model_name):
 
     print('TESTING')
 
@@ -511,7 +511,7 @@ if __name__ == '__main__':
     # test_get_all_correctness2('inception')
     # test_get_all_correctness2('resnet')
     # test_get_all_correctness2('vgg16')
-    get_all_correctness('inception')
+    get_all_correctness('resnet')
     # crop_correctness_in_bbx(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]))
     # pass
 
