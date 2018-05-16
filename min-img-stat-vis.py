@@ -283,3 +283,6 @@ if __name__ == '__main__':
     # pct_minimal_images_vs_correctness(0.2, 1.0, 'loose', 'scale')
     # pct_correct_in_bbx()
     pct_minimal_images_vs_crop_size('loose', 'shift')
+    pct_minimal_images_vs_crop_size('loose', 'scale')
+    pct_minimal_images_vs_crop_size('strict', 'shift')
+    pct_minimal_images_vs_crop_size('strict', 'scale')
