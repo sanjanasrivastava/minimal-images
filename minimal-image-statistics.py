@@ -247,6 +247,9 @@ def num_min_imgs_vs_bbx_coverage(crop_metric, model_name, image_scale, strictnes
         # map smalldataset_id to measurements
         id_to_measurements[smalldataset_id] = (proportion, totals)
 
+    if not id_to_measurements:
+        print('EMPTY DICTIONARY:', crop_metric, model_name, strictness, axis)
+
     folder = PATH_TO_OUTPUT_DATA + settings.make_stats_foldername(crop_metric, model_name, image_scale, strictness, axis)
     if not os.path.exists(folder):
         os.makedirs(folder)
@@ -315,135 +318,6 @@ def get_all_correctness(model_name):
         json.dump(all_correctness, writefile)
 
 
-def _get_all_correctness2(model_name):
-
-    '''
-    Saves a json file containing a dict mapping small dataset ID numbers to (bool indicating full
-    image correctly classified, bbx correctly classified)
-    '''
-
-    # open requisite parameters
-    with open('caffe_ilsvrc12/' + settings.DATASET + '-labels.json', 'r') as labels_file:
-        true_labels = json.load(labels_file)
-    with open(BBX_FILE, 'r') as bbx_file:
-        all_bbxs = json.load(bbx_file)
-    model = settings.MODELS[model_name]
-
-    inds = range(settings.SMALL_DATASET_SIZE)
-    smalldataset_ids = inds                                                                                                 # get all smalldataset_ids
-    imagenetval_tags = settings.convert_smalldataset_ids_to_imagenetval_tags_multiple(smalldataset_ids)                     # get corresponding imagenet val ids
-
-    images = [Image.open(PATH_TO_DATA + settings.folder_name('img') + img_tag + '.JPEG') for img_tag in imagenetval_tags]   # get image objects
-    images = [im.convert('RGB') if im.mode != 'RGB' else im for im in images]                                                       # ensure that all are 3-channel
-    bbxs = [images[i].crop(all_bbxs[imagenetval_tags[i]][0][0]) for i in inds]                                              # just doing the first bbx...
-    images = [imresize(im, (model.im_size, model.im_size)) for im in images]                                                # resize images and bbxs for classification
-    bbxs = [imresize(im, (model.im_size, model.im_size)) for im in bbxs]
-
-    true_classes = [true_labels[img_tag] for img_tag in imagenetval_tags]
-
-    imagenet_to_small = {imagenetval_tags[i]: smalldataset_ids[i] for i in range(len(smalldataset_ids))}
-
-    with tf.Session() as sess:
-        imgs = tf.placeholder(tf.float32, [BATCH_SIZE, model.im_size, model.im_size, 3])
-        network = model(imgs, sess, reuse=True)                 # it's only ever the first use since we're only using one GPU
-
-        # classify all images, then bbxs
-        datas = [images, bbxs]
-        results = []
-        for data in datas:
-            counter = 0
-            all_img_results = []
-            while counter < settings.SMALL_DATASET_SIZE:
-                batch = data[counter:min(counter + BATCH_SIZE, settings.SMALL_DATASET_SIZE)]      # get the next BATCH_SIZE images (or until the end)
-                new_counter = counter + BATCH_SIZE                                                  # next step will start from +BATCH_SIZE
-                num_stubs = 0
-                if new_counter > settings.SMALL_DATASET_SIZE:                                       # if batch is smaller than BATCH_SIZE...
-                    num_stubs = BATCH_SIZE - len(batch)
-                    batch.extend([batch[-1] for __ in range(num_stubs)])                            # extend the last crop into num_stubs spots
-                prob = sess.run(network.probs, feed_dict={network.imgs: batch})
-                sorted_classes = prob.argsort(axis=1)
-                top5 = sorted_classes[:, -5:]
-                all_img_results.extend([true_classes[counter + i] in top5[i] for i in range(BATCH_SIZE - num_stubs)])       # get if each top5 vector includes the true class of that image
-
-                counter = new_counter
-            results.append(all_img_results)
-
-    image_results, bbx_results = results
-    all_correctness = {smalldataset_ids[i]: [image_results[i], bbx_results[i]] for i in inds}       # map smalldataset_ids to image result and bbx result
-
-    print('TEST ACCURACY:', float(sum(all_correctness[smalldataset_id][0] for smalldataset_id in smalldataset_ids)) / settings.SMALL_DATASET_SIZE)
-
-    with open(PATH_TO_OUTPUT_DATA + model_name + '-small-dataset-classification-correctness.json', 'w') as writefile:
-        json.dump(all_correctness, writefile)
-
-
-def _test_get_all_correctness(model_name):
-
-    with open('small-dataset-to-imagenet.txt', 'r') as datafile:
-        records = [record.split() for record in list(datafile.readlines())]
-    img_filenames_to_true_label = {record[0]: record[1] for record in records[:10]}                   # TODO limiting to 10 for testing
-    model = settings.MODELS[model_name]
-
-    with tf.Session() as sess:
-        imgs = tf.placeholder(tf.float32, [1, model.im_size, model.im_size, 3])
-        network = model(imgs, sess, reuse=None)
-        for img_filename in img_filenames_to_true_label:
-            img = Image.open(PATH_TO_DATA + settings.folder_name('img') + img_filename)        # get the image
-            if img.mode != 'RGB':
-                img = img.convert('RGB')
-            img = imresize(img, (model.im_size, model.im_size))
-            true_class = int(img_filenames_to_true_label[img_filename])
-
-            prob = sess.run(network.probs, feed_dict={network.imgs: [img]})
-            sorted_classes = prob.argsort()
-            print(np.sort(prob))
-            top5 = sorted_classes[:, -5:][0]
-            print('TRUE:')
-            print(true_class, settings.class_label_to_readable_text(true_class))
-            print('PREDICTED:')
-            for pred in top5:
-                print(pred, settings.class_label_to_readable_text(pred))
-            print('CORRECT:', true_class in top5)
-            print('\n')
-
-
-def _test_get_all_correctness2(model_name):
-
-    print('TESTING')
-
-    model = settings.MODELS[model_name]
-
-    ids = range(settings.SMALL_DATASET_SIZE)
-
-    with open('small-dataset-to-imagenet.txt', 'r') as datafile:
-        records = [record.split() for record in list(datafile.readlines())]
-    img_filenames = [records[i][0] for i in range(len(records)) if i in ids]        # get just the images with smalldataset_id in ids
-    true_labels = [int(records[i][1]) for i in range(len(records)) if i in ids]     # get their true labels
-
-
-    images = []
-    for img_filename in img_filenames:
-        image = imread(PATH_TO_DATA + 'ILSVRC2012_img_val/' + img_filename, mode='RGB')
-        image = imresize(image, (model.im_size, model.im_size))
-        images.append(image)
-
-    imgs = tf.placeholder(tf.float32, [BATCH_SIZE, model.im_size, model.im_size, 3])
-
-    images = np.array(images)
-    with tf.Session() as sess:
-      network = model(imgs, sess, reuse=None)       # inception(imgs, sess, reuse=None)
-      processed_images = model.preprocess(images)   # inception.preprocess(images)
-      probabilities = np.array(sess.run(network.probs, feed_dict={network.imgs: processed_images}))
-
-    print(probabilities.shape)
-
-    preds_all = np.argsort(probabilities, axis=1)
-    preds = preds_all[:, -5:]
-    successes = sum(1. if true_labels[i] in preds[i] else 0. for i in range(len(true_labels)))
-
-    print('ACCURACY:', float(successes) / len(ids))
-
-
 def crop_correctness_in_bbx(crop_metric, model_name, image_scale):
 
     '''
@@ -506,12 +380,12 @@ def crop_correctness_in_bbx(crop_metric, model_name, image_scale):
 
 if __name__ == '__main__':
     # percent_min_img_in_bbx(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
-    # num_min_imgs_vs_bbx_coverage(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
+    num_min_imgs_vs_bbx_coverage(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
     # get_all_correctness('vgg16')
     # test_get_all_correctness2('inception')
     # test_get_all_correctness2('resnet')
     # test_get_all_correctness2('vgg16')
-    get_all_correctness('vgg16')
+    # get_all_correctness('vgg16')
     # crop_correctness_in_bbx(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]))
     # pass
 

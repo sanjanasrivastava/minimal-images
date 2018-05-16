@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 import pandas as pd
+import pprint
 import seaborn as sns
 
 from make_small_dataset import text_to_small_label
@@ -142,12 +143,45 @@ def test_error(model_name, crop='img'):
     return size_test_errors, category_test_errors
 
 
+def arrange_test_errors():
+
+    '''
+    Returns:
+        { <vgg16, inception, resnet>:
+            { <img, bbx>:
+                { <bbx-size, category>:
+                    { accuracies }
+                }
+            }
+        }
+
+    '''
+
+    errors = {}
+    crop_types = ['img', 'bbx']
+    for model_name in models:
+        img_size_test_errors, img_category_test_errors = test_error(model_name)
+        bbx_size_test_errors, bbx_category_test_errors = test_error(model_name, crop='bbx')
+        errors[model_name] = {
+                                'img': {
+                                            'bbx-size': img_size_test_errors,
+                                            'category': img_category_test_errors
+                                       },
+                                'bbx': {
+                                            'bbx-size': bbx_size_test_errors,
+                                            'category': bbx_category_test_errors
+                                }
+                             }
+
+    with open(PATH_TO_CLASSIFICATION_RESULTS + 'arranged-errors.json', 'w') as errfile:
+        json.dump(errors, errfile)
+
+
 def pct_minimal_images_vs_correctness(crop_metric, image_scale, strictness, axis):
 
     # bar (violin) chart with one zone being correct, one zone being incorrect, and the average (distribution of) minimal images for each of those?
 
-    sns.set_style('whitegrid'
-                  '')
+    sns.set_style('whitegrid')
     nums = {model: json.load(open(PATH_TO_STATS + '0.2/' + model + '/1.0/' + strictness + '/' + axis + '/id-to-measurements.json')) for model in models}
 
     # make df: x -> correct or incorrect. y -> pct of image that is minimal. hue -> model. df with those three columns.
@@ -173,6 +207,40 @@ def pct_minimal_images_vs_correctness(crop_metric, image_scale, strictness, axis
     ax2 = sns.violinplot(x='correctly classified', y='percent of image that is minimal', hue='model', data=data)
     ax2.set_title('Percent of Image Consisting of ' + (strictness + ' ' + axis).title() + ' Minimal Images vs. Correctness of Image Classification (Crop Size = ' + str(crop_metric) + ')')
     plt.show()
+
+
+def pct_minimal_images_vs_crop_size(strictness, axis):
+
+    # chart showing four line plots: pct minimal images as a function of crop size for each strictness/axis combo
+
+    sns.set_style('whitegrid')
+    image_scale = 1.0
+
+    # DF: x = crop_metric, y = pct of image that is minimal, hue = model
+
+    all_dfs = []
+    for crop_metric in crop_metrics:
+        for model in models:
+
+            with open(PATH_TO_STATS + os.path.join(str(crop_metric), model, str(image_scale), strictness, axis, 'id-to-measurements.json')) as mfile:
+                id_to_measurements = json.load(mfile)
+
+            pct_min_imgs = []
+            for im_id in sorted(id_to_measurements.keys()):         # get pct of min map that is minimal for all image ids
+                pct_min_imgs.append(id_to_measurements[im_id][1][1] / float(id_to_measurements[im_id][1][3]))
+
+            crop_size_column = [crop_metric for __ in pct_min_imgs]
+            model_column = [model for __ in pct_min_imgs]
+
+            all_dfs.append(pd.DataFrame(data={'crop size': crop_size_column,
+                                              'percent minimal images': pct_min_imgs,
+                                              'model': model_column}))
+
+    data = pd.concat(all_dfs)
+    g = sns.lmplot(x='crop size', y='percent minimal images', hue='model', data=data, fit_reg=False, x_jitter=0.1)
+    g.fig.suptitle('Percent of Images that are ' + (strictness + ' ' + axis).title() + ' Minimal vs. Crop Size')
+    plt.show()
+
 
 def pct_correct_in_bbx():
 
@@ -206,9 +274,12 @@ def pct_correct_in_bbx():
     plt.show()
 
 
+
+
 if __name__ == '__main__':
 
     # vis_num_min_imgs_vs_prop_in_bbx_models(0.2, 1.0, 'loose', 'scale')
     # vis_num_min_imgs_vs_prop_in_bbx_models(0.2, 1.0, 'strict', 'scale')
-    pct_minimal_images_vs_correctness(0.2, 1.0, 'loose', 'scale')
+    # pct_minimal_images_vs_correctness(0.2, 1.0, 'loose', 'scale')
     # pct_correct_in_bbx()
+    pct_minimal_images_vs_crop_size('loose', 'shift')
