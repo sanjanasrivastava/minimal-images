@@ -15,6 +15,7 @@ PATH_TO_DATA = "/om/user/xboix/share/minimal-images/"
 # PATH_TO_DATA = '../min-img-data/'	# uncomment only when working on my laptop
 #""./backup/"
 PATH_TO_OUTPUT_DATA = '../min-img-data/'
+PATH_TO_OUTPUT_STATS = PATH_TO_OUTPUT_DATA + 'stats/'
 
 
 def create_location_minimal_image_maps(image_id, crop_metric, model_name, image_scale, loose, k=1):
@@ -251,7 +252,7 @@ def num_min_imgs_vs_bbx_coverage(crop_metric, model_name, image_scale, strictnes
     if not id_to_measurements:
         print('EMPTY DICTIONARY:', crop_metric, model_name, strictness, axis)
 
-    folder = PATH_TO_OUTPUT_DATA + settings.make_stats_foldername(crop_metric, model_name, image_scale, strictness, axis)
+    folder = PATH_TO_OUTPUT_STATS + settings.make_stats_foldername(crop_metric, model_name, image_scale, strictness, axis)
     print('FOLDER:', folder)
     if not os.path.exists(folder):
         print('FOLDER DIDNT EXIST')
