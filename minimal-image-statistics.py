@@ -247,12 +247,14 @@ def num_min_imgs_vs_bbx_coverage(crop_metric, model_name, image_scale, strictnes
         # map smalldataset_id to measurements
         id_to_measurements[smalldataset_id] = (proportion, totals)
 
-    print(id_to_measurements)
+    # print(id_to_measurements)
     if not id_to_measurements:
         print('EMPTY DICTIONARY:', crop_metric, model_name, strictness, axis)
 
     folder = PATH_TO_OUTPUT_DATA + settings.make_stats_foldername(crop_metric, model_name, image_scale, strictness, axis)
+    print('FOLDER:', folder)
     if not os.path.exists(folder):
+        print('FOLDER DIDNT EXIST')
         os.makedirs(folder)
     with open(folder + 'id-to-measurements.json', 'w') as writefile:
         json.dump(id_to_measurements, writefile)
