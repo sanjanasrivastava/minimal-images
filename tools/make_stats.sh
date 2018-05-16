@@ -18,7 +18,7 @@ for CROP_METRIC in "${CROP_METRICS[@]}"; do
     for MODEL in "${MODELS[@]}"; do
         for IMAGE_SCALE in "${IMAGE_SCALES[@]}"; do
             for STRICTNESS in "${STRICTNESSES[@]}"; do
-                for AXIS in "${AXES[@]}"; do
+                for AXIS in "${AXES[@]}"; do 
                      echo "$CROP_METRIC $MODEL $IMAGE_SCALE $STRICTNESS $AXIS"
                      singularity exec -B /om:/om -B /cbcl:/cbcl --nv /om/user/sanjanas/belledon-tensorflow-keras-master-latest.simg \
                      python minimal-image-statistics.py $CROP_METRIC $MODEL $IMAGE_SCALE $STRICTNESS $AXIS
