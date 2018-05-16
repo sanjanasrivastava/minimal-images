@@ -247,6 +247,7 @@ def num_min_imgs_vs_bbx_coverage(crop_metric, model_name, image_scale, strictnes
         # map smalldataset_id to measurements
         id_to_measurements[smalldataset_id] = (proportion, totals)
 
+    print(id_to_measurements)
     if not id_to_measurements:
         print('EMPTY DICTIONARY:', crop_metric, model_name, strictness, axis)
 
