@@ -237,7 +237,7 @@ def pct_minimal_images_vs_crop_size(strictness, axis):
                                               'model': model_column}))
 
     data = pd.concat(all_dfs)
-    g = sns.lmplot(x='crop size', y='percent minimal images', hue='model', data=data, fit_reg=False, x_jitter=0.1)
+    g = sns.lmplot(x='crop size', y='percent minimal images', hue='model', data=data, fit_reg=False, x_jitter=0.05)
     g.fig.suptitle('Percent of Images that are ' + (strictness + ' ' + axis).title() + ' Minimal vs. Crop Size')
     plt.show()
 

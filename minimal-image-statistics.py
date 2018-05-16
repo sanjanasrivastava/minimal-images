@@ -380,6 +380,7 @@ def crop_correctness_in_bbx(crop_metric, model_name, image_scale):
 
 if __name__ == '__main__':
     # percent_min_img_in_bbx(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
+    print(sys.argv)
     num_min_imgs_vs_bbx_coverage(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
     # get_all_correctness('vgg16')
     # test_get_all_correctness2('inception')
