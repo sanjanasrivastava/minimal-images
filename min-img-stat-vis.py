@@ -209,36 +209,45 @@ def pct_minimal_images_vs_correctness(crop_metric, image_scale, strictness, axis
     plt.show()
 
 
-def pct_minimal_images_vs_crop_size(strictness, axis):
+def pct_minimal_images_vs_crop_size():
 
     # chart showing four line plots: pct minimal images as a function of crop size for each strictness/axis combo
 
     sns.set_style('whitegrid')
     image_scale = 1.0
 
-    # DF: x = crop_metric, y = pct of image that is minimal, hue = model
+    strictnesses = ['loose', 'strict']
+    axes = ['shift', 'scale']
+    for axis in axes:
+        i = 0
+        fig = plt.figure()
+        for strictness in strictnesses:
 
-    all_dfs = []
-    for crop_metric in crop_metrics:
-        for model in models:
+            all_dfs = []
+            for crop_metric in crop_metrics:
+                for model in models:
 
-            with open(PATH_TO_STATS + os.path.join(str(crop_metric), model, str(image_scale), strictness, axis, 'id-to-measurements.json')) as mfile:
-                id_to_measurements = json.load(mfile)
+                    with open(PATH_TO_STATS + os.path.join(str(crop_metric), model, str(image_scale), strictness, axis, 'id-to-measurements.json')) as mfile:
+                        id_to_measurements = json.load(mfile)
 
-            pct_min_imgs = []
-            for im_id in sorted(id_to_measurements.keys()):         # get pct of min map that is minimal for all image ids
-                pct_min_imgs.append(id_to_measurements[im_id][1][1] / float(id_to_measurements[im_id][1][3]))
+                    pct_min_imgs = []
+                    for im_id in sorted(id_to_measurements.keys()):         # get pct of min map that is minimal for all image ids
+                        pct_min_imgs.append(id_to_measurements[im_id][1][1] / float(id_to_measurements[im_id][1][3]))
 
-            crop_size_column = [crop_metric for __ in pct_min_imgs]
-            model_column = [model for __ in pct_min_imgs]
+                    crop_size_column = [crop_metric for __ in pct_min_imgs]
+                    model_column = [model for __ in pct_min_imgs]
 
-            all_dfs.append(pd.DataFrame(data={'crop size': crop_size_column,
-                                              'percent minimal images': pct_min_imgs,
-                                              'model': model_column}))
+                    all_dfs.append(pd.DataFrame(data={'crop size': crop_size_column,
+                                                      'percent minimal images': pct_min_imgs,
+                                                      'model': model_column}))
 
-    data = pd.concat(all_dfs)
-    g = sns.lmplot(x='crop size', y='percent minimal images', hue='model', data=data, fit_reg=False, x_jitter=0.05)
-    g.fig.suptitle('Percent of Images that are ' + (strictness + ' ' + axis).title() + ' Minimal vs. Crop Size')
+            data = pd.concat(all_dfs)
+
+            fig.add_subplot(121 + i)
+            ax = sns.barplot(x='crop size', y='percent minimal images', hue='model', data=data)
+            ax.set_title('Percent of Images that are ' + (strictness + ' ' + axis).title() + ' Minimal vs. Crop Size')
+            i += 1
+
     plt.show()
 
 
@@ -264,6 +273,7 @@ def pct_correct_in_bbx():
     all_pct_correct_df = pd.concat(all_dfs)
     all_pct_correct_df = all_pct_correct_df.rename(index=str, columns={0: 'percent correct minimal images within bound-in box'})
 
+
     ax = sns.violinplot(x='crop size', y='percent correct minimal images within bound-in box', hue='model', data=all_pct_correct_df)
     # ax.set_ylim((0, 1))
     plt.figure()
@@ -282,7 +292,4 @@ if __name__ == '__main__':
     # vis_num_min_imgs_vs_prop_in_bbx_models(0.2, 1.0, 'strict', 'scale')
     # pct_minimal_images_vs_correctness(0.2, 1.0, 'loose', 'scale')
     # pct_correct_in_bbx()
-    pct_minimal_images_vs_crop_size('loose', 'shift')
-    pct_minimal_images_vs_crop_size('loose', 'scale')
-    pct_minimal_images_vs_crop_size('strict', 'shift')
-    pct_minimal_images_vs_crop_size('strict', 'scale')
+    pct_minimal_images_vs_crop_size()
