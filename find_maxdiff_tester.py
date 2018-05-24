@@ -1,9 +1,4 @@
-import json
 import numpy as np
-import os
-from PIL import Image
-from scipy.misc import imread, imresize, imshow
-import tensorflow as tf
 
 import settings
 from minimal_image_statistics import get_crop_size
