@@ -23,7 +23,10 @@ def get_maxdiff_coordinates(start_id, end_id, crop_metric, model_name, image_sca
 
             # Get correctness maps and check if diffcor possible
             corr_fns = (PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, smalldataset_id) + sfx + '.npy' for sfx in sfxs)
-            lcor, scor = cor_maps = [np.load(corr_fn) for corr_fn in corr_fns]
+            try:
+                lcor, scor = cor_maps = [np.load(corr_fn) for corr_fn in corr_fns]
+            except FileNotFoundError:
+                continue
             if compare_corr:
                 for cor_map in cor_maps:
                     if not cor_map.any():
