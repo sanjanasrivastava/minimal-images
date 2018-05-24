@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1403df6a-f044-4c1c-bcc0-1981a0ca2753" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/find_maxdiff_tester.py" afterPath="$PROJECT_DIR$/find_maxdiff_tester.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings.py" afterPath="$PROJECT_DIR$/settings.py" />
     </list>
     <ignored path="minimal-images.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -26,10 +27,11 @@
       <file leaf-file-name="find_maxdiff_tester.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/find_maxdiff_tester.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.73480666">
-              <caret line="137" column="94" selection-start-line="137" selection-start-column="94" selection-end-line="137" selection-end-column="94" />
+            <state vertical-scroll-proportion="0.8839779">
+              <caret line="189" column="49" selection-start-line="189" selection-start-column="49" selection-end-line="189" selection-end-column="49" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
+                <element signature="e#354#8352#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -39,10 +41,20 @@
         <entry file="file://$PROJECT_DIR$/find_maxdiff.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="140" column="0" selection-start-line="140" selection-start-column="0" selection-end-line="260" selection-end-column="39" />
+              <caret line="112" column="16" selection-start-line="112" selection-start-column="16" selection-end-line="115" selection-end-column="93" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-25.555555">
+              <caret line="117" column="106" selection-start-line="117" selection-start-column="106" selection-end-line="117" selection-end-column="106" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -62,7 +74,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/settings.py" />
         <option value="$PROJECT_DIR$/image_alterations.py" />
         <option value="$PROJECT_DIR$/alexnet.py" />
         <option value="$PROJECT_DIR$/tools/array_experiments.sh" />
@@ -71,6 +82,7 @@
         <option value="$PROJECT_DIR$/min-img-stat-vis.py" />
         <option value="$PROJECT_DIR$/find_maxdiff.py" />
         <option value="$PROJECT_DIR$/tools/get_maxdiff.sh" />
+        <option value="$PROJECT_DIR$/settings.py" />
         <option value="$PROJECT_DIR$/find_maxdiff_tester.py" />
       </list>
     </option>
@@ -457,7 +469,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#0#11#0" expanded="false" />
             <element signature="e#560#1975#0" expanded="false" />
             <element signature="e#2129#2389#0" expanded="false" />
             <element signature="e#2485#4324#0" expanded="false" />
@@ -495,7 +507,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#0#11#0" expanded="false" />
             <element signature="e#560#1975#0" expanded="false" />
             <element signature="e#2129#2389#0" expanded="false" />
             <element signature="e#2485#4324#0" expanded="false" />
@@ -509,7 +521,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#0#11#0" expanded="false" />
             <element signature="e#560#1975#0" expanded="false" />
             <element signature="e#2129#2389#0" expanded="false" />
             <element signature="e#2485#4324#0" expanded="false" />
@@ -523,7 +535,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#0#11#0" expanded="false" />
             <element signature="e#560#1975#0" expanded="false" />
             <element signature="e#2129#2389#0" expanded="false" />
             <element signature="e#2485#4324#0" expanded="false" />
@@ -537,7 +549,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#0#11#0" expanded="false" />
             <element signature="e#560#1975#0" expanded="false" />
             <element signature="e#2129#2389#0" expanded="false" />
             <element signature="e#2485#4324#0" expanded="false" />
@@ -551,7 +563,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#0#11#0" expanded="false" />
             <element signature="e#560#1975#0" expanded="false" />
             <element signature="e#2129#2389#0" expanded="false" />
             <element signature="e#2485#4324#0" expanded="false" />
@@ -778,20 +790,12 @@
         <state vertical-scroll-proportion="0.14917128">
           <caret line="173" column="30" selection-start-line="173" selection-start-column="30" selection-end-line="173" selection-end-column="30" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#0#11#0" expanded="false" />
             <element signature="e#560#1975#0" expanded="false" />
             <element signature="e#2129#2389#0" expanded="false" />
             <element signature="e#2485#4324#0" expanded="false" />
             <element signature="e#8111#10255#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="82" column="21" selection-start-line="82" selection-start-column="21" selection-end-line="82" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -829,10 +833,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-25.555555">
+          <caret line="117" column="106" selection-start-line="117" selection-start-column="106" selection-end-line="117" selection-end-column="106" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/find_maxdiff.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="140" column="0" selection-start-line="140" selection-start-column="0" selection-end-line="260" selection-end-column="39" />
+          <caret line="112" column="16" selection-start-line="112" selection-start-column="16" selection-end-line="115" selection-end-column="93" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
@@ -841,10 +853,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/find_maxdiff_tester.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.73480666">
-          <caret line="137" column="94" selection-start-line="137" selection-start-column="94" selection-end-line="137" selection-end-column="94" />
+        <state vertical-scroll-proportion="0.8839779">
+          <caret line="189" column="49" selection-start-line="189" selection-start-column="49" selection-end-line="189" selection-end-column="49" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#354#8352#0" expanded="false" />
           </folding>
         </state>
       </provider>

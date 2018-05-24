@@ -1,4 +1,6 @@
 import numpy as np
+import os
+from PIL import Image
 import pprint
 
 import settings
@@ -6,6 +8,7 @@ import settings
 from minimal_image_statistics import get_crop_size
 
 PATH_TO_DATA = settings.MIN_IMGS_PATH_TO_DATA
+PATH_TO_OUTPUT_DATA = '/om/user/sanjanas/min-img-data/'
 
 
 def get_maxdiff_coordinates(start_id, end_id, crop_metric, model_name, image_scale, axis, compare_corr=True):
@@ -140,13 +143,51 @@ def get_maxdiff_coordinates(start_id, end_id, crop_metric, model_name, image_sca
     return maxdiff_coordinates
 
 
+def save_crops(coords, crop_metric, model_name, image_scale, axis, compare_corr, num_samples=50):
+
+    folders = [PATH_TO_OUTPUT_DATA + settings.maxdiff_folder_name(axis, crop_metric, model_name, image_scale, 'diff' if compare_corr else 'any', conf=conf) for conf in ['high', 'low']]
+    for folder in folders:
+        if not os.path.exists(folder):
+            os.makedirs(folder)
+
+    top_ids = sorted(coords, reverse=True, key=lambda x: coords[x][2])[:num_samples]
+
+    for smalldataset_id in top_ids:
+
+        im_filename = PATH_TO_DATA + settings.folder_name('img') + settings.get_ind_name(settings.convert_id_small_to_imagenetval(smalldataset_id)) + '.JPEG'
+        im = Image.open(im_filename)
+        hcell, lcell = coords[smalldataset_id][:2]
+        hfn, lfn = (PATH_TO_OUTPUT_DATA + settings.maxdiff_file_name(smalldataset_id, axis, crop_metric, model_name, image_scale, 'diff' if compare_corr else 'any', conf=conf) for conf in ['high', 'low'])
+
+        if axis == 'scale':
+            high_size = get_crop_size(smalldataset_id, crop_metric)
+            low_size = high_size - 2
+            hcrop = im.crop(hcell[0], hcell[1], hcell[0] + high_size, hcell[1] + high_size)
+            lcrop = im.crop(lcell[0], lcell[1], lcell[0] + low_size, lcell[1] + low_size)
+
+        elif axis == 'shift':
+            size = get_crop_size(smalldataset_id, crop_metric)
+            hcrop = im.crop(hcell[0], hcell[1], hcell[0] + size, hcell[1] + size)
+            lcrop = im.crop(lcell[0], lcell[1], lcell[0] + size, lcell[1] + size)
+
+        hcrop.save(hfn, 'JPEG')
+        lcrop.save(lfn, 'JPEG')
+
+
 if __name__ == '__main__':
     coords = get_maxdiff_coordinates(0, 499, 0.2, 'resnet', 1.0, 'scale')
-    top_results = sorted(coords, reverse=True, key=lambda x: coords[x][2])[-10:]          # sort entries of coords by conf diff
+    top_results = sorted(coords, reverse=True, key=lambda x: coords[x][2])[:10]          # sort entries of coords by conf diff
     pp = pprint.PrettyPrinter()
     pp.pprint([coords[top_result] for top_result in top_results])
+
+    save_crops(coords, 0.2, 'resnet', 1.0, 'scale', True)
 
     coords = get_maxdiff_coordinates(0, 499, 0.2, 'resnet', 1.0, 'shift')
     top_results = sorted(coords, reverse=True, key=lambda x: coords[x][2])[:10]          # sort entries of coords by conf diff
     pp = pprint.PrettyPrinter()
     pp.pprint([coords[top_result] for top_result in top_results])
+
+    save_crops(coords, 0.2, 'resnet', 1.0, 'shift', True)
+
+
+

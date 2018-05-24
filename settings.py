@@ -114,6 +114,10 @@ def maxdiff_folder_name(axis, crop_metric, model_name, image_scale, corr, conf=N
         return os.path.join(MAXDIFF_PREFIX, axis, str(crop_metric), model_name, str(image_scale), corr, '')
 
 
+def maxdiff_file_name(image_id, axis, crop_metric, model_name, image_scale, corr, conf):
+    return maxdiff_folder_name(axis, crop_metric, model_name, image_scale, corr, conf=conf) + str(image_id)
+
+
 ### SMALL DATASET
 
 def convert_id_small_to_imagenetval(image_id):
