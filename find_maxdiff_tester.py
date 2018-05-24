@@ -142,7 +142,7 @@ def get_maxdiff_coordinates(start_id, end_id, crop_metric, model_name, image_sca
 
 if __name__ == '__main__':
     coords = get_maxdiff_coordinates(0, 499, 0.2, 'resnet', 1.0, 'scale')
-    top_results = sorted(coords, reverse=True, key=lambda x: coords[x][2])[:10]          # sort entries of coords by conf diff
+    top_results = sorted(coords, reverse=True, key=lambda x: coords[x][2])[-10:]          # sort entries of coords by conf diff
     pp = pprint.PrettyPrinter()
     pp.pprint([coords[top_result] for top_result in top_results])
 
