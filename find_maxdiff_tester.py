@@ -1,6 +1,7 @@
 import numpy as np
 
 import settings
+
 from minimal_image_statistics import get_crop_size
 
 PATH_TO_DATA = settings.MIN_IMGS_PATH_TO_DATA
