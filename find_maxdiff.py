@@ -125,6 +125,141 @@ def get_maxdiff_size_crops(start_id, end_id, crop_metric, model_name, image_scal
         np.save(lfolder + str(image_id), lcropped)
         np.save(sfolder + str(image_id), scropped)
 
+
+def get_max_diff_adjacent_crops(start_id, end_id, crop_metric, model_name, image_scale, compare_corr=True, use_top5=True):	# eventually add step size, right now defaults to 1 in code
+
+    # compare_correctness: bool indicating whether the final crops should necessarily have different classification correctness
+    # use_top5: bool indicating whether using top5 correctness or top1 correctness
+    # returns the two crops. If compare_correctness==True and there are no correctly classified crops, returns None.
+
+    crop_type = 'proportional' if crop_metric <= 1. else 'constant'
+    folders = [PATH_TO_DATA + settings.maxdiff_folder_name('size', crop_metric, model_name, image_scale, 'diff' if compare_corr else 'any', conf) for conf in ['high', 'low']]
+    for folder in folders:
+        if not os.path.exists(folder):
+            os.makedirs(folder)
+
+    sess = tf.Session()
+    model = settings.MODELS[model_name]
+    imgs = tf.placeholder(tf.float32, [None, model.im_size, model.im_size, 3])
+    network = model(imgs, sess)
+
+    image_ids = range(start_id, end_id + 1)
+    hc_correct = []
+    hc_incorrect = []
+    lc_correct = []
+    lc_incorrect = []
+    h_activations = {}
+    l_activations = {}
+    for image_id in image_ids:
+
+        f = open('small-dataset-to-imagenet.txt')
+        lines = f.readlines()
+        image_tag = lines[image_id].split(" ", 1)[0]
+        print(image_tag)
+
+        #image_tag = settings.get_ind_name(image_id)
+        image_filename = PATH_TO_DATA + settings.folder_name('img') + image_tag #+ ('.png' if image_id == 50001 else '.JPEG')
+        image = Image.open(image_filename)
+        if image.mode != 'RGB':
+            image = image.convert('RGB')
+        image = np.asarray(image)
+
+        image_label = image_tag[:-5] + '_' + str(crop_metric) + '_' + model_name + '_'
+        correctness_type = 'top5' if use_top5 else 'top1'
+        correctness_filename = PATH_TO_DATA + (settings.map_folder_name(settings.TOP5_MAPTYPE, crop_metric) if use_top5 else settings.map_folder_name(settings.TOP1_MAPTYPE, crop_metric)) + image_label + (settings.TOP5_MAPTYPE if use_top5 else settings.TOP1_MAPTYPE) + '.npy'
+        cor_map = np.load(correctness_filename)
+        corr_extension = '_diffcorrectness' if compare_corr else '_anycorrectness'
+
+        if compare_corr:
+            if not cor_map.any():
+                print('%s has no correctly classified crops.' % image_tag)
+                continue
+            elif cor_map.all():
+                print('%s has only correctly classified crops.' % image_tag)
+                continue
+
+        con_map_filename = PATH_TO_DATA + settings.map_folder_name(settings.CONFIDENCE_MAPTYPE, crop_metric) + image_label + settings.CONFIDENCE_MAPTYPE + '.npy'
+        con_map = np.load(con_map_filename)
+
+        down_diff = np.diff(con_map, axis=0)	# apparently assumes step_size=1 (adjacency)
+        up_diff = -1. * down_diff
+        right_diff = np.diff(con_map)
+        left_diff = -1. * right_diff
+        diffs = {'up': up_diff, 'down': down_diff, 'left': left_diff, 'right': right_diff}
+
+        # TESTER: CLASSIFYING CROPS TO SEE IF THERE'S A DIFFERENCE BETWEEN WHAT THE TESTER REPORTS AND WHAT THIS REPORTS
+        true_labels = json.load(open('caffe_ilsvrc12/' + settings.DATASET + '-labels.json'))
+
+        while True:
+            maxes = {direction: np.unravel_index(np.argmax(diffs[direction]), diffs[direction].shape) for direction in diffs}	# map each directional diff to its argmax (index of its maximum confidence diff)
+            max_dir = max([direction for direction in maxes], key=lambda direction: diffs[direction][tuple(maxes[direction])])	# get the direction of the diff whose max confidence is the highest out of the four max confidences
+            # depending on the max-confidence direction, get the argmax of that direction. The more confident crop will be offset by 1 in a way that depends on the direction.
+            if max_dir == 'up':
+                up_max = maxes['up']
+                gcell, cell = (tuple(up_max), (up_max[0] + 1, up_max[1]))	# up (and left) are like this because when up and left diffs are made, the negation also changes the direction in which your step goes. it goes down -> up; right -> left.
+            elif max_dir == 'down':
+                down_max = maxes['down']
+                cell, gcell = (tuple(down_max), (down_max[0] + 1, down_max[1]))
+            elif max_dir == 'left':
+                left_max = maxes['left']
+                gcell, cell = (tuple(left_max), (left_max[0], left_max[1] + 1))
+            else:
+                right_max = maxes['right']
+                cell, gcell = (tuple(right_max), (right_max[0], right_max[1] + 1))
+
+            diff_correctness = cor_map[cell] != cor_map[gcell]
+            if diff_correctness or not compare_correctness:
+                y, x = cell
+                gy, gx = gcell
+                height, width, channels = image.shape
+                crop_size = get_crop_size(height, proportion) if height <= width else get_crop_size(width, proportion)
+                dim_used = 'height' if height <= width else 'width'
+
+                cropped = image[cell[0]:cell[0] + crop_size, cell[1]:cell[1] + crop_size]
+                gcropped = image[gcell[0]:gcell[0] + crop_size, gcell[1]:gcell[1] + crop_size]
+                true_value = true_labels[image_tag[:-5]]
+                hc  = imresize(gcropped, (network.im_size, network.im_size))
+                lc = imresize(cropped, (network.im_size, network.im_size))
+
+                hresult = sess.run(network.pull_layers, feed_dict={network.imgs: [hc]})
+                hcprob = hresult[0][0]
+                h_activations[image_id] = hresult[1:]
+
+                result = sess.run(network.pull_layers, feed_dict={network.imgs: [lc]})
+                lcprob = lresult[0][0]
+                l_activations[image_id] = lresult[1:]
+
+                hcpreds = (np.argsort(hcprob)[::-1])[0:5]
+                lcpreds = (np.argsort(lcprob)[::-1])[0:5]
+
+                if true_value in hcpreds:
+                    hc_correct.append(image_id)
+                else:
+                    hc_incorrect.append(image_id)
+                if true_value in lcpreds:
+                    lc_correct.append(image_id)
+                else:
+                    lc_incorrect.append(image_id)
+
+                maxdiff_folder = settings.maxdiff_folder_name(crop_metric)
+                np.save(PATH_TO_DATA + maxdiff_folder + image_label + 'maxdiff_lowconf' + corr_extension, cropped)
+                np.save(PATH_TO_DATA + maxdiff_folder + image_label + 'maxdiff_highconf' + corr_extension, gcropped)
+                break
+
+            else:
+                if max_dir in ['up', 'left']:
+                    diffs[max_dir][gcell] = -2.	# for the diff where that was the argmax, mark the cell containing it to something lower than any real entry (-1. <= real entry <= 1.) This is gcell for up, left and cell for down, right because the lower-indexed cell is always the one that contained the confidence originally
+                else:
+                    diffs[max_dir][cell] = -2.
+
+    print('INTERNAL TEST')
+    print("High confidence crop correctly classified:", hc_correct)
+    print('High confidence crop incorrectly classified:', hc_incorrect)
+    print('Low confidence crop correctly classified:', lc_correct)
+    print('Low confidence crop incorrectly classified:', lc_incorrect)
+    sess.close()
+    return h_activations, l_activations
+
            
 if __name__ == '__main__':
     get_maxdiff_size_crops(1, 5, 0.2, 'vgg16', 1.0)
