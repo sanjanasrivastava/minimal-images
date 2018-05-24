@@ -135,7 +135,7 @@ def get_maxdiff_coordinates(start_id, end_id, crop_metric, model_name, image_sca
                     else:
                         diffs[max_dir][cell] = -2.
 
-            maxdiff_coordinates[smalldataset_id] = (gcell, cell, con_map[lcell] - con_map[scell])
+            maxdiff_coordinates[smalldataset_id] = (gcell, cell, con_map[gcell] - con_map[cell])
 
     return maxdiff_coordinates
 
