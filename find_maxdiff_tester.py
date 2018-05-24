@@ -84,11 +84,69 @@ def get_maxdiff_coordinates(start_id, end_id, crop_metric, model_name, image_sca
 
             maxdiff_coordinates[smalldataset_id] = (lcell, scell, lcon[lcell] - scon[scell])
 
+        else:           # shift-based maxdiff
+
+            correctness_filename = PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, smalldataset_id) + '.npy'
+            try:
+                cor_map = np.load(correctness_filename)
+            except FileNotFoundError:
+                continue
+            if compare_corr:
+                if not cor_map.any():
+                    print('%s has no correctly classified crops.' % smalldataset_id)
+                    continue
+                elif cor_map.all():
+                    print('%s has only correctly classified crops.' % smalldataset_id)
+                    continue
+
+            con_map_filename = PATH_TO_DATA + settings.map_filename(settings.CONFIDENCE_MAPTYPE, crop_metric, model_name, image_scale, smalldataset_id) + '.npy'
+            con_map = np.load(con_map_filename)
+
+            down_diff = np.diff(con_map, axis=0)	# apparently assumes step_size=1 (adjacency)
+            up_diff = -1. * down_diff
+            right_diff = np.diff(con_map)
+            left_diff = -1. * right_diff
+            diffs = {'up': up_diff, 'down': down_diff, 'left': left_diff, 'right': right_diff}
+
+            while True:
+                maxes = {direction: np.unravel_index(np.argmax(diffs[direction]), diffs[direction].shape) for direction in diffs}	# map each directional diff to its argmax (index of its maximum confidence diff)
+                max_dir = max([direction for direction in maxes], key=lambda direction: diffs[direction][tuple(maxes[direction])])	# get the direction of the diff whose max confidence is the highest out of the four max confidences
+                # depending on the max-confidence direction, get the argmax of that direction. The more confident crop will be offset by 1 in a way that depends on the direction.
+                if max_dir == 'up':
+                    up_max = maxes['up']
+                    gcell, cell = (tuple(up_max), (up_max[0] + 1, up_max[1]))	# up (and left) are like this because when up and left diffs are made, the negation also changes the direction in which your step goes. it goes down -> up; right -> left.
+                elif max_dir == 'down':
+                    down_max = maxes['down']
+                    cell, gcell = (tuple(down_max), (down_max[0] + 1, down_max[1]))
+                elif max_dir == 'left':
+                    left_max = maxes['left']
+                    gcell, cell = (tuple(left_max), (left_max[0], left_max[1] + 1))
+                else:
+                    right_max = maxes['right']
+                    cell, gcell = (tuple(right_max), (right_max[0], right_max[1] + 1))
+
+                diff_correctness = cor_map[cell] != cor_map[gcell]
+                if diff_correctness or not compare_corr:
+                    break
+
+                else:
+                    if max_dir in ['up', 'left']:
+                        diffs[max_dir][gcell] = -2.	# for the diff where that was the argmax, mark the cell containing it to something lower than any real entry (-1. <= real entry <= 1.) This is gcell for up, left and cell for down, right because the lower-indexed cell is always the one that contained the confidence originally
+                    else:
+                        diffs[max_dir][cell] = -2.
+
+            maxdiff_coordinates[smalldataset_id] = (gcell, cell, con_map[lcell] - con_map[scell])
+
     return maxdiff_coordinates
 
 
 if __name__ == '__main__':
     coords = get_maxdiff_coordinates(0, 499, 0.2, 'resnet', 1.0, 'scale')
-    top_results = sorted(coords, reverse=True, key=lambda x: coords[x][2])[:50]          # sort entries of coords by conf diff
+    top_results = sorted(coords, reverse=True, key=lambda x: coords[x][2])[:10]          # sort entries of coords by conf diff
+    pp = pprint.PrettyPrinter()
+    pp.pprint([coords[top_result] for top_result in top_results])
+
+    coords = get_maxdiff_coordinates(0, 499, 0.2, 'resnet', 1.0, 'shift')
+    top_results = sorted(coords, reverse=True, key=lambda x: coords[x][2])[:10]          # sort entries of coords by conf diff
     pp = pprint.PrettyPrinter()
     pp.pprint([coords[top_result] for top_result in top_results])
