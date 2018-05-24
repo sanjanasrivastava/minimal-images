@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1403df6a-f044-4c1c-bcc0-1981a0ca2753" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/find_maxdiff_tester.py" afterPath="$PROJECT_DIR$/find_maxdiff_tester.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings.py" afterPath="$PROJECT_DIR$/settings.py" />
     </list>
     <ignored path="minimal-images.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -26,8 +27,8 @@
       <file leaf-file-name="find_maxdiff_tester.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/find_maxdiff_tester.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.61878455">
-              <caret line="173" column="31" selection-start-line="173" selection-start-column="31" selection-end-line="173" selection-end-column="31" />
+            <state vertical-scroll-proportion="0.58563536">
+              <caret line="172" column="22" selection-start-line="172" selection-start-column="22" selection-end-line="172" selection-end-column="22" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
                 <element signature="e#354#8352#0" expanded="false" />
@@ -51,8 +52,8 @@
       <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-25.555555">
-              <caret line="117" column="106" selection-start-line="117" selection-start-column="106" selection-end-line="117" selection-end-column="106" />
+            <state vertical-scroll-proportion="-23.333334">
+              <caret line="114" column="109" selection-start-line="114" selection-start-column="109" selection-end-line="114" selection-end-column="109" />
               <folding />
             </state>
           </provider>
@@ -832,14 +833,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-25.555555">
-          <caret line="117" column="106" selection-start-line="117" selection-start-column="106" selection-end-line="117" selection-end-column="106" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/find_maxdiff.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -850,10 +843,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-23.333334">
+          <caret line="114" column="109" selection-start-line="114" selection-start-column="109" selection-end-line="114" selection-end-column="109" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/find_maxdiff_tester.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.61878455">
-          <caret line="173" column="31" selection-start-line="173" selection-start-column="31" selection-end-line="173" selection-end-column="31" />
+        <state vertical-scroll-proportion="0.58563536">
+          <caret line="172" column="22" selection-start-line="172" selection-start-column="22" selection-end-line="172" selection-end-column="22" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
             <element signature="e#354#8352#0" expanded="false" />

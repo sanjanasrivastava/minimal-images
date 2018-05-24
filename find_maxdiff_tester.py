@@ -145,10 +145,9 @@ def get_maxdiff_coordinates(start_id, end_id, crop_metric, model_name, image_sca
 
 def save_crops(coords, crop_metric, model_name, image_scale, axis, compare_corr, num_samples=50):
 
-    folders = [PATH_TO_OUTPUT_DATA + settings.maxdiff_folder_name(axis, crop_metric, model_name, image_scale, 'diff' if compare_corr else 'any', conf=conf) for conf in ['high', 'low']]
-    for folder in folders:
-        if not os.path.exists(folder):
-            os.makedirs(folder)
+    folder = PATH_TO_OUTPUT_DATA + settings.maxdiff_folder_name(axis, crop_metric, model_name, image_scale, 'diff' if compare_corr else 'any')
+    if not os.path.exists(folder):
+        os.makedirs(folder)
 
     top_ids = sorted(coords, reverse=True, key=lambda x: coords[x][2])[:num_samples]
 
@@ -157,7 +156,7 @@ def save_crops(coords, crop_metric, model_name, image_scale, axis, compare_corr,
         im_filename = PATH_TO_DATA + settings.folder_name('img') + settings.get_ind_name(settings.convert_id_small_to_imagenetval(smalldataset_id)) + '.JPEG'
         im = Image.open(im_filename)
         hcell, lcell = coords[smalldataset_id][:2]
-        hfn, lfn = (PATH_TO_OUTPUT_DATA + settings.maxdiff_file_name(smalldataset_id, axis, crop_metric, model_name, image_scale, 'diff' if compare_corr else 'any', conf=conf) for conf in ['high', 'low'])
+        hfn, lfn = (PATH_TO_OUTPUT_DATA + settings.maxdiff_file_name(smalldataset_id, axis, crop_metric, model_name, image_scale, 'diff' if compare_corr else 'any', conf) for conf in ['high', 'low'])
 
         if axis == 'scale':
             high_size = get_crop_size(smalldataset_id, crop_metric)
@@ -170,8 +169,8 @@ def save_crops(coords, crop_metric, model_name, image_scale, axis, compare_corr,
             hcrop = im.crop((hcell[0], hcell[1], hcell[0] + size, hcell[1] + size))
             lcrop = im.crop((lcell[0], lcell[1], lcell[0] + size, lcell[1] + size))
 
-        hcrop.save(hfn + '.JPEG', 'JPEG')
-        lcrop.save(lfn + '.JPEG', 'JPEG')
+        hcrop.save(hfn, 'JPEG')
+        lcrop.save(lfn, 'JPEG')
 
 
 if __name__ == '__main__':

@@ -107,15 +107,12 @@ MAXDIFF_PREFIX = 'maxdiff'
 #     return IMAGENET_SET + '_' + MAXDIFF_PREFIX + '_' + str(proportion) + '/'
 
 
-def maxdiff_folder_name(axis, crop_metric, model_name, image_scale, corr, conf=None):
-    if conf:    
-        return os.path.join(MAXDIFF_PREFIX, axis, str(crop_metric), model_name, str(image_scale), corr, conf, '')
-    else: 
-        return os.path.join(MAXDIFF_PREFIX, axis, str(crop_metric), model_name, str(image_scale), corr, '')
+def maxdiff_folder_name(axis, crop_metric, model_name, image_scale, corr):
+    return os.path.join(MAXDIFF_PREFIX, axis, str(crop_metric), model_name, str(image_scale), corr, '')
 
 
 def maxdiff_file_name(image_id, axis, crop_metric, model_name, image_scale, corr, conf):
-    return maxdiff_folder_name(axis, crop_metric, model_name, image_scale, corr, conf=conf) + str(image_id)
+    return maxdiff_folder_name(axis, crop_metric, model_name, image_scale, corr) + str(image_id) + '_' + conf + '.JPEG'
 
 
 ### SMALL DATASET
