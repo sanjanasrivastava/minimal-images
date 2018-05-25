@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="1403df6a-f044-4c1c-bcc0-1981a0ca2753" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/find_maxdiff_tester.py" afterPath="$PROJECT_DIR$/find_maxdiff_tester.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings.py" afterPath="$PROJECT_DIR$/settings.py" />
     </list>
     <ignored path="minimal-images.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,8 +26,8 @@
       <file leaf-file-name="find_maxdiff_tester.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/find_maxdiff_tester.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.58563536">
-              <caret line="172" column="22" selection-start-line="172" selection-start-column="22" selection-end-line="172" selection-end-column="22" />
+            <state vertical-scroll-proportion="0.27071825">
+              <caret line="151" column="98" selection-start-line="151" selection-start-column="98" selection-end-line="151" selection-end-column="98" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
                 <element signature="e#354#8352#0" expanded="false" />
@@ -853,8 +852,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/find_maxdiff_tester.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.58563536">
-          <caret line="172" column="22" selection-start-line="172" selection-start-column="22" selection-end-line="172" selection-end-column="22" />
+        <state vertical-scroll-proportion="0.27071825">
+          <caret line="151" column="98" selection-start-line="151" selection-start-column="98" selection-end-line="151" selection-end-column="98" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
             <element signature="e#354#8352#0" expanded="false" />

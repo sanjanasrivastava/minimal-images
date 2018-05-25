@@ -149,7 +149,7 @@ def save_crops(coords, crop_metric, model_name, image_scale, axis, compare_corr,
     if not os.path.exists(folder):
         os.makedirs(folder)
 
-    top_ids = sorted(coords, reverse=True, key=lambda x: coords[x][2])[:num_samples]
+    top_ids = sorted(coords, reverse=True, key=lambda x: coords[x][2])[num_samples:num_samples * 2]
 
     for smalldataset_id in top_ids:
 
