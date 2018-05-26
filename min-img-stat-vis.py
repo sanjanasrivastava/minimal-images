@@ -274,12 +274,13 @@ def pct_correct_in_bbx():
     all_pct_correct_df = all_pct_correct_df.rename(index=str, columns={0: 'percent correct minimal images within bound-in box'})
 
 
-    ax = sns.violinplot(x='crop size', y='percent correct minimal images within bound-in box', hue='model', data=all_pct_correct_df)
+    # ax = sns.violinplot(x='crop size', y='percent correct minimal images within bound-in box', hue='model', data=all_pct_correct_df)
     # ax.set_ylim((0, 1))
-    plt.figure()
-    ax2 = sns.boxplot(x='crop size', y='percent correct minimal images within bound-in box', hue='model', data=all_pct_correct_df)
+    # plt.figure()
+    # ax2 = sns.boxplot(x='crop size', y='percent correct minimal images within bound-in box', hue='model', data=all_pct_correct_df)
     plt.figure()
     ax3 = sns.pointplot(x='crop size', y='percent correct minimal images within bound-in box', hue='model', data=all_pct_correct_df)
+    ax3.set_title('Percent Correctly Classified Minimal Images Within Object Bound-in Box')
 
     plt.show()
 
@@ -291,5 +292,5 @@ if __name__ == '__main__':
     # vis_num_min_imgs_vs_prop_in_bbx_models(0.2, 1.0, 'loose', 'scale')
     # vis_num_min_imgs_vs_prop_in_bbx_models(0.2, 1.0, 'strict', 'scale')
     # pct_minimal_images_vs_correctness(0.2, 1.0, 'loose', 'scale')
-    # pct_correct_in_bbx()
-    pct_minimal_images_vs_crop_size()
+    pct_correct_in_bbx()
+    # pct_minimal_images_vs_crop_size()

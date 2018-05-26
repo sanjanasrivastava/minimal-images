@@ -186,7 +186,7 @@ def get_intractable_images(path_to_data, crop_metric, model_name, image_scale):
 
 
 if __name__ == '__main__':
-    print(get_intractable_images('/om/user/xboix/share/minimal-images/', 0.4, 'resnet', 1.0))
-
+    # print(get_intractable_images('/om/user/xboix/share/minimal-images/', 0.4, 'resnet', 1.0))
+    get_class_labels([3552, 3928])
 
 
