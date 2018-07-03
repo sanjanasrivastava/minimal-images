@@ -3,9 +3,9 @@ import os
 
 from alexnet import alexnet 
 from imagenet_classes import class_names
-from inception import inception
-from resnet import resnet
-from vgg16 import vgg16
+# from inception import inception
+# from resnet import resnet
+# from vgg16 import vgg16
 
 
 IMAGENET_SET = 'ILSVRC2012'
@@ -17,10 +17,9 @@ DATA_FIELDNAMES = ['testID', 'imagenet_set', 'dataset', 'datatype', 'num_images'
 
 
 NUM_CLASSES = 1000
-MODELS = {'vgg16': vgg16, 'alexnet': alexnet, 'inception': inception, 'resnet': resnet}
+# MODELS = {'vgg16': vgg16, 'alexnet': alexnet, 'inception': inception, 'resnet': resnet}
 # PULL_LAYERS = {'vgg16': [model.probs, model.conv1_1, model.conv1_2, model.pool1, model.conv2_1, model.conv2_2, model.pool2, model.conv3_1, model.conv3_2, model.conv3_3, model.pool3, model.conv4_1, model.conv4_2, model.conv4_3, model.pool4, model.conv5_1, model.conv5_2, model.conv5_3, model.pool5, model.fc1, model.fc2, model.fc3l],
 #                'alexnet': [model.probs, model.conv1, model.conv2, model.conv3, model.conv4, model.conv5, model.fc6, model.fc7, model.fc8]}
-
 
 
 CROP_MIN_WIDTH = 20
@@ -187,6 +186,6 @@ def get_intractable_images(path_to_data, crop_metric, model_name, image_scale):
 
 if __name__ == '__main__':
     # print(get_intractable_images('/om/user/xboix/share/minimal-images/', 0.4, 'resnet', 1.0))
-    get_class_labels([3552, 3928])
+    get_class_labels([4241])
 
 

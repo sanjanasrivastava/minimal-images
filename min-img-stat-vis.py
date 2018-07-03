@@ -213,12 +213,13 @@ def pct_minimal_images_vs_crop_size():
 
     # chart showing four line plots: pct minimal images as a function of crop size for each strictness/axis combo
 
-    sns.set_style('whitegrid')
+    sns.set(font_scale=1.3, style='whitegrid')
     image_scale = 1.0
 
     strictnesses = ['loose', 'strict']
     axes = ['shift', 'scale']
     for axis in axes:
+        sns.set(font_scale=1.3, style='whitegrid')
         i = 0
         fig = plt.figure()
         for strictness in strictnesses:
@@ -232,7 +233,7 @@ def pct_minimal_images_vs_crop_size():
 
                     pct_min_imgs = []
                     for im_id in sorted(id_to_measurements.keys()):         # get pct of min map that is minimal for all image ids
-                        pct_min_imgs.append(id_to_measurements[im_id][1][1] / float(id_to_measurements[im_id][1][3]))
+                        pct_min_imgs.append((id_to_measurements[im_id][1][1] / float(id_to_measurements[im_id][1][3])) * 100)
 
                     crop_size_column = [crop_metric for __ in pct_min_imgs]
                     model_column = [model for __ in pct_min_imgs]
@@ -244,11 +245,23 @@ def pct_minimal_images_vs_crop_size():
             data = pd.concat(all_dfs)
 
             fig.add_subplot(121 + i)
-            ax = sns.barplot(x='crop size', y='percent minimal images', hue='model', data=data)
+            ax = sns.pointplot(x='crop size', y='percent minimal images', hue='model', data=data)
             ax.set_title('Percent of Images that are ' + (strictness + ' ' + axis).title() + ' Minimal vs. Crop Size')
             i += 1
 
     plt.show()
+
+
+def accuracy_vs_crop_size():
+
+    sns.set(font_scale=1.5, style='whitegrid')
+
+    for model in models:
+        pass
+
+
+
+
 
 
 def pct_correct_in_bbx():
@@ -285,6 +298,174 @@ def pct_correct_in_bbx():
     plt.show()
 
 
+def pct_min_img_vs_bbx_size():
+
+    '''
+    line plot of % min imgs vs. bbx size (object size) - strict scale, all three models
+    TODO should I hold a constant crop metric? If so, I choose 0.2
+    '''
+
+    crop_metric = 0.2
+    image_scale = 1.0
+    strictness = 'strict'
+    axis = 'scale'
+
+    all_dfs = []
+    for model in models:
+        with open(PATH_TO_STATS + os.path.join(str(crop_metric), model, str(image_scale), strictness, axis, 'id-to-measurements.json')) as mfile:
+            id_to_measurements = json.load(mfile)
+
+        im_ids = sorted(id_to_measurements.keys())  # df col 0: smalldataset_id (not actually put into df)
+        bbx_sizes = []                              # df col 1: bbx size
+        pct_min_imgs = []                           # df col 2: pct min imgs
+        model_column = [model for __ in im_ids]     # df col 3: model
+        for im_id in im_ids:
+            bbx_sizes.append(discrete_sizes(id_to_measurements[im_id][0]))
+            pct_min_imgs.append((id_to_measurements[im_id][1][0] / float(id_to_measurements[im_id][1][3])) * 100)   # (num min imgs / num pixels) * 100
+
+        all_dfs.append(pd.DataFrame(data={'Object size': bbx_sizes,
+                                          'Percent minimal images': pct_min_imgs,
+                                          'Model': model_column}))
+    data = pd.concat(all_dfs)
+    # data = data.sort_values(['Object size'], ascending=SIZES)
+
+    sns.set(font_scale=1.5, style='whitegrid')
+    ax = sns.pointplot(x='Object size', y='Percent minimal images', hue='Model', data=data, order=SIZES)
+    ax.set_title('% Strict shift minimal images vs. object size')
+    ax.set_ylabel('% Strict shift minimal images')
+    plt.show()
+
+
+def accuracy_vs_bbx_size():
+
+    '''
+    line plot of accuracy vs. bbx size - strict scale 0.2, all three models
+    '''
+
+    crop_metric = 0.2
+    image_scale = 1.0
+    strictness = 'strict'
+    axis = 'scale'
+
+    all_dfs = []
+
+    for model in models:
+        with open(PATH_TO_CLASSIFICATION_RESULTS + model + '-small-dataset-classification-correctness.json', 'r') as cfile:
+            classification_results = json.load(cfile)
+        with open(PATH_TO_STATS + os.path.join(str(crop_metric), model, str(image_scale), strictness, axis, 'id-to-measurements.json'), 'r') as mfile:
+            id_to_measurements = json.load(mfile)
+
+        im_ids = id_to_measurements.keys()
+        size_classification_results = {size: [] for size in SIZES}
+        for im_id in im_ids:        # map size string to a list of correctness values for its images
+            bbx_size = discrete_sizes(id_to_measurements[im_id][0])     # get the size of the bbx
+            size_classification_results[bbx_size].append(classification_results[str(im_id)][0])         # append the full image correctness to that size's list
+        avg_size_classification_results = {size: np.mean(size_classification_results[size]) * 100 for size in size_classification_results}        # get averages as percentages
+
+        bbx_sizes = SIZES
+        accuracies = [avg_size_classification_results[size] for size in SIZES]      # get accuracies in order of SIZES
+        model_column = [model for __ in SIZES]
+
+        all_dfs.append(pd.DataFrame(data={'Object size': bbx_sizes,
+                                          '% Accuracy of DNN on full image': accuracies,
+                                          'DNN': model_column}))
+
+    data = pd.concat(all_dfs)
+    sns.set(font_scale=1.5, style='whitegrid')
+    ax = sns.pointplot(x='Object size', y='% Accuracy of DNN on full image', hue='DNN', data=data)
+    ax.set_title('Accuracy of DNN on full image vs. object size ')
+    ax.set_ylabel('% Accuracy of DNN on full image')
+    plt.show()
+
+
+SMALL_LABEL_TO_TEXT = {text_to_small_label[text]: text for text in text_to_small_label}
+CATEGORIES = [SMALL_LABEL_TO_TEXT[i] for i in range(len(SMALL_LABEL_TO_TEXT))]              # text categories in order of ordinal value
+
+
+def pct_min_img_vs_category():
+
+    '''
+    line plot of % min imgs vs. category - strict scale 0.2, all three models
+    '''
+
+    crop_metric = 0.2
+    image_scale = 1.0
+    strictness = 'strict'
+    axis = 'scale'
+
+    with open('small-dataset-to-imagenet.txt', 'r') as labelfile:
+        vals = list(labelfile.readlines())
+    category_inds = [int(val.split()[-1]) for val in vals]
+
+    all_dfs = []
+    for model in models:
+        with open(PATH_TO_STATS + os.path.join(str(crop_metric), model, str(image_scale), strictness, axis, 'id-to-measurements.json')) as mfile:
+            id_to_measurements = json.load(mfile)
+
+        im_ids = sorted(id_to_measurements.keys())  # df col 0: smalldataset_id (not actually put into df)
+        categories = []                             # df col 1: categories
+        pct_min_imgs = []                           # df col 2: pct min imgs
+        model_column = [model for __ in im_ids]     # df col 3: model
+        for im_id in im_ids:
+            categories.append(SMALL_LABEL_TO_TEXT[category_inds[int(im_id)]])       # get the im_idth image's text category and append it to the list of categories
+            pct_min_imgs.append((id_to_measurements[im_id][1][0] / float(id_to_measurements[im_id][1][3])) * 100)   # (num min imgs / num pixels) * 100
+
+        all_dfs.append(pd.DataFrame(data={'Object category': categories,
+                                          'Percent minimal images': pct_min_imgs,
+                                          'DNN': model_column}))
+    data = pd.concat(all_dfs)
+
+    sns.set(font_scale=1.5, style='whitegrid')
+    ax = sns.pointplot(x='Object category', y='Percent minimal images', hue='DNN', data=data, order=CATEGORIES)
+    ax.set_title('% Strict shift minimal images vs. object category')
+    ax.set_ylabel('% Strict shift minimal images')
+    plt.show()
+
+
+def accuracy_vs_category():
+
+    '''
+    line plot of accuracy vs. category - strict scale 0.2, all three models
+    '''
+
+    crop_metric = 0.2
+    image_scale = 1.0
+    strictness = 'strict'
+    axis = 'scale'
+
+    all_dfs = []
+
+    for model in models:
+        with open(PATH_TO_CLASSIFICATION_RESULTS + model + '-small-dataset-classification-correctness.json', 'r') as cfile:
+            classification_results = json.load(cfile)
+        with open('small-dataset-to-imagenet.txt', 'r') as labelfile:
+            vals = list(labelfile.readlines())
+            category_inds = [int(val.split()[-1]) for val in vals]
+
+        im_ids = sorted([int(key) for key in classification_results.keys()])
+        category_classification_results = {category: [] for category in category_inds}
+        for im_id in im_ids:        # map size string to a list of correctness values for its images
+            category = category_inds[im_id]    # get the category of the image
+            category_classification_results[category].append(classification_results[str(im_id)][0])         # append the full image correctness to that size's list
+        avg_category_classification_results = {category: np.mean(category_classification_results[category]) * 100 for category in category_classification_results}        # get averages as percentages
+
+
+        accuracies = [avg_category_classification_results[category] for category in range(len(CATEGORIES))]      # get accuracies in order of SIZES
+        model_column = [model for __ in CATEGORIES]
+
+
+        all_dfs.append(pd.DataFrame(data={'Object category': CATEGORIES,
+                                          '% Accuracy of DNN on full image': accuracies,
+                                          'DNN': model_column}))
+
+    data = pd.concat(all_dfs)
+    print(data)
+    sns.set(font_scale=1.5, style='whitegrid')
+    ax = sns.pointplot(x='Object category', y='% Accuracy of DNN on full image', hue='DNN', data=data, order=CATEGORIES)
+    ax.set_title('Accuracy of DNN on full image vs. object category ')
+    ax.set_ylabel('% Accuracy of DNN on full image')
+
+    plt.show()
 
 
 if __name__ == '__main__':
@@ -292,5 +473,10 @@ if __name__ == '__main__':
     # vis_num_min_imgs_vs_prop_in_bbx_models(0.2, 1.0, 'loose', 'scale')
     # vis_num_min_imgs_vs_prop_in_bbx_models(0.2, 1.0, 'strict', 'scale')
     # pct_minimal_images_vs_correctness(0.2, 1.0, 'loose', 'scale')
-    pct_correct_in_bbx()
+    # pct_correct_in_bbx()
     # pct_minimal_images_vs_crop_size()
+    # pct_min_img_vs_bbx_size()
+    # accuracy_vs_bbx_size()
+    # pct_min_img_vs_category()
+
+    accuracy_vs_category()
