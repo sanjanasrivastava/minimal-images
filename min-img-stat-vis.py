@@ -260,10 +260,6 @@ def accuracy_vs_crop_size():
         pass
 
 
-
-
-
-
 def pct_correct_in_bbx():
 
     '''
@@ -466,6 +462,27 @@ def accuracy_vs_category():
     ax.set_ylabel('% Accuracy of DNN on full image')
 
     plt.show()
+
+
+def pct_min_imgs_vs_non_min_imgs_in_bbx():
+
+    # TODO - get data off polestar first
+
+    '''
+    Plots percent of bbx that is minimal for loose shift minimal images vs. crop size; hued by model
+    '''
+
+    image_scale = 1.0
+    strictness = 'loose'
+    axis = 'shift'
+
+    for crop_metric in crop_metrics:
+        for model in models:
+            # get matrix: row i is smalldataset_id=i's
+            pct_min_imgs = np.load(PATH_TO_STATS + os.path.join(str(crop_metric), model, str(image_scale), strictness, axis))
+
+
+
 
 
 if __name__ == '__main__':

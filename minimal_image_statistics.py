@@ -160,7 +160,7 @@ def total_min_imgs(minmap):
     return totals
 
 
-def percent_min_img_in_bbx(crop_metric, model_name, image_scale, strictness, axis):
+def percent_min_img_in_bbx_vs_not_in_bbx(crop_metric, model_name, image_scale, strictness, axis):
     '''
     defaults to calculating for all images 
     strictness: 'strict' or 'loose' 
@@ -209,6 +209,53 @@ def percent_min_img_in_bbx(crop_metric, model_name, image_scale, strictness, axi
     np.save(folder + 'percent-min-img-in-bbx.npy', result)
 
     return result
+
+
+def percent_min_img_vs_non_min_img_in_bbx(crop_metric, model_name, image_scale, strictness, axis):
+
+    '''
+    saves a numpy array of % of bbx that is minimal images; cell i is smalldataset_id=i's metric.
+    minimal images for all crop sizes, all models.
+    saved in <crop_metric>/<model>/<image_scale>/<strictness>/<axis>/file
+    '''
+
+    # crop_metrics = [0.2, 0.4, 0.6, 0.8]
+    # model_names = ['inception', 'resnet', 'vgg16']
+    # image_scale = 1.0
+    # strictness = 'loose'
+    # axis = 'shift'
+
+    smalldataset_ids = range(settings.SMALL_DATASET_SIZE)
+    with open(BBX_FILE, 'r') as bbx_file:
+        all_bbxs = json.load(bbx_file)
+
+    result = np.zeros(settings.SMALL_DATASET_SIZE)
+
+    for smalldataset_id in smalldataset_ids:
+        intractable_images = settings.get_intractable_images(PATH_TO_DATA, crop_metric, model_name, image_scale)
+        if smalldataset_id in intractable_images:
+            continue
+
+        # get minimal image map
+        minimal_map_fn = PATH_TO_DATA + settings.min_img_map_filename(crop_metric, model_name, image_scale, strictness, axis, smalldataset_id)
+        minmap = np.load(minimal_map_fn)
+
+        # get total pixels in map-adjusted bbx
+        bbx_dims = settings.get_bbx_dims(all_bbxs, smalldataset_id)
+        crop_size = get_crop_size(smalldataset_id, crop_metric)
+        bbx_region_mask = minmap_bbx_mask(minmap.shape, bbx_dims, crop_size)
+        total_bbx_pixels = np.sum(bbx_region_mask)                              # sum all the 1s in the mask
+
+        # get number of general minimal images in map-adjusted bbx
+        bbx_minmap = minmap * bbx_region_mask
+        bbx_minimgs = np.sum(bbx_minmap != 0.)
+
+        # get percentage
+        pct_bbx_is_minimal = bbx_minimgs/float(total_bbx_pixels)
+        result[smalldataset_id] = pct_bbx_is_minimal
+
+    folder = PATH_TO_OUTPUT_STATS + settings.make_stats_foldername(crop_metric, model_name, image_scale, strictness, axis)
+    np.save(folder + 'percent-of-bbx-minimal.npy', result)
 
     
 def num_min_imgs_vs_bbx_coverage(crop_metric, model_name, image_scale, strictness, axis):
@@ -381,18 +428,25 @@ def crop_correctness_in_bbx(crop_metric, model_name, image_scale):
         json.dump(all_img_pct_correct_in_bbx, f)
 
 
+def crop_correctness():
+    pass
+
+
+
+
 
 if __name__ == '__main__':
     # percent_min_img_in_bbx(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
-    print(sys.argv)
-    num_min_imgs_vs_bbx_coverage(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
+    # print(sys.argv)
+    # num_min_imgs_vs_bbx_coverage(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
     # get_all_correctness('vgg16')
     # test_get_all_correctness2('inception')
     # test_get_all_correctness2('resnet')
     # test_get_all_correctness2('vgg16')
     # get_all_correctness('vgg16')
     # crop_correctness_in_bbx(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]))
-    # pass
+    percent_min_img_in_bbx_vs_not_in_bbx()
+
 
 
 
