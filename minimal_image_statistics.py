@@ -219,11 +219,6 @@ def percent_min_img_vs_non_min_img_in_bbx(crop_metric, model_name, image_scale, 
     saved in <crop_metric>/<model>/<image_scale>/<strictness>/<axis>/file
     '''
 
-    # crop_metrics = [0.2, 0.4, 0.6, 0.8]
-    # model_names = ['inception', 'resnet', 'vgg16']
-    # image_scale = 1.0
-    # strictness = 'loose'
-    # axis = 'shift'
     print('starting function')
 
     smalldataset_ids = range(settings.SMALL_DATASET_SIZE)
@@ -449,6 +444,7 @@ if __name__ == '__main__':
     # crop_correctness_in_bbx(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]))
     print('calling function')
     percent_min_img_in_bbx_vs_not_in_bbx(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
+    print('done with function')
 
 
 
