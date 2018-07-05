@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1403df6a-f044-4c1c-bcc0-1981a0ca2753" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/minimal_image_statistics.py" afterPath="$PROJECT_DIR$/minimal_image_statistics.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/make_stats.sh" afterPath="$PROJECT_DIR$/tools/make_stats.sh" />
     </list>
     <ignored path="minimal-images.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -58,29 +59,29 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="minimal_image_statistics.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="minimal_image_statistics.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/minimal_image_statistics.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4931164">
-              <caret line="444" column="41" selection-start-line="444" selection-start-column="41" selection-end-line="444" selection-end-column="41" />
+            <state vertical-scroll-proportion="-23.481482">
+              <caret line="253" column="0" selection-start-line="253" selection-start-column="0" selection-end-line="253" selection-end-column="0" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
                 <element signature="e#566#4180#0" expanded="false" />
                 <element signature="e#4286#4839#0" expanded="false" />
                 <element signature="e#4939#6874#0" expanded="false" />
                 <element signature="e#7207#7473#0" expanded="false" />
-                <element signature="e#14640#17342#0" expanded="false" />
-                <element signature="e#17417#20392#0" expanded="false" />
+                <element signature="e#14579#17281#0" expanded="false" />
+                <element signature="e#17356#20331#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="make_stats.sh" pinned="false" current-in-tab="false">
+      <file leaf-file-name="make_stats.sh" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tools/make_stats.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="17" column="23" selection-start-line="17" selection-start-column="23" selection-end-line="17" selection-end-column="23" />
+            <state vertical-scroll-proportion="0.3087167">
+              <caret line="17" column="2" selection-start-line="17" selection-start-column="2" selection-end-line="17" selection-end-column="2" />
               <folding />
             </state>
           </provider>
@@ -111,8 +112,8 @@
         <option value="$PROJECT_DIR$/find_maxdiff_tester.py" />
         <option value="$PROJECT_DIR$/settings.py" />
         <option value="$PROJECT_DIR$/min-img-stat-vis.py" />
-        <option value="$PROJECT_DIR$/tools/make_stats.sh" />
         <option value="$PROJECT_DIR$/minimal_image_statistics.py" />
+        <option value="$PROJECT_DIR$/tools/make_stats.sh" />
       </list>
     </option>
   </component>
@@ -527,8 +528,8 @@
             <element signature="e#4286#4839#0" expanded="false" />
             <element signature="e#4939#6874#0" expanded="false" />
             <element signature="e#7207#7473#0" expanded="false" />
-            <element signature="e#14640#17342#0" expanded="false" />
-            <element signature="e#17417#20392#0" expanded="false" />
+            <element signature="e#14579#17281#0" expanded="false" />
+            <element signature="e#17356#20331#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -946,27 +947,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tools/make_stats.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="17" column="23" selection-start-line="17" selection-start-column="23" selection-end-line="17" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/minimal_image_statistics.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4931164">
-          <caret line="444" column="41" selection-start-line="444" selection-start-column="41" selection-end-line="444" selection-end-column="41" />
+        <state vertical-scroll-proportion="-23.481482">
+          <caret line="253" column="0" selection-start-line="253" selection-start-column="0" selection-end-line="253" selection-end-column="0" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
             <element signature="e#566#4180#0" expanded="false" />
             <element signature="e#4286#4839#0" expanded="false" />
             <element signature="e#4939#6874#0" expanded="false" />
             <element signature="e#7207#7473#0" expanded="false" />
-            <element signature="e#14640#17342#0" expanded="false" />
-            <element signature="e#17417#20392#0" expanded="false" />
+            <element signature="e#14579#17281#0" expanded="false" />
+            <element signature="e#17356#20331#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/make_stats.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3087167">
+          <caret line="17" column="2" selection-start-line="17" selection-start-column="2" selection-end-line="17" selection-end-column="2" />
+          <folding />
         </state>
       </provider>
     </entry>
