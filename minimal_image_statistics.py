@@ -224,10 +224,13 @@ def percent_min_img_vs_non_min_img_in_bbx(crop_metric, model_name, image_scale, 
     # image_scale = 1.0
     # strictness = 'loose'
     # axis = 'shift'
+    print('starting function')
 
     smalldataset_ids = range(settings.SMALL_DATASET_SIZE)
     with open(BBX_FILE, 'r') as bbx_file:
         all_bbxs = json.load(bbx_file)
+
+    print('opened bbx file')
 
     result = np.zeros(settings.SMALL_DATASET_SIZE)
 
@@ -253,10 +256,11 @@ def percent_min_img_vs_non_min_img_in_bbx(crop_metric, model_name, image_scale, 
         # get percentage
         pct_bbx_is_minimal = bbx_minimgs/float(total_bbx_pixels)
         result[smalldataset_id] = pct_bbx_is_minimal
-        print('COMPLETED SMALLDATASETID %' % smalldataset_id)
+        print('completed small dataset id', smalldataset_id)
 
     folder = PATH_TO_OUTPUT_STATS + settings.make_stats_foldername(crop_metric, model_name, image_scale, strictness, axis)
     np.save(folder + 'percent-of-bbx-minimal.npy', result)
+    print('saved')
 
     
 def num_min_imgs_vs_bbx_coverage(crop_metric, model_name, image_scale, strictness, axis):
