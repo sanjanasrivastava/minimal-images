@@ -3,9 +3,9 @@ import numpy as np
 import os.path
 from PIL import Image
 import random
-from scipy.misc import imresize, imread
+# from scipy.misc import imresize, imread
 import sys
-import tensorflow as tf
+# import tensorflow as tf
 
 import confidence_maps_parallel as c_m_p
 import settings
