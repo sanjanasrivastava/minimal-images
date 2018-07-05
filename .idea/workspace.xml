@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1403df6a-f044-4c1c-bcc0-1981a0ca2753" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/minimal_image_statistics.py" afterPath="$PROJECT_DIR$/minimal_image_statistics.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/make_stats.sh" afterPath="$PROJECT_DIR$/tools/make_stats.sh" />
     </list>
     <ignored path="minimal-images.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -58,29 +59,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="minimal_image_statistics.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="minimal_image_statistics.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/minimal_image_statistics.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.13141426">
-              <caret line="7" column="2" selection-start-line="7" selection-start-column="2" selection-end-line="7" selection-end-column="2" />
+            <state vertical-scroll-proportion="-3.8888888">
+              <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
               <folding>
-                <element signature="e#0#11#0" expanded="true" />
-                <element signature="e#570#4184#0" expanded="false" />
-                <element signature="e#4290#4843#0" expanded="false" />
-                <element signature="e#4943#6878#0" expanded="false" />
-                <element signature="e#7211#7477#0" expanded="false" />
-                <element signature="e#14670#17372#0" expanded="false" />
-                <element signature="e#17447#20422#0" expanded="false" />
+                <element signature="e#566#4180#0" expanded="false" />
+                <element signature="e#4286#4839#0" expanded="false" />
+                <element signature="e#4939#6874#0" expanded="false" />
+                <element signature="e#7207#7473#0" expanded="false" />
+                <element signature="e#14666#17368#0" expanded="false" />
+                <element signature="e#17443#20418#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="make_stats.sh" pinned="false" current-in-tab="false">
+      <file leaf-file-name="make_stats.sh" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tools/make_stats.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="6" column="24" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
+            <state vertical-scroll-proportion="0.47215497">
+              <caret line="26" column="21" selection-start-line="26" selection-start-column="21" selection-end-line="26" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -111,8 +111,8 @@
         <option value="$PROJECT_DIR$/find_maxdiff_tester.py" />
         <option value="$PROJECT_DIR$/settings.py" />
         <option value="$PROJECT_DIR$/min-img-stat-vis.py" />
-        <option value="$PROJECT_DIR$/tools/make_stats.sh" />
         <option value="$PROJECT_DIR$/minimal_image_statistics.py" />
+        <option value="$PROJECT_DIR$/tools/make_stats.sh" />
       </list>
     </option>
   </component>
@@ -522,13 +522,12 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="314" column="45" selection-start-line="314" selection-start-column="45" selection-end-line="314" selection-end-column="45" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#570#4184#0" expanded="false" />
-            <element signature="e#4290#4843#0" expanded="false" />
-            <element signature="e#4943#6878#0" expanded="false" />
-            <element signature="e#7211#7477#0" expanded="false" />
-            <element signature="e#14670#17372#0" expanded="false" />
-            <element signature="e#17447#20422#0" expanded="false" />
+            <element signature="e#566#4180#0" expanded="false" />
+            <element signature="e#4286#4839#0" expanded="false" />
+            <element signature="e#4939#6874#0" expanded="false" />
+            <element signature="e#7207#7473#0" expanded="false" />
+            <element signature="e#14666#17368#0" expanded="false" />
+            <element signature="e#17443#20418#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -946,27 +945,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tools/make_stats.sh">
+    <entry file="file://$PROJECT_DIR$/minimal_image_statistics.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="24" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
-          <folding />
+        <state vertical-scroll-proportion="-3.8888888">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding>
+            <element signature="e#566#4180#0" expanded="false" />
+            <element signature="e#4286#4839#0" expanded="false" />
+            <element signature="e#4939#6874#0" expanded="false" />
+            <element signature="e#7207#7473#0" expanded="false" />
+            <element signature="e#14666#17368#0" expanded="false" />
+            <element signature="e#17443#20418#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/minimal_image_statistics.py">
+    <entry file="file://$PROJECT_DIR$/tools/make_stats.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.13141426">
-          <caret line="7" column="2" selection-start-line="7" selection-start-column="2" selection-end-line="7" selection-end-column="2" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#570#4184#0" expanded="false" />
-            <element signature="e#4290#4843#0" expanded="false" />
-            <element signature="e#4943#6878#0" expanded="false" />
-            <element signature="e#7211#7477#0" expanded="false" />
-            <element signature="e#14670#17372#0" expanded="false" />
-            <element signature="e#17447#20422#0" expanded="false" />
-          </folding>
+        <state vertical-scroll-proportion="0.47215497">
+          <caret line="26" column="21" selection-start-line="26" selection-start-column="21" selection-end-line="26" selection-end-column="21" />
+          <folding />
         </state>
       </provider>
     </entry>
