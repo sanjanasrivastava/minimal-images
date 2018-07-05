@@ -253,6 +253,7 @@ def percent_min_img_vs_non_min_img_in_bbx(crop_metric, model_name, image_scale, 
         # get percentage
         pct_bbx_is_minimal = bbx_minimgs/float(total_bbx_pixels)
         result[smalldataset_id] = pct_bbx_is_minimal
+        print('COMPLETED SMALLDATASETID %' % smalldataset_id)
 
     folder = PATH_TO_OUTPUT_STATS + settings.make_stats_foldername(crop_metric, model_name, image_scale, strictness, axis)
     np.save(folder + 'percent-of-bbx-minimal.npy', result)

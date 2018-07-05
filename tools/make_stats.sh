@@ -7,15 +7,15 @@
 #SBATCH --workdir=./log/
 #SBATCH --qos=use-everything
 
-declare -a CROP_METRICS=("0.2" "0.4" "0.6" "0.8")
-# declare -a CROP_METRICS=("0.8")
-declare -a MODELS=("vgg16" "resnet" "inception")
-# declare -a MODELS=("inception")
+# declare -a CROP_METRICS=("0.2" "0.4" "0.6" "0.8")
+declare -a CROP_METRICS=("0.2")
+# declare -a MODELS=("vgg16" "resnet" "inception")
+declare -a MODELS=("inception")
 declare -a IMAGE_SCALES=("1")
-declare -a STRICTNESSES=("loose" "strict")
-# declare -a STRICTNESSES=("loose")
-declare -a AXES=("shift" "scale")
-# declare -a AXES=("scale")
+# declare -a STRICTNESSES=("loose" "strict")
+declare -a STRICTNESSES=("loose")
+# declare -a AXES=("shift" "scale")
+declare -a AXES=("shift")
 
 cd /om/user/sanjanas/minimal-images
 for CROP_METRIC in "${CROP_METRICS[@]}"; do
