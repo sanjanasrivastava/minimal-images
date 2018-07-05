@@ -442,9 +442,7 @@ if __name__ == '__main__':
     # test_get_all_correctness2('vgg16')
     # get_all_correctness('vgg16')
     # crop_correctness_in_bbx(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]))
-    print('calling function')
-    percent_min_img_in_bbx_vs_not_in_bbx(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
-    print('done with function')
+    percent_min_img_vs_non_min_img_in_bbx(float(sys.argv[1]), sys.argv[2], float(sys.argv[3]), sys.argv[4], sys.argv[5])
 
 
 
