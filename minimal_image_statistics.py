@@ -243,6 +243,8 @@ def percent_min_img_vs_non_min_img_in_bbx(crop_metric, model_name, image_scale, 
         crop_size = get_crop_size(smalldataset_id, crop_metric)
         bbx_region_mask = minmap_bbx_mask(minmap.shape, bbx_dims, crop_size)
         total_bbx_pixels = np.sum(bbx_region_mask)                              # sum all the 1s in the mask
+        if total_bbx_pixels == 0:
+            continue
 
         # get number of general minimal images in map-adjusted bbx
         bbx_minmap = minmap * bbx_region_mask
