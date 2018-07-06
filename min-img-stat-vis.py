@@ -5,6 +5,7 @@ import os
 import pandas as pd
 import pprint
 import seaborn as sns
+import settings
 
 from make_small_dataset import text_to_small_label
 
@@ -466,22 +467,68 @@ def accuracy_vs_category():
 
 def pct_min_imgs_vs_non_min_imgs_in_bbx():
 
-    # TODO - get data off polestar first
-
     '''
     Plots percent of bbx that is minimal for loose shift minimal images vs. crop size; hued by model
     '''
 
     image_scale = 1.0
-    strictness = 'loose'
-    axis = 'shift'
+    # strictness = 'loose'
+    # axis = 'shift'
+    strictnesses = ['loose', 'strict']
+    axes = ['shift', 'scale']
 
-    for crop_metric in crop_metrics:
-        for model in models:
-            # get matrix: row i is smalldataset_id=i's
-            pct_min_imgs = np.load(PATH_TO_STATS + os.path.join(str(crop_metric), model, str(image_scale), strictness, axis))
+    for strictness in strictnesses:
+        for axis in axes:
+
+            all_dfs = []
+
+            for crop_metric in crop_metrics:
+                for model in models:
+                    # df: model, proportionality constant, pct bbx is min img
+                    # get matrix: row i is smalldataset_id=i's
+                    pct_of_bbx_min_imgs = np.load(PATH_TO_STATS + os.path.join(str(crop_metric), model, str(image_scale), strictness, axis, '') + 'percent-of-bbx-minimal.npy')
+                    pct_of_bbx_min_imgs = np.nanmean(pct_of_bbx_min_imgs)
+
+                    print(pct_of_bbx_min_imgs)
+                    all_dfs.append(pd.DataFrame(data={'Proportionality constant': [crop_metric],
+                                                      '% of bound-in box images that are minimal': [pct_of_bbx_min_imgs],
+                                                      'DNN': [model]}))
+
+            plt.figure()
+            data = pd.concat(all_dfs)
+            sns.set(font_scale=2, style='whitegrid')
+            ax = sns.pointplot(x='Proportionality constant', y='% of bound-in box images that are minimal', hue='DNN', data=data)
+            plt.show()
 
 
+def pct_min_imgs_in_bbx_vs_outside():
+
+    '''
+    Plots percent of min imgs that are in bbx (as opposed to outside bbx) vs. crop size; hued by model
+    '''
+
+    image_scale = 1.0
+    strictnesses = ['loose', 'strict']
+    axes = ['shift', 'scale']
+
+    for strictness in strictnesses:
+        for axis in axes:
+            all_dfs = []
+
+            for crop_metric in crop_metrics:
+                for model in models:
+                    pct_min_imgs_in_bbx = np.load(PATH_TO_STATS + settings.make_stats_foldername(crop_metric, model, image_scale, strictness, axis) + 'percent-min-img-in-bbx.npy')
+                    pct_min_imgs_in_bbx = pct_min_imgs_in_bbx[:, 0]
+
+                    all_dfs.append(pd.DataFrame(data={'Proportionality constant': [crop_metric for __ in pct_min_imgs_in_bbx],
+                                                      '% of all minimal images within bound-in box': pct_min_imgs_in_bbx,
+                                                      'DNN': [model for __ in pct_min_imgs_in_bbx]}))
+
+            plt.figure()
+            data = pd.concat(all_dfs)
+            sns.set(font_scale=2, style='whitegrid')
+            ax = sns.pointplot(x='Proportionality constant', y='% of all minimal images within bound-in box', hue='DNN', data=data)
+            plt.show()
 
 
 
@@ -495,5 +542,6 @@ if __name__ == '__main__':
     # pct_min_img_vs_bbx_size()
     # accuracy_vs_bbx_size()
     # pct_min_img_vs_category()
-
-    accuracy_vs_category()
+    # accuracy_vs_category()
+    pct_min_imgs_vs_non_min_imgs_in_bbx()
+    # pct_min_imgs_in_bbx_vs_outside()
