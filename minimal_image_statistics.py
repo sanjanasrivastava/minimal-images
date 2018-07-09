@@ -443,6 +443,7 @@ def crop_correctness_across_image(crop_metric, model_name, image_scale):
         try:
             top5map = np.load(PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, smalldataset_id))
         except FileNotFoundError:
+            print('FILE NOT FOUND')
             results[smalldataset_id] = np.nan       # if there is no map, put in a nan (for nanmean when visualizing) and move to next smalldataset_id)
             continue
         percent_correct = float(np.sum(top5map > 0.)) / top5map.size

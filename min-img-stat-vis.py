@@ -259,10 +259,19 @@ def accuracy_vs_crop_size():
     Basically, a graph of top5 map white percentage. x axis: crop size. y axis: top5 white percentage. hue: model.
     '''
 
-    sns.set(font_scale=1.5, style='whitegrid')
-
-    for model in models:
-        pass
+    all_dfs = []
+    for crop_metric in crop_metrics:
+        for model in models:
+            result = np.load(PATH_TO_STATS + os.path.join(str(crop_metric), model, str(image_scale), 'crop-classification-correctness.npy'))
+            mean_result = np.nanmean(result)
+            all_dfs.append(pd.DataFrame(data={'DNN': [model],
+                                              '% crops correctly classified': [mean_result],
+                                              'proportionality constant': [crop_metric]}))
+    data = pd.concat(all_dfs)
+    print(data)
+    sns.set(style='whitegrid', font_scale=2.0)
+    ax = sns.pointplot(y='% crops correctly classified', x='proportionality constant', hue='DNN', data=data)
+    # plt.show()
 
 
 def pct_correct_in_bbx():
@@ -423,7 +432,6 @@ def pct_min_img_vs_category():
     plt.show()
 
 
-
 def accuracy_vs_category():
 
     '''
@@ -551,4 +559,5 @@ if __name__ == '__main__':
     # accuracy_vs_category()
     # pct_min_imgs_vs_non_min_imgs_in_bbx()
     # pct_min_imgs_in_bbx_vs_outside
-    pass
+    accuracy_vs_crop_size()
+    # pass
