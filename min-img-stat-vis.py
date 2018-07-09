@@ -255,6 +255,10 @@ def pct_minimal_images_vs_crop_size():
 
 def accuracy_vs_crop_size():
 
+    '''
+    Basically, a graph of top5 map white percentage. x axis: crop size. y axis: top5 white percentage. hue: model.
+    '''
+
     sns.set(font_scale=1.5, style='whitegrid')
 
     for model in models:
@@ -419,6 +423,7 @@ def pct_min_img_vs_category():
     plt.show()
 
 
+
 def accuracy_vs_category():
 
     '''
@@ -532,6 +537,7 @@ def pct_min_imgs_in_bbx_vs_outside():
 
 
 
+
 if __name__ == '__main__':
 
     # vis_num_min_imgs_vs_prop_in_bbx_models(0.2, 1.0, 'loose', 'scale')
@@ -543,5 +549,6 @@ if __name__ == '__main__':
     # accuracy_vs_bbx_size()
     # pct_min_img_vs_category()
     # accuracy_vs_category()
-    pct_min_imgs_vs_non_min_imgs_in_bbx()
-    # pct_min_imgs_in_bbx_vs_outside()
+    # pct_min_imgs_vs_non_min_imgs_in_bbx()
+    # pct_min_imgs_in_bbx_vs_outside
+    pass

@@ -430,8 +430,25 @@ def crop_correctness_in_bbx(crop_metric, model_name, image_scale):
         json.dump(all_img_pct_correct_in_bbx, f)
 
 
-def crop_correctness():
-    pass
+def crop_correctness_across_image(crop_metric, model_name, image_scale):
+
+    '''
+    saves stats/<crop_metric>/<model_name>/<image_scale>/crop-classification-correctness.npy
+    1x500 vector. Cell i contains smalldataset_id=i's top5map white percentage. If top5 map doesn't exist for this combo, vector gets np.nan.
+    '''
+
+    results = np.zeros(settings.SMALL_DATASET_SIZE)
+
+    for smalldataset_id in range(settings.SMALL_DATASET_SIZE):
+        try:
+            top5map = np.load(PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, smalldataset_id))
+        except FileNotFoundError:
+            results[smalldataset_id] = np.nan       # if there is no map, put in a nan (for nanmean when visualizing) and move to next smalldataset_id)
+            continue
+        percent_correct = float(np.sum(top5map > 0.)) / top5map.size
+        results[smalldataset_id] = percent_correct
+
+    np.save(PATH_TO_OUTPUT_STATS + os.path.join(str(crop_metric), model_name, str(image_scale), 'crop-classification-correctness.npy'), results)
 
 
 if __name__ == '__main__':
