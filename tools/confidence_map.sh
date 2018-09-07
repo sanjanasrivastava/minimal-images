@@ -5,7 +5,7 @@
 #SBATCH --gres=gpu:GEFORCEGTX1080TI:1
 #SBATCH -t 1:00:00
 #SBATCH --workdir=./log/
-#SBATCH --qos=use-everything
+#SBATCH --qos=cbmm
 
 # declare -a MODELS=("inception" "resnet")
 
