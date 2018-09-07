@@ -61,7 +61,7 @@
         <entry file="file://$PROJECT_DIR$/tools/confidence_map.sh">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.14950167">
-              <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+              <caret line="9" column="19" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -848,7 +848,7 @@
     <entry file="file://$PROJECT_DIR$/tools/confidence_map.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.14950167">
-          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <caret line="9" column="19" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
           <folding />
         </state>
       </provider>

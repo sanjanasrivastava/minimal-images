@@ -7,7 +7,7 @@
 #SBATCH --workdir=./log/
 #SBATCH --qos=cbmm
 
-declare -a MODELS=("inception" "resnet")
+declare -a MODELS=("resnet")
 echo Hello
 
 cd /om/user/sanjanas/minimal-images
