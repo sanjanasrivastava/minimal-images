@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1403df6a-f044-4c1c-bcc0-1981a0ca2753" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/minimal_image_statistics.py" afterPath="$PROJECT_DIR$/minimal_image_statistics.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools/confidence_map.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/confidence_maps_parallel.py" afterPath="$PROJECT_DIR$/confidence_maps_parallel.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/min-img-stat-vis.py" afterPath="$PROJECT_DIR$/min-img-stat-vis.py" />
     </list>
     <ignored path="minimal-images.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -23,26 +26,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="min-img-stat-vis.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/min-img-stat-vis.py">
+      <file leaf-file-name="find_maxdiff.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/find_maxdiff.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-14.444445">
-              <caret line="265" column="0" selection-start-line="265" selection-start-column="0" selection-end-line="265" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-                <element signature="e#576#1991#0" expanded="false" />
-                <element signature="e#2501#4340#0" expanded="false" />
-                <element signature="e#4425#6882#0" expanded="false" />
-                <element signature="e#6917#8036#0" expanded="false" />
-                <element signature="e#10318#12077#0" expanded="false" />
-                <element signature="e#13009#14670#0" expanded="false" />
-                <element signature="e#14709#16385#0" expanded="false" />
-                <element signature="e#16421#18395#0" expanded="false" />
-                <element signature="e#18660#20469#0" expanded="false" />
-                <element signature="e#20505#22583#0" expanded="false" />
-                <element signature="e#22634#24058#0" expanded="false" />
-                <element signature="e#24104#25353#0" expanded="false" />
-              </folding>
+            <state vertical-scroll-proportion="0.0">
+              <caret line="112" column="16" selection-start-line="112" selection-start-column="16" selection-end-line="115" selection-end-column="93" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -50,36 +39,32 @@
       <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="13.37037">
-              <caret line="132" column="25" selection-start-line="132" selection-start-column="25" selection-end-line="132" selection-end-column="25" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="80" column="0" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="minimal_image_statistics.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/minimal_image_statistics.py">
+      <file leaf-file-name="confidence_maps_parallel.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/confidence_maps_parallel.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.63517916">
-              <caret line="452" column="21" selection-start-line="452" selection-start-column="21" selection-end-line="452" selection-end-column="21" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="436" column="31" selection-start-line="436" selection-start-column="4" selection-end-line="436" selection-end-column="31" />
               <folding>
-                <element signature="e#0#11#0" expanded="true" />
-                <element signature="e#566#4180#0" expanded="false" />
-                <element signature="e#4286#4839#0" expanded="false" />
-                <element signature="e#4939#6874#0" expanded="false" />
-                <element signature="e#7578#10043#0" expanded="false" />
-                <element signature="e#12164#14523#0" expanded="false" />
-                <element signature="e#14679#17381#0" expanded="false" />
+                <element signature="e#968#8695#0" expanded="false" />
+                <element signature="e#8886#16180#0" expanded="false" />
+                <element signature="e#16267#21124#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="make_stats.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tools/make_stats.sh">
+      <file leaf-file-name="confidence_map.sh" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/tools/confidence_map.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="10" column="30" selection-start-line="10" selection-start-column="30" selection-end-line="10" selection-end-column="30" />
+            <state vertical-scroll-proportion="0.24861878">
+              <caret line="15" column="63" selection-start-line="15" selection-start-column="63" selection-end-line="15" selection-end-column="63" />
               <folding />
             </state>
           </provider>
@@ -110,13 +95,15 @@
         <option value="$PROJECT_DIR$/find_maxdiff_tester.py" />
         <option value="$PROJECT_DIR$/settings.py" />
         <option value="$PROJECT_DIR$/tools/make_stats.sh" />
-        <option value="$PROJECT_DIR$/min-img-stat-vis.py" />
         <option value="$PROJECT_DIR$/minimal_image_statistics.py" />
+        <option value="$PROJECT_DIR$/min-img-stat-vis.py" />
+        <option value="$PROJECT_DIR$/confidence_maps_parallel.py" />
+        <option value="$PROJECT_DIR$/tools/confidence_map.sh" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="653" />
+    <option name="x" value="272" />
     <option name="y" value="23" />
     <option name="width" value="1316" />
     <option name="height" value="1023" />
@@ -146,8 +133,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -182,12 +167,14 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../minimal-images-paper" />
   </component>
   <component name="RunManager" selected="Python.min-img-stat-vis">
     <configuration default="false" name="minimal-image-statistics" type="PythonConfigurationType" factoryName="Python" temporary="true">
@@ -439,26 +426,26 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="653" y="23" width="1316" height="1023" extended-state="0" />
+    <frame x="272" y="23" width="1316" height="1023" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.0" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25250965" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32975295" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28141782" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28141782" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -486,32 +473,10 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/min-img-stat-vis.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#576#1991#0" expanded="false" />
-            <element signature="e#2501#4340#0" expanded="false" />
-            <element signature="e#4425#6882#0" expanded="false" />
-            <element signature="e#6917#8036#0" expanded="false" />
-            <element signature="e#10318#12077#0" expanded="false" />
-            <element signature="e#13009#14670#0" expanded="false" />
-            <element signature="e#14709#16385#0" expanded="false" />
-            <element signature="e#16421#18395#0" expanded="false" />
-            <element signature="e#18660#20469#0" expanded="false" />
-            <element signature="e#20505#22583#0" expanded="false" />
-            <element signature="e#22634#24058#0" expanded="false" />
-            <element signature="e#24104#25353#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -520,7 +485,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="314" column="45" selection-start-line="314" selection-start-column="45" selection-end-line="314" selection-end-column="45" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#0#11#0" expanded="false" />
             <element signature="e#566#4180#0" expanded="false" />
             <element signature="e#4286#4839#0" expanded="false" />
             <element signature="e#4939#6874#0" expanded="false" />
@@ -549,21 +514,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#576#1991#0" expanded="false" />
-            <element signature="e#2501#4340#0" expanded="false" />
-            <element signature="e#4425#6882#0" expanded="false" />
-            <element signature="e#6917#8036#0" expanded="false" />
-            <element signature="e#10318#12077#0" expanded="false" />
-            <element signature="e#13009#14670#0" expanded="false" />
-            <element signature="e#14709#16385#0" expanded="false" />
-            <element signature="e#16421#18395#0" expanded="false" />
-            <element signature="e#18660#20469#0" expanded="false" />
-            <element signature="e#20505#22583#0" expanded="false" />
-            <element signature="e#22634#24058#0" expanded="false" />
-            <element signature="e#24104#25353#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -571,21 +521,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#576#1991#0" expanded="false" />
-            <element signature="e#2501#4340#0" expanded="false" />
-            <element signature="e#4425#6882#0" expanded="false" />
-            <element signature="e#6917#8036#0" expanded="false" />
-            <element signature="e#10318#12077#0" expanded="false" />
-            <element signature="e#13009#14670#0" expanded="false" />
-            <element signature="e#14709#16385#0" expanded="false" />
-            <element signature="e#16421#18395#0" expanded="false" />
-            <element signature="e#18660#20469#0" expanded="false" />
-            <element signature="e#20505#22583#0" expanded="false" />
-            <element signature="e#22634#24058#0" expanded="false" />
-            <element signature="e#24104#25353#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -593,21 +528,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#576#1991#0" expanded="false" />
-            <element signature="e#2501#4340#0" expanded="false" />
-            <element signature="e#4425#6882#0" expanded="false" />
-            <element signature="e#6917#8036#0" expanded="false" />
-            <element signature="e#10318#12077#0" expanded="false" />
-            <element signature="e#13009#14670#0" expanded="false" />
-            <element signature="e#14709#16385#0" expanded="false" />
-            <element signature="e#16421#18395#0" expanded="false" />
-            <element signature="e#18660#20469#0" expanded="false" />
-            <element signature="e#20505#22583#0" expanded="false" />
-            <element signature="e#22634#24058#0" expanded="false" />
-            <element signature="e#24104#25353#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -615,21 +535,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#576#1991#0" expanded="false" />
-            <element signature="e#2501#4340#0" expanded="false" />
-            <element signature="e#4425#6882#0" expanded="false" />
-            <element signature="e#6917#8036#0" expanded="false" />
-            <element signature="e#10318#12077#0" expanded="false" />
-            <element signature="e#13009#14670#0" expanded="false" />
-            <element signature="e#14709#16385#0" expanded="false" />
-            <element signature="e#16421#18395#0" expanded="false" />
-            <element signature="e#18660#20469#0" expanded="false" />
-            <element signature="e#20505#22583#0" expanded="false" />
-            <element signature="e#22634#24058#0" expanded="false" />
-            <element signature="e#24104#25353#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -637,21 +542,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#576#1991#0" expanded="false" />
-            <element signature="e#2501#4340#0" expanded="false" />
-            <element signature="e#4425#6882#0" expanded="false" />
-            <element signature="e#6917#8036#0" expanded="false" />
-            <element signature="e#10318#12077#0" expanded="false" />
-            <element signature="e#13009#14670#0" expanded="false" />
-            <element signature="e#14709#16385#0" expanded="false" />
-            <element signature="e#16421#18395#0" expanded="false" />
-            <element signature="e#18660#20469#0" expanded="false" />
-            <element signature="e#20505#22583#0" expanded="false" />
-            <element signature="e#22634#24058#0" expanded="false" />
-            <element signature="e#24104#25353#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -865,20 +755,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/confidence_maps_parallel.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="183" column="0" selection-start-line="183" selection-start-column="0" selection-end-line="313" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/get_classifications.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="3" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="116" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tools/get_maxdiff.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -893,26 +769,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/find_maxdiff.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14917128">
-          <caret line="112" column="16" selection-start-line="112" selection-start-column="16" selection-end-line="115" selection-end-column="93" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/anaconda/envs/py35/lib/python3.5/site-packages/seaborn/categorical.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.25181597">
           <caret line="150" column="0" selection-start-line="150" selection-start-column="0" selection-end-line="150" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="13.37037">
-          <caret line="132" column="25" selection-start-line="132" selection-start-column="25" selection-end-line="132" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -920,29 +780,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="5632" column="0" selection-start-line="5632" selection-start-column="0" selection-end-line="5632" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/min-img-stat-vis.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-14.444445">
-          <caret line="265" column="0" selection-start-line="265" selection-start-column="0" selection-end-line="265" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#576#1991#0" expanded="false" />
-            <element signature="e#2501#4340#0" expanded="false" />
-            <element signature="e#4425#6882#0" expanded="false" />
-            <element signature="e#6917#8036#0" expanded="false" />
-            <element signature="e#10318#12077#0" expanded="false" />
-            <element signature="e#13009#14670#0" expanded="false" />
-            <element signature="e#14709#16385#0" expanded="false" />
-            <element signature="e#16421#18395#0" expanded="false" />
-            <element signature="e#18660#20469#0" expanded="false" />
-            <element signature="e#20505#22583#0" expanded="false" />
-            <element signature="e#22634#24058#0" expanded="false" />
-            <element signature="e#24104#25353#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -950,16 +787,15 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="10" column="30" selection-start-line="10" selection-start-column="30" selection-end-line="10" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/minimal_image_statistics.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.63517916">
-          <caret line="452" column="21" selection-start-line="452" selection-start-column="21" selection-end-line="452" selection-end-column="21" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="453" column="0" selection-start-line="453" selection-start-column="0" selection-end-line="453" selection-end-column="0" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#0#11#0" expanded="false" />
             <element signature="e#566#4180#0" expanded="false" />
             <element signature="e#4286#4839#0" expanded="false" />
             <element signature="e#4939#6874#0" expanded="false" />
@@ -967,6 +803,56 @@
             <element signature="e#12164#14523#0" expanded="false" />
             <element signature="e#14679#17381#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/min-img-stat-vis.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="694" column="70" selection-start-line="694" selection-start-column="70" selection-end-line="694" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/find_maxdiff.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="112" column="16" selection-start-line="112" selection-start-column="16" selection-end-line="115" selection-end-column="93" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="80" column="0" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/get_classifications.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.016611295">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/confidence_maps_parallel.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="436" column="31" selection-start-line="436" selection-start-column="4" selection-end-line="436" selection-end-column="31" />
+          <folding>
+            <element signature="e#968#8695#0" expanded="false" />
+            <element signature="e#8886#16180#0" expanded="false" />
+            <element signature="e#16267#21124#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/confidence_map.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.24861878">
+          <caret line="15" column="63" selection-start-line="15" selection-start-column="63" selection-end-line="15" selection-end-column="63" />
+          <folding />
         </state>
       </provider>
     </entry>

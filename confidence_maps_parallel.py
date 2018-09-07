@@ -14,7 +14,8 @@ from vgg16 import vgg16
 
 # DATA PARAMS
 # PATH_TO_DATA = '../../poggio-urop-data/'
-PATH_TO_DATA = settings.MIN_IMGS_PATH_TO_DATA 
+PATH_TO_DATA = settings.MIN_IMGS_PATH_TO_DATA
+# PATH_TO_DATA = '/om/user/sanjanas/min-img-data/human-image-comparison/'
 
 
 # TEST PARAMS
@@ -433,8 +434,173 @@ def test_maxdiff_crops(start_id, end_id, crop_metric, model_name='vgg16'):
     return h_activations, l_activations
 
 
+def create_confidence_map_human(start_id, end_id, crop_metric, model_name, image_scale, make_cmap=True, make_top5=True, make_top1=True, make_distance=True):
+
+    PATH_TO_DATA = '/om/user/sanjanas/min-img-data/human-image-comparison/'
+
+    # Get the crop type - if the crop_metric is a fraction, it's a proportion. If it's larger than 1, it's a constant crop size.
+    crop_type = 'proportional' if crop_metric <= 1. else 'constant'
+
+    # Prepare folders
+    maptypes = [settings.CONFIDENCE_MAPTYPE, settings.TOP5_MAPTYPE, settings.TOP1_MAPTYPE, settings.DISTANCE_MAPTYPE]
+    folders = [PATH_TO_DATA + settings.map_folder_name(maptype, crop_metric, model_name, image_scale) for maptype in maptypes]
+    for folder in folders:
+        if not os.path.exists(folder):
+            os.makedirs(folder)
+
+    # Get the right model
+    model = settings.MODELS[model_name]
+
+    # Before anything else happens, so we only set up once despite multiple images, make a network for each GPU
+    config = tf.ConfigProto(log_device_placement=True, allow_soft_placement=True)
+    config.gpu_options.allow_growth = True
+    sess = tf.Session(config = config)
+    networks = []
+    for i in range(NUM_GPUS):
+        gpu = 'device:GPU:%d' % i
+        with tf.device(gpu):
+            imgs = tf.placeholder(tf.float32, [BATCH_SIZE, model.im_size, model.im_size, 3])
+            if not model_name == 'alexnet':
+                network = model(imgs, sess, reuse=None if i == 0 else True)
+            else:
+                network = model(imgs, sess)
+
+            networks.append(network)
+
+    # Get each map called for!
+    true_labels = {50002: 671,  # mountain bike
+                   50003: 817,  # sports car
+                   50004: 504,  # coffee mug
+                   50005: 22,   # bald eagle
+                   # 50006: 837,  # sunglasses - closest I could find todo check
+                   50006: 308,  # fly
+                   # 50008: 603,  # horse-cart... no horse todo check
+                   # 50009: 610,  # jersey/T-shirt todo check
+                   50007: 404,  # airliner
+                   50008: 554   # fireboat
+                  }
+    image_ids = range(start_id, end_id + 1)
+
+    for image_id in image_ids:
+
+        # f = open('small-dataset-to-imagenet.txt')
+        # lines = f.readlines()
+        # image_tag = lines[image_id].split(" ", 1)[0]
+        image_tag = 'ILSVRC2012_val_000' + str(image_id)
+        print(image_tag)
+
+        #image_tag = settings.get_ind_name(image_id)
+
+        # image_filename = PATH_TO_DATA + settings.folder_name('img') + image_tag #+ ('.png' if image_id == 50001 else'.JPEG')
+        image_filename = PATH_TO_DATA + 'human-images/' + image_tag + '.png'
+
+        true_class = true_labels[image_id] if image_id != 50001 else 266
+        im = Image.open(image_filename)
+        if im.mode != 'RGB':
+            im = im.convert('RGB')	# make sure bw images are 3-channel, because they get opened in L mode
+        width, height = im.size
+
+        # Resize image based on image_scale
+        im = im.resize((int(width * image_scale), int(height * image_scale)))
+
+        width, height = im.size
+
+        # TODO do resizing experiment    im = imresize(im, (width*image_scale, height*image_scale))	# resize image as needed
+
+        crop_size = get_crop_size(height, crop_metric, crop_type) if height <= width else get_crop_size(width, crop_metric, crop_type)
+        crop_x1s = range(width - crop_size + 1)
+        crop_y1s = range(height - crop_size + 1)
+        crop_dims = itertools.product(crop_x1s, crop_y1s)
+
+        C, O, F, D = (np.zeros((height - crop_size + 1, width - crop_size + 1)) for __ in range(4))
+        crop_dims = list(crop_dims)
+        total_crops = len(crop_dims)
+        crop_index = 0
+
+        overall_start_time = time.clock()
+        print('TOTAL CROPS:', total_crops)
+        sys.stdout.flush()
+        while crop_index < total_crops:	# While we haven't exhausted crops TODO see if the logic needs to be changed
+            all_cropped_imgs = []
+            stub_crops = 0		# Initializing to 0 in case there's an image with no stub crops (i.e. number of crops is a multiple of 64)
+            map_indices = []	# The indices that these confidences will be mapped to
+
+            for i in range(BATCH_SIZE * NUM_GPUS):	# Get BATCH_SIZE crops for each GPU (total of NUM_GPUS)
+
+                if crop_index == total_crops:	# If we're on the last round and it's not all 64, repeat the last crop for the rest
+                    stub_crops = (BATCH_SIZE * NUM_GPUS) - i 	# the number of crops still needed, because i in this round is the number of crops that have already been filled in
+                    cropped = imresize(cropped, (model.im_size, model.im_size))		# resize the last one (from previous round) permanently. There will be a previous one due to the while logic
+                    for i in range(stub_crops):
+                        all_cropped_imgs.append(cropped)    # fill in the rest of the slots with the resized last crop
+                    break
+
+                # If not on the last one, continue on to fill in the next crop
+                x1, y1 = crop_dims[crop_index]
+                map_indices.append((x1, y1))
+                cropped = im.crop((x1, y1, x1 + crop_size, y1 + crop_size))
+                all_cropped_imgs.append(imresize(cropped, (model.im_size, model.im_size)))
+                crop_index += 1	# Increment to get the next crop dimensions
+
+            start_time = time.clock()
+            network_probs = list(map(lambda x: x.probs, networks))
+            num_crops = len(all_cropped_imgs)
+            partition_cropped_imgs = [all_cropped_imgs[int(i*num_crops/NUM_GPUS):min(num_crops, int((i+1)*num_crops/NUM_GPUS))] for i in range(NUM_GPUS)]	# TODO yikes is this correct
+            prob = np.array(sess.run(network_probs, feed_dict={networks[i].imgs: model.preprocess(np.array(partition_cropped_imgs[i])) for i in range(NUM_GPUS)}))
+
+            #  prob = sess.run(vgg.probs, feed_dict={vgg.imgs: all_cropped_imgs})
+            end_time = time.clock()
+            print ('Time for running one size-' + str(BATCH_SIZE), 'batch:', end_time - start_time, 'seconds')
+            print('CROPS COMPLETED SO FAR:', crop_index)
+            sys.stdout.flush()
+
+            # plot the confidences in the map. For final iteration, which likely has <BATCH_SIZE meaningful crops, the index list being of shorter length will cause them to be thrown.
+            confidence = prob[:, :, true_class].reshape(BATCH_SIZE * NUM_GPUS)
+            for i in range(len(map_indices)):
+                c, r = map_indices[i]
+                C[r, c] = confidence[i]
+
+            # plot the top-5 and top-1 binary correctness maps
+            flat_probs = prob.reshape((NUM_GPUS * BATCH_SIZE, settings.NUM_CLASSES))
+            sorted_classes = flat_probs.argsort(axis=1)
+            top_5 = sorted_classes[:, -5:]
+            top_1 = sorted_classes[:, -1].squeeze()
+            for i in range(len(map_indices)):
+                c, r = map_indices[i]
+                O[r, c] = 255. if top_1[i] == true_class else 0.
+                F[r, c] = 255. if true_class in top_5[i] else 0.
+
+            # plot the distance map
+            sixth = sorted_classes[:, 6]
+            for i in range(len(map_indices)):
+                c, r = map_indices[i]
+                if true_class in top_5[i]:
+                    D[r, c] = 255. * flat_probs[i][true_class] - flat_probs[i][sixth[i]]
+                else:
+                    D[r, c] = 0.
+
+        overall_end_time = time.clock()
+        print('Time for overall cropping and map-building process with size-' + str(BATCH_SIZE), 'batch:', overall_end_time - overall_start_time, 'seconds')
+        sys.stdout.flush()
+
+        # Make confidence map, save to confidence map folder
+        if make_cmap:
+            np.save(PATH_TO_DATA + settings.map_filename(settings.CONFIDENCE_MAPTYPE, crop_metric, model_name, image_scale, image_id), C)
+
+        # Save binary correctness maps
+        if make_top5:
+            np.save(PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, image_id), F)
+        if make_top1:
+            np.save(PATH_TO_DATA + settings.map_filename(settings.TOP1_MAPTYPE, crop_metric, model_name, image_scale, image_id), O)
+
+        # Save distance maps
+        if make_distance:
+            np.save(PATH_TO_DATA + settings.map_filename(settings.DISTANCE_MAPTYPE, crop_metric, model_name, image_scale, image_id), D)
+
+        print(image_tag)
+
+
 if __name__ == '__main__':
-    create_confidence_map(int(sys.argv[1]), int(sys.argv[2]), float(sys.argv[3]), sys.argv[4], float(sys.argv[5])) 
+    create_confidence_map_human(int(sys.argv[1]), int(sys.argv[2]), float(sys.argv[3]), sys.argv[4], float(sys.argv[5]))
     print(":)")
  
     # h_activations, l_activations = get_max_diff_adjacent_crops(int(sys.argv[1]), int(sys.argv[2]), float(sys.argv[3]), compare_correctness=True) 
