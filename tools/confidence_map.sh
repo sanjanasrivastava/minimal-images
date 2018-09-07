@@ -7,7 +7,8 @@
 #SBATCH --workdir=./log/
 #SBATCH --qos=cbmm
 
-# declare -a MODELS=("inception" "resnet")
+declare -a MODELS=("inception" "resnet")
+echo Hello
 
 cd /om/user/sanjanas/minimal-images
 for MODEL in "${MODELS[@]}"; do
