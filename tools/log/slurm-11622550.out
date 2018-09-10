@@ -1,0 +1,8 @@
+Hello
+resnet
+Traceback (most recent call last):
+  File "confidence_maps_parallel.py", line 603, in <module>
+    create_confidence_map_human(int(sys.argv[1]), int(sys.argv[2]), float(sys.argv[3]), sys.argv[4], float(sys.argv[5]))
+  File "confidence_maps_parallel.py", line 452, in create_confidence_map_human
+    model = settings.MODELS[model_name]
+AttributeError: module 'settings' has no attribute 'MODELS'
