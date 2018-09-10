@@ -598,6 +598,7 @@ def create_confidence_map_human(start_id, end_id, crop_metric, model_name, image
 
         print(image_tag)
 
+    print(':)')
 
 if __name__ == '__main__':
     create_confidence_map_human(int(sys.argv[1]), int(sys.argv[2]), float(sys.argv[3]), sys.argv[4], float(sys.argv[5]))
