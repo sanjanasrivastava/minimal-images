@@ -174,19 +174,22 @@ def save_crops(coords, crop_metric, model_name, image_scale, axis, compare_corr,
 
 
 if __name__ == '__main__':
-    coords = get_maxdiff_coordinates(0, 499, 0.2, 'resnet', 1.0, 'scale')
-    top_results = sorted(coords, reverse=True, key=lambda x: coords[x][2])[:10]          # sort entries of coords by conf diff
-    pp = pprint.PrettyPrinter()
-    pp.pprint([coords[top_result] for top_result in top_results])
+    # coords = get_maxdiff_coordinates(0, 499, 0.2, 'resnet', 1.0, 'scale')
+    # top_results = sorted(coords, reverse=True, key=lambda x: coords[x][2])[:10]          # sort entries of coords by conf diff
+    # pp = pprint.PrettyPrinter()
+    # pp.pprint([coords[top_result] for top_result in top_results])
+    #
+    # save_crops(coords, 0.2, 'resnet', 1.0, 'scale', True)
+    #
+    # coords = get_maxdiff_coordinates(0, 499, 0.2, 'resnet', 1.0, 'shift')
+    # top_results = sorted(coords, reverse=True, key=lambda x: coords[x][2])[:10]          # sort entries of coords by conf diff
+    # pp = pprint.PrettyPrinter()
+    # pp.pprint([coords[top_result] for top_result in top_results])
+    #
+    # save_crops(coords, 0.2, 'resnet', 1.0, 'shift', True)
 
-    save_crops(coords, 0.2, 'resnet', 1.0, 'scale', True)
-
-    coords = get_maxdiff_coordinates(0, 499, 0.2, 'resnet', 1.0, 'shift')
-    top_results = sorted(coords, reverse=True, key=lambda x: coords[x][2])[:10]          # sort entries of coords by conf diff
-    pp = pprint.PrettyPrinter()
-    pp.pprint([coords[top_result] for top_result in top_results])
-
-    save_crops(coords, 0.2, 'resnet', 1.0, 'shift', True)
+    coords = get_maxdiff_coordinates(0, 10, 0.6, 'resnet', 1.0, 'shift')
+    save_crops(coords, 0.6, 'resnet', 1.0, 'shift', True)
 
 
 
