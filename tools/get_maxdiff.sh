@@ -7,6 +7,8 @@
 #SBATCH --workdir=./log/
 #SBATCH --qos=use-everything
 
+echo Hello
+
 cd /om/user/sanjanas/minimal-images
 singularity exec -B /om:/om -B /cbcl:/cbcl --nv /om/user/sanjanas/belledon-tensorflow-keras-master-latest.simg \
 python find_maxdiff_tester.py
