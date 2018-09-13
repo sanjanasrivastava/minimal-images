@@ -240,7 +240,7 @@ def get_human_maxdiff_coordinates(crop_metric, model_name, image_scale, compare_
 
 def save_human_crops(coords, crop_metric, model_name, image_scale, compare_corr, num_samples=50):
 
-    PATH_TO_DATA = '/om/user/sanjanas/min-img/data/human-image-comparison/'
+    PATH_TO_DATA = '/om/user/sanjanas/min-img-data/human-image-comparison/'
     PATH_TO_OUTPUT_DATA = PATH_TO_DATA
     axis = 'shift'
 
