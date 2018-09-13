@@ -252,19 +252,21 @@ def save_human_crops(coords, crop_metric, model_name, image_scale, compare_corr,
 
     for image_id in range(50002, 50009):
 
-        im_filename = PATH_TO_DATA + 'human-images/' + settings.get_ind_name(image_id) + '.png'
-        im = Image.open(im_filename)
-        hcell, lcell = coords[image_id][:2]
-        hfn, lfn = (PATH_TO_OUTPUT_DATA + settings.maxdiff_file_name(image_id, axis, crop_metric, model_name, image_scale, 'diff' if compare_corr else 'any', conf) for conf in ['high', 'low'])
+        if image_id in coords:
 
-        width, height = im.size
-        dimension = height if height <= width else width
-        size = int(((crop_metric * dimension) // 2) * 2 + 1)
-        hcrop = im.crop((hcell[0], hcell[1], hcell[0] + size, hcell[1] + size))
-        lcrop = im.crop((lcell[0], lcell[1], lcell[0] + size, lcell[1] + size))
+            im_filename = PATH_TO_DATA + 'human-images/' + settings.get_ind_name(image_id) + '.png'
+            im = Image.open(im_filename)
+            hcell, lcell = coords[image_id][:2]
+            hfn, lfn = (PATH_TO_OUTPUT_DATA + settings.maxdiff_file_name(image_id, axis, crop_metric, model_name, image_scale, 'diff' if compare_corr else 'any', conf) for conf in ['high', 'low'])
 
-        hcrop.save(hfn, 'PNG')
-        lcrop.save(lfn, 'PNG')
+            width, height = im.size
+            dimension = height if height <= width else width
+            size = int(((crop_metric * dimension) // 2) * 2 + 1)
+            hcrop = im.crop((hcell[0], hcell[1], hcell[0] + size, hcell[1] + size))
+            lcrop = im.crop((lcell[0], lcell[1], lcell[0] + size, lcell[1] + size))
+
+            hcrop.save(hfn, 'PNG')
+            lcrop.save(lfn, 'PNG')
 
 
 if __name__ == '__main__':
