@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1403df6a-f044-4c1c-bcc0-1981a0ca2753" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/find_maxdiff_tester.py" afterPath="$PROJECT_DIR$/find_maxdiff_tester.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/confidence_map.sh" afterPath="$PROJECT_DIR$/tools/confidence_map.sh" />
     </list>
     <ignored path="minimal-images.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -49,11 +49,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="confidence_map.sh" pinned="false" current-in-tab="false">
+      <file leaf-file-name="confidence_map.sh" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tools/confidence_map.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.25917926">
+              <caret line="16" column="54" selection-start-line="16" selection-start-column="54" selection-end-line="16" selection-end-column="54" />
               <folding />
             </state>
           </provider>
@@ -69,15 +69,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="find_maxdiff_tester.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="find_maxdiff_tester.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/find_maxdiff_tester.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.83801293">
-              <caret line="289" column="46" selection-start-line="289" selection-start-column="46" selection-end-line="289" selection-end-column="46" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="257" column="40" selection-start-line="257" selection-start-column="40" selection-end-line="257" selection-end-column="40" />
               <folding>
                 <element signature="e#354#8352#0" expanded="false" />
                 <element signature="e#8458#9891#0" expanded="false" />
-                <element signature="e#9991#13452#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -106,12 +105,12 @@
         <option value="$PROJECT_DIR$/tools/make_stats.sh" />
         <option value="$PROJECT_DIR$/minimal_image_statistics.py" />
         <option value="$PROJECT_DIR$/min-img-stat-vis.py" />
-        <option value="$PROJECT_DIR$/tools/confidence_map.sh" />
         <option value="$PROJECT_DIR$/settings.py" />
         <option value="$PROJECT_DIR$/confidence_maps_parallel.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/tools/get_maxdiff.sh" />
         <option value="$PROJECT_DIR$/find_maxdiff_tester.py" />
+        <option value="$PROJECT_DIR$/tools/confidence_map.sh" />
       </list>
     </option>
   </component>
@@ -770,31 +769,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tools/confidence_map.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/find_maxdiff.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="114" column="52" selection-start-line="114" selection-start-column="52" selection-end-line="114" selection-end-column="52" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/confidence_maps_parallel.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="28" column="114" selection-start-line="28" selection-start-column="4" selection-end-line="28" selection-end-column="114" />
-          <folding>
-            <element signature="e#968#8695#0" expanded="false" />
-            <element signature="e#8886#16180#0" expanded="false" />
-            <element signature="e#16267#21124#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -812,14 +791,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tools/get_maxdiff.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="19.481482">
@@ -830,15 +801,42 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/tools/get_maxdiff.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/find_maxdiff_tester.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.83801293">
-          <caret line="289" column="46" selection-start-line="289" selection-start-column="46" selection-end-line="289" selection-end-column="46" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="257" column="40" selection-start-line="257" selection-start-column="40" selection-end-line="257" selection-end-column="40" />
           <folding>
             <element signature="e#354#8352#0" expanded="false" />
             <element signature="e#8458#9891#0" expanded="false" />
-            <element signature="e#9991#13452#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/confidence_maps_parallel.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="28" column="114" selection-start-line="28" selection-start-column="4" selection-end-line="28" selection-end-column="114" />
+          <folding>
+            <element signature="e#968#8695#0" expanded="false" />
+            <element signature="e#8886#16180#0" expanded="false" />
+            <element signature="e#16267#21124#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/confidence_map.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.25917926">
+          <caret line="16" column="54" selection-start-line="16" selection-start-column="54" selection-end-line="16" selection-end-column="54" />
+          <folding />
         </state>
       </provider>
     </entry>
