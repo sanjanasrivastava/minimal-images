@@ -173,6 +173,100 @@ def save_crops(coords, crop_metric, model_name, image_scale, axis, compare_corr,
         lcrop.save(lfn, 'JPEG')
 
 
+def get_human_maxdiff_coordinates(crop_metric, model_name, image_scale, compare_corr=True):
+
+    # for all human images, return coordinates of maximally different crops (shift)
+
+    PATH_TO_DATA = '/om/user/sanjanas/min-img-data/human-image-comparison/'
+
+    crop_type = 'proportional' if crop_metric <= 1. else 'constant'
+    maxdiff_coordinates = {}
+
+    for image_id in range(50002, 50009):
+
+        correctness_filename = PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, image_id) + '.npy'
+        try:
+            cor_map = np.load(correctness_filename)
+        except FileNotFoundError:
+            continue
+        if compare_corr:
+            if not cor_map.any():
+                print('%s has no correctly classified crops.' % image_id)
+                continue
+            elif cor_map.all():
+                print('%s has only correctly classified crops.' % image_id)
+                continue
+
+        con_map_filename = PATH_TO_DATA + settings.map_filename(settings.CONFIDENCE_MAPTYPE, crop_metric, model_name, image_scale, image_id) + '.npy'
+        con_map = np.load(con_map_filename)
+
+        down_diff = np.diff(con_map, axis=0)	# apparently assumes step_size=1 (adjacency)
+        up_diff = -1. * down_diff
+        right_diff = np.diff(con_map)
+        left_diff = -1. * right_diff
+        diffs = {'up': up_diff, 'down': down_diff, 'left': left_diff, 'right': right_diff}
+
+        while True:
+            maxes = {direction: np.unravel_index(np.argmax(diffs[direction]), diffs[direction].shape) for direction in diffs}	# map each directional diff to its argmax (index of its maximum confidence diff)
+            max_dir = max([direction for direction in maxes], key=lambda direction: diffs[direction][tuple(maxes[direction])])	# get the direction of the diff whose max confidence is the highest out of the four max confidences
+            # depending on the max-confidence direction, get the argmax of that direction. The more confident crop will be offset by 1 in a way that depends on the direction.
+            if max_dir == 'up':
+                up_max = maxes['up']
+                gcell, cell = (tuple(up_max), (up_max[0] + 1, up_max[1]))	# up (and left) are like this because when up and left diffs are made, the negation also changes the direction in which your step goes. it goes down -> up; right -> left.
+            elif max_dir == 'down':
+                down_max = maxes['down']
+                cell, gcell = (tuple(down_max), (down_max[0] + 1, down_max[1]))
+            elif max_dir == 'left':
+                left_max = maxes['left']
+                gcell, cell = (tuple(left_max), (left_max[0], left_max[1] + 1))
+            else:
+                right_max = maxes['right']
+                cell, gcell = (tuple(right_max), (right_max[0], right_max[1] + 1))
+
+            diff_correctness = cor_map[cell] != cor_map[gcell]
+            if diff_correctness or not compare_corr:
+                break
+
+            else:
+                if max_dir in ['up', 'left']:
+                    diffs[max_dir][gcell] = -2.	# for the diff where that was the argmax, mark the cell containing it to something lower than any real entry (-1. <= real entry <= 1.) This is gcell for up, left and cell for down, right because the lower-indexed cell is always the one that contained the confidence originally
+                else:
+                    diffs[max_dir][cell] = -2.
+
+        maxdiff_coordinates[image_id] = (gcell, cell, con_map[gcell] - con_map[cell])
+
+    return maxdiff_coordinates
+
+
+def save_human_crops(coords, crop_metric, model_name, image_scale, compare_corr, num_samples=50):
+
+    PATH_TO_DATA = '/om/user/sanjanas/min-img/data/human-image-comparison/'
+    PATH_TO_OUTPUT_DATA = PATH_TO_DATA
+    axis = 'shift'
+
+    folder = PATH_TO_OUTPUT_DATA + settings.maxdiff_folder_name(axis, crop_metric, model_name, image_scale, 'diff' if compare_corr else 'any')
+    if not os.path.exists(folder):
+        os.makedirs(folder)
+
+    # top_ids = sorted(coords, reverse=True, key=lambda x: coords[x][2])[num_samples:num_samples * 2]
+
+    for image_id in range(50002, 50009):
+
+        im_filename = PATH_TO_DATA + 'human-images/' + settings.get_ind_name(image_id) + '.png'
+        im = Image.open(im_filename)
+        hcell, lcell = coords[image_id][:2]
+        hfn, lfn = (PATH_TO_OUTPUT_DATA + settings.maxdiff_file_name(image_id, axis, crop_metric, model_name, image_scale, 'diff' if compare_corr else 'any', conf) for conf in ['high', 'low'])
+
+        width, height = im.size
+        dimension = height if height <= width else width
+        size = int(((crop_metric * dimension) // 2) * 2 + 1)
+        hcrop = im.crop((hcell[0], hcell[1], hcell[0] + size, hcell[1] + size))
+        lcrop = im.crop((lcell[0], lcell[1], lcell[0] + size, lcell[1] + size))
+
+        hcrop.save(hfn, 'PNG')
+        lcrop.save(lfn, 'PNG')
+
+
 if __name__ == '__main__':
     # coords = get_maxdiff_coordinates(0, 499, 0.2, 'resnet', 1.0, 'scale')
     # top_results = sorted(coords, reverse=True, key=lambda x: coords[x][2])[:10]          # sort entries of coords by conf diff
@@ -188,8 +282,10 @@ if __name__ == '__main__':
     #
     # save_crops(coords, 0.2, 'resnet', 1.0, 'shift', True)
 
-    coords = get_maxdiff_coordinates(0, 30, 0.6, 'resnet', 1.0, 'shift')
-    save_crops(coords, 0.6, 'resnet', 1.0, 'shift', True)
+    # coords = get_maxdiff_coordinates(0, 30, 0.6, 'resnet', 1.0, 'shift')
+    # save_crops(coords, 0.6, 'resnet', 1.0, 'shift', True)
 
+    coords = get_human_maxdiff_coordinates(0.2, 'resnet', 1.0)
+    save_human_crops(coords, 0.2, 'resnet', 1.0, True)
 
 
