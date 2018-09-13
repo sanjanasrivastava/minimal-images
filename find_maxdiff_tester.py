@@ -287,7 +287,7 @@ if __name__ == '__main__':
     # coords = get_maxdiff_coordinates(0, 30, 0.6, 'resnet', 1.0, 'shift')
     # save_crops(coords, 0.6, 'resnet', 1.0, 'shift', True)
 
-    coords = get_human_maxdiff_coordinates(0.2, 'resnet', 1.0)
-    save_human_crops(coords, 0.2, 'resnet', 1.0, True)
+    coords = get_human_maxdiff_coordinates(0.5, 'resnet', 1.0)
+    save_human_crops(coords, 0.5, 'resnet', 1.0, True)
 
 
