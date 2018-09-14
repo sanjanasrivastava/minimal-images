@@ -63,7 +63,7 @@
         <entry file="file://$PROJECT_DIR$/tools/get_maxdiff.sh">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+              <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -72,13 +72,11 @@
       <file leaf-file-name="find_maxdiff_tester.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/find_maxdiff_tester.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.59935206">
-              <caret line="290" column="51" selection-start-line="290" selection-start-column="51" selection-end-line="290" selection-end-column="51" />
+            <state vertical-scroll-proportion="0.6835853">
+              <caret line="179" column="25" selection-start-line="179" selection-start-column="25" selection-end-line="179" selection-end-column="25" />
               <folding>
-                <element signature="e#354#8352#0" expanded="false" />
-                <element signature="e#8458#9891#0" expanded="false" />
-                <element signature="e#9991#13452#0" expanded="false" />
-                <element signature="e#13558#14860#0" expanded="false" />
+                <element signature="e#10148#13609#0" expanded="false" />
+                <element signature="e#13715#15017#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -803,14 +801,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tools/get_maxdiff.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tools/confidence_map.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -831,15 +821,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/tools/get_maxdiff.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/find_maxdiff_tester.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.59935206">
-          <caret line="290" column="51" selection-start-line="290" selection-start-column="51" selection-end-line="290" selection-end-column="51" />
+        <state vertical-scroll-proportion="0.6835853">
+          <caret line="179" column="25" selection-start-line="179" selection-start-column="25" selection-end-line="179" selection-end-column="25" />
           <folding>
-            <element signature="e#354#8352#0" expanded="false" />
-            <element signature="e#8458#9891#0" expanded="false" />
-            <element signature="e#9991#13452#0" expanded="false" />
-            <element signature="e#13558#14860#0" expanded="false" />
+            <element signature="e#10148#13609#0" expanded="false" />
+            <element signature="e#13715#15017#0" expanded="false" />
           </folding>
         </state>
       </provider>

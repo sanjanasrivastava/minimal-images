@@ -19,6 +19,7 @@ def get_maxdiff_coordinates(start_id, end_id, crop_metric, model_name, image_sca
     maxdiff_coordinates = {}
 
     for smalldataset_id in range(start_id, end_id + 1):
+        print('CURRENTLY:', smalldataset_id)
 
         if axis == 'scale':         # scale (size)-based minimal images
             sfxs = ['', '_small']
@@ -140,6 +141,8 @@ def get_maxdiff_coordinates(start_id, end_id, crop_metric, model_name, image_sca
 
             maxdiff_coordinates[smalldataset_id] = (gcell, cell, con_map[gcell] - con_map[cell])
 
+    print('COORDS COMPLETE')
+
     return maxdiff_coordinates
 
 
@@ -152,6 +155,8 @@ def save_crops(coords, crop_metric, model_name, image_scale, axis, compare_corr,
     top_ids = sorted(coords, reverse=True, key=lambda x: coords[x][2])[num_samples:num_samples * 2]
 
     for smalldataset_id in top_ids:
+
+        print('CURRENTLY SAVING:', smalldataset_id)
 
         im_filename = PATH_TO_DATA + settings.folder_name('img') + settings.get_ind_name(settings.convert_id_small_to_imagenetval(smalldataset_id)) + '.JPEG'
         im = Image.open(im_filename)
@@ -171,6 +176,8 @@ def save_crops(coords, crop_metric, model_name, image_scale, axis, compare_corr,
 
         hcrop.save(hfn, 'JPEG')
         lcrop.save(lfn, 'JPEG')
+
+    print('SAVES COMPLETE')
 
 
 def get_human_maxdiff_coordinates(crop_metric, model_name, image_scale, compare_corr=True):
