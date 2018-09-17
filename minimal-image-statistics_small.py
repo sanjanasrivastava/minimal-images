@@ -22,8 +22,6 @@ def create_size_minimal_image_maps(image_id, crop_metric, model_name, image_scal
         return -1, -1
     s_top5 = np.load(fname)
 
-
-
     r, c = l_top5.shape
     M = np.zeros((r, c))
     

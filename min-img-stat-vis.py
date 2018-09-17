@@ -222,7 +222,6 @@ def pct_minimal_images_vs_crop_size():
     for axis in axes:
         sns.set(font_scale=1.5, style='whitegrid')
         i = 0
-        fig = plt.figure()
         for strictness in strictnesses:
 
             all_dfs = []
@@ -245,11 +244,16 @@ def pct_minimal_images_vs_crop_size():
 
             data = pd.concat(all_dfs)
 
-            fig.add_subplot(121 + i)
+            fig = plt.figure()
             ax = sns.pointplot(x='crop size', y='percent minimal images', hue='model', data=data)
             ax.set_title('Percent of images that are ' + strictness + ' ' + axis + ' minimal vs. proportionality constant')
             ax.set_xlabel('Proportionality constant')
             ax.set_ylabel('% Crops affected by a ' + axis)
+            for item in ([ax.title, ax.xaxis.label, ax.yaxis.label] +
+                         ax.get_xticklabels() + ax.get_yticklabels()):
+                item.set_fontsize(24)
+            fig.set_size_inches(6, 4.5)
+
             i += 1
 
     plt.show()
@@ -280,13 +284,13 @@ def accuracy_vs_crop_size():
     plt.show()
 
 
-def fig_imagenet():
+def fig_imagenet(strictness, axis):
 
     # pct min imgs
     image_scale = 1.0
 
-    strictness = 'strict'
-    axis = 'shift'
+    # strictness = 'strict'
+    # axis = 'shift'
     sns.set(font_scale=1, style='whitegrid')
     fig = plt.figure()
 
@@ -314,10 +318,14 @@ def fig_imagenet():
     sns.set_context('poster')
     fig.add_subplot(121)
     ax = sns.pointplot(x='crop size', y='percent minimal images', hue='model', data=data)
-    ax.set_title('Strict shift decrease with crop size')
+    ax.set_title(strictness.title() + axis + ' decrease with crop size')
     ax.set_xlabel('P (crop side length / image lesser dimension)')
     ax.set_ylabel('% Crops affected by a ' + axis)
-    ax.legend(frameon = True, title="DNN")
+    ax.legend(frameon = True, title="DNN", fontsize=12)
+    for item in ([ax.title, ax.xaxis.label, ax.yaxis.label] +
+                         ax.get_xticklabels() + ax.get_yticklabels()):
+        item.set_fontsize(24)
+        fig.set_size_inches(12, 4.5)
 
 
     # accuracy
@@ -708,13 +716,16 @@ if __name__ == '__main__':
     # pct_minimal_images_vs_correctness(0.2, 1.0, 'loose', 'scale')
     # pct_correct_in_bbx()
     # pct_minimal_images_vs_crop_size()
+    for strictness in ['loose', 'strict']:
+        for axis in ['shift', 'scale']:
+            fig_imagenet(strictness, axis)
     # pct_min_img_vs_bbx_size()
     # accuracy_vs_bbx_size()
     # fig_bbx_size()
     # pct_min_img_vs_category()
     # accuracy_vs_category()
     # pct_min_imgs_vs_non_min_imgs_in_bbx()
-    pct_min_imgs_in_bbx_vs_outside()
+    # pct_min_imgs_in_bbx_vs_outside()
     # accuracy_vs_crop_size()
     # fig_imagenet()
     # pass
