@@ -5,7 +5,7 @@
 #SBATCH --gres=gpu:GEFORCEGTX1080TI:1
 #SBATCH -t 0:30:00
 #SBATCH --workdir=./log/
-#SBATCH --qos=use-everything
+#SBATCH --qos=cbmm
 
 echo Hello
 
