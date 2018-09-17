@@ -62,6 +62,7 @@ def create_human_size_minimal_image_maps(image_id, crop_metric, model_name, imag
 
     fname = PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, image_id) + '.npy'
     if not os.path.isfile(fname):
+        print(settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, image_id))
         print(fname)
         print('large map not found')
         return -1, -1
