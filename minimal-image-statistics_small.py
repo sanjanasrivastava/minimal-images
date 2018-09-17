@@ -58,7 +58,7 @@ def create_size_minimal_image_maps(image_id, crop_metric, model_name, image_scal
 
 def create_human_size_minimal_image_maps(image_id, crop_metric, model_name, image_scale, loose):
 
-    PATH_TO_DATA = '/om/user/sanjanas/min-img-data/human-image-comparison'
+    PATH_TO_DATA = '/om/user/sanjanas/min-img-data/human-image-comparison/'
 
     fname = PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, image_id) + '.npy'
     if not os.path.isfile(fname):
