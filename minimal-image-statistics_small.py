@@ -117,7 +117,7 @@ for idx_metric, crop_metric in enumerate([0.4]):
     print(idx_metric)
     sys.stdout.flush()
     for idx_loose, loose in enumerate([False, True]):
-        for image_id in range(50002, 50008):
+        for image_id in range(50002, 50009):
             print(image_id)
             sys.stdout.flush()
 
