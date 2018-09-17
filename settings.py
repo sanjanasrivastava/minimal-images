@@ -91,7 +91,6 @@ BACKPROP_MAPTYPE = 'backprop'
 BACKPROP_INDICES_FILENAME = 'backprop/backprop-indices.json'
 
 def map_folder_name(maptype, crop_metric, model, image_scale):
-    print(os.path.join(maptype, str(crop_metric), model, str(image_scale), ''))
     return os.path.join(maptype, str(crop_metric), model, str(image_scale), '')
 
 

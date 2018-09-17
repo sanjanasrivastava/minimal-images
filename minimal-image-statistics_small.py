@@ -61,6 +61,7 @@ def create_human_size_minimal_image_maps(image_id, crop_metric, model_name, imag
     PATH_TO_DATA = '/om/user/sanjanas/min-img-data/human-image-comparison/'
 
     fname = PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, image_id) + '.npy'
+    fname = PATH_TO_DATA + 'top5/0.4/resnet/1.0/' + str(image_id) + '.npy'
     if not os.path.isfile(fname):
         print(fname)
         print('large map not found')
@@ -69,6 +70,7 @@ def create_human_size_minimal_image_maps(image_id, crop_metric, model_name, imag
     l_top5 = np.load(fname)
 
     fname = PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, image_id) + '_small.npy'
+    fname = PATH_TO_DATA + 'top5/0.4/resnet/1.0/' + str(image_id) + '_small.npy'
     if not os.path.isfile(fname):
         print('small map not found')
         return -1, -1
