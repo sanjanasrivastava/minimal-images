@@ -90,22 +90,24 @@ def create_human_size_minimal_image_maps(image_id, crop_metric, model_name, imag
                         M[i, j] = 1.	# ...the current crop is a positive minimal image. Otherwise, it's not minimal.
                 else:		# if the current crop is incorrectly classified...
                     if np.any(window):		# if any cell in the window is correctly classified...
-                        M[i, j] = -1.	# ...the current crop is a negative minimal image. Otherwise, it's not minimal.
+                        M[i, j] = 1.	# ...the current crop is a negative minimal image. Otherwise, it's not minimal.
             else:	# we are looking for strict minimal image maps
                 if self: 	# if the current crop is correctly classified...
                     if not np.any(window):	# if all crops in the window are incorrectly classified...
                         M[i, j] = 1.	# ...the current crop is a positive minimal image. Otherwise, it's not minimal.
                 else:		# if the current crop is incorrectly classified...
                     if np.all(window):	# if all the crops in the window are correctly classified...
-                        M[i, j] = -1.	# ...the current crop is a negative minimal image. Otherwise, it's not minimal.
+                        M[i, j] = 1.	# ...the current crop is a negative minimal image. Otherwise, it's not minimal.
     print('finished making map')
     #  save map
     if loose:
         print('saving loose map')
-        np.save(PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, image_id) + '_small_lmap.npy', M)
+        np.save(PATH_TO_DATA + 'top5/0.4/resnet/1.0/' + str(image_id) + '_small_lmap.npy', M)
+        # np.save(PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, image_id) + '_small_lmap.npy', M)
     else:
         print('saving strict map')
-        np.save(PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, image_id) + '_small_map.npy', M)
+        np.save(PATH_TO_DATA + 'top5/0.4/resnet/1.0/' + str(image_id) + '_small_map.npy', M)
+        # np.save(PATH_TO_DATA + settings.map_filename(settings.TOP5_MAPTYPE, crop_metric, model_name, image_scale, image_id) + '_small_map.npy', M)
 
     # calculate map statistics
     num_pos_min_imgs = (M > 0.).sum()
