@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="1403df6a-f044-4c1c-bcc0-1981a0ca2753" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/minimal-image-statistics_small.py" afterPath="$PROJECT_DIR$/minimal-image-statistics_small.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/get_minimal_maps.sh" afterPath="$PROJECT_DIR$/tools/get_minimal_maps.sh" />
     </list>
     <ignored path="minimal-images.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -46,11 +45,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="minimal-image-statistics_small.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="minimal-image-statistics_small.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/minimal-image-statistics_small.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="74" column="24" selection-start-line="74" selection-start-column="24" selection-end-line="74" selection-end-column="24" />
+            <state vertical-scroll-proportion="0.7720365">
+              <caret line="128" column="10" selection-start-line="128" selection-start-column="10" selection-end-line="128" selection-end-column="10" />
               <folding>
                 <element signature="e#232#2666#0" expanded="false" />
               </folding>
@@ -58,11 +57,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="get_minimal_maps.sh" pinned="false" current-in-tab="true">
+      <file leaf-file-name="get_minimal_maps.sh" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tools/get_minimal_maps.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.15957446">
-              <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="6" column="24" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -131,8 +130,8 @@
         <option value="$PROJECT_DIR$/minimal_image_statistics.py" />
         <option value="$PROJECT_DIR$/tools/confidence_map.sh" />
         <option value="$PROJECT_DIR$/confidence_maps_parallel.py" />
-        <option value="$PROJECT_DIR$/minimal-image-statistics_small.py" />
         <option value="$PROJECT_DIR$/tools/get_minimal_maps.sh" />
+        <option value="$PROJECT_DIR$/minimal-image-statistics_small.py" />
       </list>
     </option>
   </component>
@@ -878,21 +877,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/minimal-image-statistics_small.py">
+    <entry file="file://$PROJECT_DIR$/tools/get_minimal_maps.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="74" column="24" selection-start-line="74" selection-start-column="24" selection-end-line="74" selection-end-column="24" />
-          <folding>
-            <element signature="e#232#2666#0" expanded="false" />
-          </folding>
+          <caret line="6" column="24" selection-start-line="6" selection-start-column="24" selection-end-line="6" selection-end-column="24" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tools/get_minimal_maps.sh">
+    <entry file="file://$PROJECT_DIR$/minimal-image-statistics_small.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.15957446">
-          <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
-          <folding />
+        <state vertical-scroll-proportion="0.7720365">
+          <caret line="128" column="10" selection-start-line="128" selection-start-column="10" selection-end-line="128" selection-end-column="10" />
+          <folding>
+            <element signature="e#232#2666#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

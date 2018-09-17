@@ -123,10 +123,10 @@ for idx_metric, crop_metric in enumerate([0.4]):
 
             a, b = \
                 create_human_size_minimal_image_maps(image_id, crop_metric, model_name, image_scale, loose)
-            results[idx_metric][idx_loose][image_id][0] = a
-            results[idx_metric][idx_loose][image_id][1] = b
+            # results[idx_metric][idx_loose][image_id][0] = a
+            # results[idx_metric][idx_loose][image_id][1] = b
 
-        np.save('tmp_results_' + model_name + '_small.npy', results)
+        # np.save('tmp_results_' + model_name + '_small.npy', results)
 
 
 
