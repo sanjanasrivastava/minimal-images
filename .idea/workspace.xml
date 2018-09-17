@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1403df6a-f044-4c1c-bcc0-1981a0ca2753" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools/get_minimal_maps.sh" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/min-img-stat-vis.py" afterPath="$PROJECT_DIR$/min-img-stat-vis.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/minimal-image-statistics_small.py" afterPath="$PROJECT_DIR$/minimal-image-statistics_small.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/confidence_map.sh" afterPath="$PROJECT_DIR$/tools/confidence_map.sh" />
     </list>
     <ignored path="minimal-images.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -52,7 +51,29 @@
         <entry file="file://$PROJECT_DIR$/minimal-image-statistics_small.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="22" column="27" selection-start-line="22" selection-start-column="27" selection-end-line="22" selection-end-column="27" />
+              <caret line="108" column="34" selection-start-line="108" selection-start-column="34" selection-end-line="108" selection-end-column="34" />
+              <folding>
+                <element signature="e#232#2666#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="get_minimal_maps.sh" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/tools/get_minimal_maps.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.25075987">
+              <caret line="11" column="35" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="make_stats.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tools/make_stats.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -72,11 +93,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="confidence_map.sh" pinned="false" current-in-tab="true">
+      <file leaf-file-name="confidence_map.sh" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tools/confidence_map.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.36474165">
-              <caret line="16" column="55" selection-start-line="16" selection-start-column="55" selection-end-line="16" selection-end-column="55" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -104,14 +125,15 @@
         <option value="$PROJECT_DIR$/find_maxdiff.py" />
         <option value="$PROJECT_DIR$/tools/make_stats.sh" />
         <option value="$PROJECT_DIR$/settings.py" />
-        <option value="$PROJECT_DIR$/confidence_maps_parallel.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/find_maxdiff_tester.py" />
         <option value="$PROJECT_DIR$/tools/get_maxdiff.sh" />
         <option value="$PROJECT_DIR$/min-img-stat-vis.py" />
         <option value="$PROJECT_DIR$/minimal_image_statistics.py" />
-        <option value="$PROJECT_DIR$/minimal-image-statistics_small.py" />
         <option value="$PROJECT_DIR$/tools/confidence_map.sh" />
+        <option value="$PROJECT_DIR$/confidence_maps_parallel.py" />
+        <option value="$PROJECT_DIR$/minimal-image-statistics_small.py" />
+        <option value="$PROJECT_DIR$/tools/get_minimal_maps.sh" />
       </list>
     </option>
   </component>
@@ -164,6 +186,20 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="minimal-images" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="minimal-images" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -174,6 +210,7 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../minimal-images-paper" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///Users/sanjanasrivastava/Documents/Research/Projects/minimal-images/confidence_maps_parallel.py" />
   </component>
   <component name="RunManager" selected="Python.min-img-stat-vis">
     <configuration default="false" name="minimal-image-statistics" type="PythonConfigurationType" factoryName="Python" temporary="true">
@@ -472,41 +509,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/ILSVRC2012_val_bbx_dimensions.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="37088" selection-start-line="0" selection-start-column="37088" selection-end-line="0" selection-end-column="37088" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/min-img-stat-vis.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/min-img-stat-vis.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/min-img-stat-vis.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/min-img-stat-vis.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -689,13 +691,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tools/array_experiments.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.32258064">
-          <caret line="20" column="69" selection-start-line="20" selection-start-column="45" selection-end-line="20" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/small-dataset-to-imagenet.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -728,13 +723,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="5632" column="0" selection-start-line="5632" selection-start-column="0" selection-end-line="5632" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/make_stats.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="30" selection-start-line="10" selection-start-column="30" selection-end-line="10" selection-end-column="30" />
         </state>
       </provider>
     </entry>
@@ -823,10 +811,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/minimal-image-statistics_small.py">
+    <entry file="file://$PROJECT_DIR$/tools/confidence_map.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="27" selection-start-line="22" selection-start-column="27" selection-end-line="22" selection-end-column="27" />
+          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -843,10 +831,68 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tools/confidence_map.sh">
+    <entry file="file://$PROJECT_DIR$/tools/array_experiments4_small.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36474165">
-          <caret line="16" column="55" selection-start-line="16" selection-start-column="55" selection-end-line="16" selection-end-column="55" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/array_experiments_small.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/array_experiments_10804_small.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/array_experiments.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.45592704">
+          <caret line="20" column="69" selection-start-line="20" selection-start-column="45" selection-end-line="20" selection-end-column="69" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/array_experiments_titanx8.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/minimal-image-statistics_small.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="108" column="34" selection-start-line="108" selection-start-column="34" selection-end-line="108" selection-end-column="34" />
+          <folding>
+            <element signature="e#232#2666#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/make_stats.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/get_minimal_maps.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.25075987">
+          <caret line="11" column="35" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
           <folding />
         </state>
       </provider>
