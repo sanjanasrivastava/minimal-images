@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1403df6a-f044-4c1c-bcc0-1981a0ca2753" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/minimal-image-statistics_small.py" afterPath="$PROJECT_DIR$/minimal-image-statistics_small.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/find_maxdiff_tester.py" afterPath="$PROJECT_DIR$/find_maxdiff_tester.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/min-img-stat-vis.py" afterPath="$PROJECT_DIR$/min-img-stat-vis.py" />
     </list>
     <ignored path="minimal-images.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -26,32 +28,37 @@
       <file leaf-file-name="min-img-stat-vis.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/min-img-stat-vis.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-16.148148">
-              <caret line="327" column="30" selection-start-line="327" selection-start-column="30" selection-end-line="327" selection-end-column="30" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/settings.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.111111">
-              <caret line="93" column="0" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
+            <state vertical-scroll-proportion="-6.148148">
+              <caret line="777" column="43" selection-start-line="777" selection-start-column="43" selection-end-line="777" selection-end-column="43" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
+                <element signature="e#601#2016#0" expanded="false" />
+                <element signature="e#2170#2430#0" expanded="false" />
+                <element signature="e#2526#4365#0" expanded="false" />
+                <element signature="e#4450#6907#0" expanded="false" />
+                <element signature="e#6942#8061#0" expanded="false" />
+                <element signature="e#8152#10296#0" expanded="false" />
+                <element signature="e#10343#12407#0" expanded="false" />
+                <element signature="e#12444#13605#0" expanded="false" />
+                <element signature="e#13640#13941#0" expanded="false" />
+                <element signature="e#13985#17711#0" expanded="false" />
+                <element signature="e#24506#27976#0" expanded="false" />
+                <element signature="e#28241#30048#0" expanded="false" />
+                <element signature="e#30084#32160#0" expanded="false" />
+                <element signature="e#32211#33635#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="minimal-image-statistics_small.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/minimal-image-statistics_small.py">
+      <file leaf-file-name="find_maxdiff_tester.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/find_maxdiff_tester.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8206687">
-              <caret line="109" column="10" selection-start-line="109" selection-start-column="10" selection-end-line="109" selection-end-column="10" />
+            <state vertical-scroll-proportion="-2.5531914">
+              <caret line="22" column="28" selection-start-line="22" selection-start-column="28" selection-end-line="22" selection-end-column="28" />
               <folding>
-                <element signature="e#232#2666#0" expanded="false" />
+                <element signature="e#10218#13679#0" expanded="false" />
+                <element signature="e#13785#15087#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -61,52 +68,20 @@
         <entry file="file://$PROJECT_DIR$/tools/get_maxdiff.sh">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+              <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="get_minimal_maps.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tools/get_minimal_maps.sh">
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/settings.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="2" column="29" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="make_stats.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tools/make_stats.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="35" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="confidence_maps_parallel.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/confidence_maps_parallel.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="505" column="31" selection-start-line="505" selection-start-column="31" selection-end-line="505" selection-end-column="31" />
+              <caret line="47" column="11" selection-start-line="47" selection-start-column="11" selection-end-line="47" selection-end-column="11" />
               <folding>
-                <element signature="e#968#8695#0" expanded="false" />
-                <element signature="e#8886#16180#0" expanded="false" />
-                <element signature="e#16267#21124#0" expanded="false" />
+                <element signature="e#0#11#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="confidence_map.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tools/confidence_map.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -133,20 +108,20 @@
         <option value="$PROJECT_DIR$/find_maxdiff.py" />
         <option value="$PROJECT_DIR$/tools/make_stats.sh" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/find_maxdiff_tester.py" />
         <option value="$PROJECT_DIR$/tools/get_maxdiff.sh" />
-        <option value="$PROJECT_DIR$/min-img-stat-vis.py" />
         <option value="$PROJECT_DIR$/minimal_image_statistics.py" />
         <option value="$PROJECT_DIR$/tools/confidence_map.sh" />
         <option value="$PROJECT_DIR$/confidence_maps_parallel.py" />
         <option value="$PROJECT_DIR$/tools/get_minimal_maps.sh" />
         <option value="$PROJECT_DIR$/settings.py" />
         <option value="$PROJECT_DIR$/minimal-image-statistics_small.py" />
+        <option value="$PROJECT_DIR$/min-img-stat-vis.py" />
+        <option value="$PROJECT_DIR$/find_maxdiff_tester.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="287" />
+    <option name="x" value="349" />
     <option name="y" value="23" />
     <option name="width" value="1316" />
     <option name="height" value="1023" />
@@ -470,10 +445,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="287" y="23" width="1316" height="1023" extended-state="0" />
+    <frame x="349" y="23" width="1316" height="1023" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15653495" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18693009" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32975295" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -512,18 +487,11 @@
           <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="5" />
+      <option name="time" value="7" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/min-img-stat-vis.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/min-img-stat-vis.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -762,42 +730,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/find_maxdiff_tester.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="45" selection-start-line="9" selection-start-column="45" selection-end-line="9" selection-end-column="45" />
-          <folding>
-            <element signature="e#10148#13609#0" expanded="false" />
-            <element signature="e#13715#15017#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.048596114">
           <caret line="3" column="11" selection-start-line="3" selection-start-column="11" selection-end-line="3" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/min-img-stat-vis.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-16.148148">
-          <caret line="327" column="30" selection-start-line="327" selection-start-column="30" selection-end-line="327" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/minimal_image_statistics.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33890578">
-          <caret line="80" column="73" selection-start-line="80" selection-start-column="73" selection-end-line="80" selection-end-column="73" />
-          <folding>
-            <element signature="e#4939#6874#0" expanded="false" />
-            <element signature="e#7578#10043#0" expanded="false" />
-            <element signature="e#12164#14523#0" expanded="false" />
-            <element signature="e#14679#17381#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -809,10 +745,60 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/tools/array_experiments4_small.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/array_experiments_small.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/array_experiments_10804_small.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/array_experiments.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.45592704">
+          <caret line="20" column="69" selection-start-line="20" selection-start-column="45" selection-end-line="20" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/array_experiments_titanx8.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/make_stats.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda/envs/py35/lib/python3.5/site-packages/matplotlib/axes/_axes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33282673">
+          <caret line="544" column="0" selection-start-line="544" selection-start-column="0" selection-end-line="544" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/confidence_maps_parallel.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="505" column="31" selection-start-line="505" selection-start-column="31" selection-end-line="505" selection-end-column="31" />
+          <caret line="479" column="26" selection-start-line="479" selection-start-column="26" selection-end-line="479" selection-end-column="26" />
           <folding>
             <element signature="e#968#8695#0" expanded="false" />
             <element signature="e#8886#16180#0" expanded="false" />
@@ -821,43 +807,48 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tools/array_experiments4_small.sh">
+    <entry file="file://$PROJECT_DIR$/minimal-image-statistics_small.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <caret line="109" column="10" selection-start-line="109" selection-start-column="10" selection-end-line="109" selection-end-column="10" />
+          <folding>
+            <element signature="e#232#2666#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tools/array_experiments_small.sh">
+    <entry file="file://$PROJECT_DIR$/minimal_image_statistics.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+        <state vertical-scroll-proportion="-19.444445">
+          <caret line="208" column="33" selection-start-line="208" selection-start-column="22" selection-end-line="208" selection-end-column="33" />
+          <folding>
+            <element signature="e#4939#6874#0" expanded="false" />
+            <element signature="e#12164#14523#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tools/array_experiments_10804_small.sh">
+    <entry file="file://$PROJECT_DIR$/min-img-stat-vis.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/array_experiments.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45592704">
-          <caret line="20" column="69" selection-start-line="20" selection-start-column="45" selection-end-line="20" selection-end-column="69" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/array_experiments_titanx8.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+        <state vertical-scroll-proportion="-6.148148">
+          <caret line="777" column="43" selection-start-line="777" selection-start-column="43" selection-end-line="777" selection-end-column="43" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#601#2016#0" expanded="false" />
+            <element signature="e#2170#2430#0" expanded="false" />
+            <element signature="e#2526#4365#0" expanded="false" />
+            <element signature="e#4450#6907#0" expanded="false" />
+            <element signature="e#6942#8061#0" expanded="false" />
+            <element signature="e#8152#10296#0" expanded="false" />
+            <element signature="e#10343#12407#0" expanded="false" />
+            <element signature="e#12444#13605#0" expanded="false" />
+            <element signature="e#13640#13941#0" expanded="false" />
+            <element signature="e#13985#17711#0" expanded="false" />
+            <element signature="e#24506#27976#0" expanded="false" />
+            <element signature="e#28241#30048#0" expanded="false" />
+            <element signature="e#30084#32160#0" expanded="false" />
+            <element signature="e#32211#33635#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -869,38 +860,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tools/get_maxdiff.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/make_stats.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.111111">
-          <caret line="93" column="0" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="47" column="11" selection-start-line="47" selection-start-column="11" selection-end-line="47" selection-end-column="11" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/minimal-image-statistics_small.py">
+    <entry file="file://$PROJECT_DIR$/tools/get_maxdiff.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8206687">
-          <caret line="109" column="10" selection-start-line="109" selection-start-column="10" selection-end-line="109" selection-end-column="10" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/find_maxdiff_tester.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.5531914">
+          <caret line="22" column="28" selection-start-line="22" selection-start-column="28" selection-end-line="22" selection-end-column="28" />
           <folding>
-            <element signature="e#232#2666#0" expanded="false" />
+            <element signature="e#10218#13679#0" expanded="false" />
+            <element signature="e#13785#15087#0" expanded="false" />
           </folding>
         </state>
       </provider>

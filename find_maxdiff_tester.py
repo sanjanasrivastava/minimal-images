@@ -15,8 +15,12 @@ def get_maxdiff_coordinates(start_id, end_id, crop_metric, model_name, image_sca
 
     # for all smalldataset images start_id through end_id, return coordinates of maximally different crops
 
+    print('ENTERED COORDS FUNCTION')
+
     crop_type = 'proportional' if crop_metric <= 1. else 'constant'
     maxdiff_coordinates = {}
+
+    print('ENTERING FOR LOOP')
 
     for smalldataset_id in range(start_id, end_id + 1):
         print('CURRENTLY:', smalldataset_id)
@@ -294,7 +298,14 @@ if __name__ == '__main__':
     # coords = get_maxdiff_coordinates(0, 30, 0.6, 'resnet', 1.0, 'shift')
     # save_crops(coords, 0.6, 'resnet', 1.0, 'shift', True)
 
+    print('IN SCRIPT')
+
     coords = get_maxdiff_coordinates(0, 249, 0.6, 'resnet', 1.0, 'scale')
+
+    print('COMPLETED COORDS')
+
     save_crops(coords, 0.6, 'resnet', 1.0, 'scale', True)
+
+    print('COMPLETED SCRIPT')
 
 

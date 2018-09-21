@@ -1,4 +1,5 @@
 import json
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
 import os
@@ -284,6 +285,18 @@ def accuracy_vs_crop_size():
     plt.show()
 
 
+def set_size(w,h, ax=None):
+    """ w, h: width, height in inches """
+    if not ax: ax=plt.gca()
+    l = ax.figure.subplotpars.left
+    r = ax.figure.subplotpars.right
+    t = ax.figure.subplotpars.top
+    b = ax.figure.subplotpars.bottom
+    figw = float(w)/(r-l)
+    figh = float(h)/(t-b)
+    ax.figure.set_size_inches(figw, figh)
+
+
 def fig_imagenet(strictness, axis):
 
     # pct min imgs
@@ -291,8 +304,11 @@ def fig_imagenet(strictness, axis):
 
     # strictness = 'strict'
     # axis = 'shift'
-    sns.set(font_scale=1, style='whitegrid')
-    fig = plt.figure()
+    sns.set()
+    sns.set_style('whitegrid')
+    sns.set_context('poster')
+    # fig, ax = plt.subplots()
+
 
     all_dfs = []
     for crop_metric in crop_metrics:
@@ -314,19 +330,30 @@ def fig_imagenet(strictness, axis):
 
     data = pd.concat(all_dfs)
 
-    sns.set(style='whitegrid', font_scale=1.5)
-    sns.set_context('poster')
-    fig.add_subplot(121)
-    ax = sns.pointplot(x='crop size', y='percent minimal images', hue='model', data=data)
-    ax.set_title(strictness.title() + axis + ' decrease with crop size')
-    ax.set_xlabel('P (crop side length / image lesser dimension)')
-    ax.set_ylabel('% Crops affected by a ' + axis)
-    ax.legend(frameon = True, title="DNN", fontsize=12)
-    for item in ([ax.title, ax.xaxis.label, ax.yaxis.label] +
-                         ax.get_xticklabels() + ax.get_yticklabels()):
-        item.set_fontsize(24)
-        fig.set_size_inches(12, 4.5)
 
+    # plotting params
+    fontsize = 26
+    figwidth = 9
+    figheight = 7.5
+
+    fig1 = plt.figure(figsize=(8.5, 6))
+    ax1 = fig1.add_axes([0.2, 0.2, 0.75, 0.65])
+    sns.set_context('poster')
+
+
+    sns.pointplot(x='crop size', y='percent minimal images', hue='model', data=data, ax=ax1)
+    ax1.set_title(strictness.title() + ' ' + axis + ' decrease with crop size')
+    ax1.set_xlabel('P (crop side length / image lesser dimension)')
+    ax1.set_ylabel('% Crops affected by a ' + axis)
+    ax1.legend(frameon = True, title="DNN", fontsize=fontsize * 0.7, prop={"size": 20})
+    ax1.grid(True)
+    for item in ([ax1.title, ax1.xaxis.label, ax1.yaxis.label] +
+                         ax1.get_xticklabels() + ax1.get_yticklabels()):
+        item.set_fontsize(fontsize)
+    # set_size(8, 2)
+    # fig1.set_size_inches(figwidth, figheight)
+
+    plt.savefig('../minimal-images-paper/imagenet_figures/' + '_'.join([strictness, axis, 'vs', 'cropsize']) + '.pdf')
 
     # accuracy
 
@@ -338,18 +365,27 @@ def fig_imagenet(strictness, axis):
             # mean_result = np.nanmean(result)
             all_dfs.append(pd.DataFrame(data={'DNN': [model for __ in result], # [model],
                                               '% crops correctly classified': result, # [mean_result],
-                                              'proportionality constant': [crop_metric for __ in result]})) # [crop_metric]}))
+                                              'proportionality constant': [crop_metric for __ in result]})) # [crop_metric]})
+
     data = pd.concat(all_dfs)
 
-    fig.add_subplot(122)
-    ax = sns.pointplot(y='% crops correctly classified', x='proportionality constant', hue='DNN', data=data)
-    ax.set_title('DNN accuracy increases with crop size')
-    ax.set_xlabel('P (crop side length / image lesser dimension)')
-    ax.set_ylabel('% Crops correctly classified')
-    ax.legend(frameon = True, title="DNN")
+    fig2 = plt.figure(figsize=(8.5, 6))
+    ax2 = fig2.add_axes([0.2, 0.2, 0.75, 0.65])
 
-    plt.show()
+    # fig.add_subplot(122)
+    sns.pointplot(y='% crops correctly classified', x='proportionality constant', hue='DNN', data=data, ax=ax2)
+    ax2.get_xaxis().set_major_formatter(mpl.ticker.ScalarFormatter())
+    ax2.set_title('DNN accuracy increases with crop size')
+    ax2.set_xlabel('P (crop side length / image lesser dimension)')
+    ax2.set_ylabel('% Fragile recognition images correctly classified')
+    ax2.grid(True)
+    ax2.legend(frameon = True, title="DNN", fontsize=fontsize * 0.7)
+    for item in ([ax2.title, ax2.xaxis.label, ax2.yaxis.label] +
+                         ax2.get_xticklabels() + ax2.get_yticklabels()):
+        item.set_fontsize(fontsize)
 
+    # fig2.set_size_inches(figwidth, figheight)
+    plt.savefig('../minimal-images-paper/imagenet_figures/' + '_'.join(['accuracy', 'vs', 'cropsize']) + '.pdf')
 
 
 def pct_correct_in_bbx():
@@ -420,11 +456,25 @@ def pct_min_img_vs_bbx_size():
     data = pd.concat(all_dfs)
     # data = data.sort_values(['Object size'], ascending=SIZES)
 
-    sns.set(font_scale=1.5, style='whitegrid')
-    ax = sns.pointplot(x='Object size', y='Percent minimal images', hue='Model', data=data, order=SIZES)
-    ax.set_title('% Strict shift images increase with object size')
-    ax.set_ylabel('% Strict shift fragile recognition images')
-    plt.show()
+    # Plotting parameters
+    sns.set(style='whitegrid', context='poster')
+    fontsize = 26
+    figwidth, figheight = 8.5, 6
+    axleft = axbottom = 0.2
+    axwidth, axheight = 0.75, 0.65
+    legend_fontsize = fontsize * 0.7
+
+    fig = plt.figure(figsize=(figwidth, figheight))
+    ax = fig.add_axes([axleft, axbottom, axwidth, axheight])
+    sns.pointplot(x='Object size', y='Percent minimal images', hue='Model', data=data, order=SIZES)
+    ax.set_title(' '.join(['%', strictness.title(), axis, 'increase with object size']))
+    ax.set_ylabel(' '.join(['%', strictness.title(), axis, 'FRIs']))
+    ax.legend(frameon = True, title="DNN", fontsize=legend_fontsize)
+    for item in ([ax.title, ax.xaxis.label, ax.yaxis.label] +
+             ax.get_xticklabels() + ax.get_yticklabels()):
+        item.set_fontsize(fontsize)
+    ax.grid(True)
+    plt.savefig('../minimal-images-paper/imagenet_figures/' + '_'.join([strictness, axis, 'vs', 'objectsize']) + '.pdf')
 
 
 def accuracy_vs_bbx_size():
@@ -462,12 +512,26 @@ def accuracy_vs_bbx_size():
                                           'DNN': model_column}))
 
     data = pd.concat(all_dfs)
-    sns.set(font_scale=1.5, style='whitegrid')
-    ax = sns.pointplot(x='Object size', y='% Accuracy of DNN on full image', hue='DNN', data=data)
-    ax.set_title('DNN accuracy on full images increases with object size')
-    ax.set_ylabel('% Accuracy of DNN on full image')
 
-    plt.show()
+    # Plotting parameters
+    sns.set(style='whitegrid', context='poster')
+    fontsize = 26
+    figwidth, figheight = 8.5, 6
+    axleft = axbottom = 0.2
+    axwidth, axheight = 0.75, 0.65
+    legend_fontsize = fontsize * 0.7
+
+    fig = plt.figure(figsize=(figwidth, figheight))
+    ax = fig.add_axes([axleft, axbottom, axwidth, axheight])
+    sns.pointplot(x='Object size', y='% Accuracy of DNN on full image', hue='DNN', data=data)
+    ax.set_title('DNN accuracy increases with object size')
+    ax.set_ylabel('% Accuracy on full image')
+    ax.grid(True)
+    ax.legend(frameon = True, title="DNN", fontsize=legend_fontsize)
+    for item in ([ax.title, ax.xaxis.label, ax.yaxis.label] +
+             ax.get_xticklabels() + ax.get_yticklabels()):
+        item.set_fontsize(fontsize)
+    plt.savefig('../minimal-images-paper/imagenet_figures/' + '_'.join(['accuracy', 'vs', 'objectsize']) + '.pdf')
 
 
 def fig_bbx_size():
@@ -673,10 +737,16 @@ def pct_min_imgs_in_bbx_vs_outside():
     '''
 
     image_scale = 1.0
-    strictnesses = ['loose'] # , 'strict']
+    strictnesses = ['loose', 'strict']
     axes = ['shift', 'scale']
 
-    fig = plt.figure()
+    # Plotting parameters
+    fontsize = 26
+    figwidth, figheight = 8.5, 6
+    axleft = axbottom = 0.2
+    axwidth, axheight = 0.75, 0.65
+    legend_fontsize = fontsize * 0.7
+
 
     for strictness in strictnesses:
         i = 0
@@ -689,24 +759,26 @@ def pct_min_imgs_in_bbx_vs_outside():
                     pct_min_imgs_in_bbx = pct_min_imgs_in_bbx[:, 0]
 
                     all_dfs.append(pd.DataFrame(data={'Proportionality constant': [crop_metric for __ in pct_min_imgs_in_bbx],
-                                                      '% of all minimal images within bound-in box': pct_min_imgs_in_bbx,
+                                                      '% of all minimal images within bound-in box': [pct * 100 for pct in pct_min_imgs_in_bbx],
                                                       'DNN': [model for __ in pct_min_imgs_in_bbx]}))
 
             data = pd.concat(all_dfs)
-            sns.set(font_scale=1.5, style='whitegrid')
+            sns.set(font_scale=1.5, style='whitegrid', context='poster')
+            fig = plt.figure(figsize=(figwidth, figheight))
+            ax = fig.add_axes([axleft, axbottom, axwidth, axheight])
 
-            fig.add_subplot(121 + i)
-            sns.set_context('poster')
             ax = sns.pointplot(x='Proportionality constant', y='% of all minimal images within bound-in box', hue='DNN', data=data)
             ax.set_xlabel('P (crop side length / image lesser dimension)')
-            ax.set_ylabel('% Fragile recognition images within bound-in box')
-            ax.set_title('Loose ' + axis + ' image overlap with object')
-            ax.legend(frameon = True, title="DNN")
+            ax.set_ylabel('% FRIs within bound-in box')
+            ax.set_title(strictness.title() + ' ' + axis + ' object overlap decreases')
+            ax.grid(True)
+            ax.legend(frameon = True, title="DNN", fontsize=legend_fontsize)
+            for item in ([ax.title, ax.xaxis.label, ax.yaxis.label] +
+                         ax.get_xticklabels() + ax.get_yticklabels()):
+                item.set_fontsize(fontsize)
             i += 1
 
-    plt.show()
-
-
+            plt.savefig('../minimal-images-paper/imagenet_figures/' + '_'.join([strictness, axis, 'in', 'bbx']) + '.pdf')
 
 
 if __name__ == '__main__':
@@ -716,16 +788,16 @@ if __name__ == '__main__':
     # pct_minimal_images_vs_correctness(0.2, 1.0, 'loose', 'scale')
     # pct_correct_in_bbx()
     # pct_minimal_images_vs_crop_size()
-    for strictness in ['loose', 'strict']:
-        for axis in ['shift', 'scale']:
-            fig_imagenet(strictness, axis)
+    # for strictness in ['loose', 'strict']:
+    #     for axis in ['shift', 'scale']:
+    #         fig_imagenet(strictness, axis)
     # pct_min_img_vs_bbx_size()
     # accuracy_vs_bbx_size()
     # fig_bbx_size()
     # pct_min_img_vs_category()
     # accuracy_vs_category()
     # pct_min_imgs_vs_non_min_imgs_in_bbx()
-    # pct_min_imgs_in_bbx_vs_outside()
+    pct_min_imgs_in_bbx_vs_outside()
     # accuracy_vs_crop_size()
     # fig_imagenet()
     # pass
