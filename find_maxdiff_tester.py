@@ -38,7 +38,7 @@ def get_maxdiff_coordinates(start_id, end_id, crop_metric, model_name, image_sca
                 continue
             if compare_corr:
                 if not lcor.any():
-                    print('%s has no correctly classified crops.' % smalldataset_id)
+                    print('%s has no correctly classified crops. SCALE' % smalldataset_id)
                     continue
                 elif scor.all():
                     print('%s has only correctly classified crops.' % smalldataset_id)
