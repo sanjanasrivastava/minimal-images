@@ -51,11 +51,11 @@
       <file leaf-file-name="find_maxdiff_tester.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/find_maxdiff_tester.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.21690768">
-              <caret line="160" column="17" selection-start-line="160" selection-start-column="17" selection-end-line="160" selection-end-column="17" />
+            <state vertical-scroll-proportion="0.2502781">
+              <caret line="162" column="33" selection-start-line="162" selection-start-column="33" selection-end-line="162" selection-end-column="33" />
               <folding>
-                <element signature="e#10277#13738#0" expanded="false" />
-                <element signature="e#13844#15146#0" expanded="false" />
+                <element signature="e#10280#13741#0" expanded="false" />
+                <element signature="e#13847#15149#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -887,11 +887,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/find_maxdiff_tester.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.21690768">
-          <caret line="160" column="17" selection-start-line="160" selection-start-column="17" selection-end-line="160" selection-end-column="17" />
+        <state vertical-scroll-proportion="0.2502781">
+          <caret line="162" column="33" selection-start-line="162" selection-start-column="33" selection-end-line="162" selection-end-column="33" />
           <folding>
-            <element signature="e#10277#13738#0" expanded="false" />
-            <element signature="e#13844#15146#0" expanded="false" />
+            <element signature="e#10280#13741#0" expanded="false" />
+            <element signature="e#13847#15149#0" expanded="false" />
           </folding>
         </state>
       </provider>
