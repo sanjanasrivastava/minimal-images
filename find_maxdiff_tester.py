@@ -320,7 +320,7 @@ if __name__ == '__main__':
     sample_ids_vgg_small = [208, 176, 489, 193, 385, 247, 254, 241, 314, 356, 125, 280, 192, 322, 57, 133, 181, 366, 293, 203, 72, 325, 237, 93, 216, 329, 376, 408, 270, 42]
     sample_ids_inception_small = [61, 122, 286, 289, 384, 437, 481, 258, 175, 312, 376, 118, 401, 101, 77, 487, 102, 200, 471, 10, 496, 216, 405, 443, 295, 489, 103, 148, 87, 125]
     for small_id in sample_ids_inception_small:
-        coords = get_maxdiff_coordinates(small_id, small_id, 0.2, 'vgg16', 1.0, 'scale')
-        save_crops(coords, 0.2, 'vgg16', 1.0, 'scale', True)
+        coords = get_maxdiff_coordinates(small_id, small_id, 0.2, 'inception', 1.0, 'scale')
+        save_crops(coords, 0.2, 'inception', 1.0, 'scale', True)
 
 
