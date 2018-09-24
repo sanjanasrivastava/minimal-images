@@ -37,13 +37,12 @@ def get_maxdiff_coordinates(start_id, end_id, crop_metric, model_name, image_sca
             except FileNotFoundError:
                 continue
             if compare_corr:
-                for cor_map in cor_maps:
-                    if not cor_map.any():
-                        print('%s has no correctly classified crops.' % smalldataset_id)
-                        continue
-                    elif cor_map.all():
-                        print('%s has only correctly classified crops.' % smalldataset_id)
-                        continue
+                if not lcor.any():
+                    print('%s has no correctly classified crops.' % smalldataset_id)
+                    continue
+                elif scor.all():
+                    print('%s has only correctly classified crops.' % smalldataset_id)
+                    continue
 
             # Get confidence maps
             con_fns = (PATH_TO_DATA + settings.map_filename(settings.CONFIDENCE_MAPTYPE, crop_metric, model_name, image_scale, smalldataset_id) + sfx + '.npy' for sfx in sfxs)
