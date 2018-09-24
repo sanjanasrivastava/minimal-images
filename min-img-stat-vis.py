@@ -350,6 +350,9 @@ def fig_imagenet(strictness, axis):
     for item in ([ax1.title, ax1.xaxis.label, ax1.yaxis.label] +
                          ax1.get_xticklabels() + ax1.get_yticklabels()):
         item.set_fontsize(fontsize)
+    # ax1.title.set_position([0.5, 1.07])
+    # ax1.title.set_fontsize(30)
+
     # set_size(8, 2)
     # fig1.set_size_inches(figwidth, figheight)
 
@@ -788,16 +791,15 @@ if __name__ == '__main__':
     # pct_minimal_images_vs_correctness(0.2, 1.0, 'loose', 'scale')
     # pct_correct_in_bbx()
     # pct_minimal_images_vs_crop_size()
-    # for strictness in ['loose', 'strict']:
-    #     for axis in ['shift', 'scale']:
-    #         fig_imagenet(strictness, axis)
+    for strictness in ['loose', 'strict']:
+        for axis in ['shift', 'scale']:
+            fig_imagenet(strictness, axis)
     # pct_min_img_vs_bbx_size()
     # accuracy_vs_bbx_size()
     # fig_bbx_size()
     # pct_min_img_vs_category()
     # accuracy_vs_category()
     # pct_min_imgs_vs_non_min_imgs_in_bbx()
-    pct_min_imgs_in_bbx_vs_outside()
+    # pct_min_imgs_in_bbx_vs_outside()
     # accuracy_vs_crop_size()
-    # fig_imagenet()
     # pass
