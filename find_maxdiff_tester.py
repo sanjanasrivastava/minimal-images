@@ -178,6 +178,9 @@ def save_crops(coords, crop_metric, model_name, image_scale, axis, compare_corr,
             hcrop = im.crop((hcell[0], hcell[1], hcell[0] + size, hcell[1] + size))
             lcrop = im.crop((lcell[0], lcell[1], lcell[0] + size, lcell[1] + size))
 
+        print(hfn)
+        print(lfn)
+
         hcrop.save(hfn, 'JPEG')
         lcrop.save(lfn, 'JPEG')
 
