@@ -298,14 +298,17 @@ if __name__ == '__main__':
     # coords = get_maxdiff_coordinates(0, 30, 0.6, 'resnet', 1.0, 'shift')
     # save_crops(coords, 0.6, 'resnet', 1.0, 'shift', True)
 
-    print('IN SCRIPT')
-
-    coords = get_maxdiff_coordinates(0, 249, 0.6, 'resnet', 1.0, 'scale')
-
-    print('COMPLETED COORDS')
-
-    save_crops(coords, 0.6, 'resnet', 1.0, 'scale', True)
-
-    print('COMPLETED SCRIPT')
+    # print('IN SCRIPT')
+    #
+    # coords = get_maxdiff_coordinates(0, 249, 0.6, 'resnet', 1.0, 'scale')
+    #
+    # print('COMPLETED COORDS')
+    #
+    # save_crops(coords, 0.6, 'resnet', 1.0, 'scale', True)
+    #
+    # print('COMPLETED SCRIPT')
+    for small_id in range(0, 1):
+        coords = get_maxdiff_coordinates(small_id, small_id, 0.6, 'resnet', 1.0, 'scale')
+        save_crops(coords, 0.6, 'resnet', 1.0, 'scale', True)
 
 
