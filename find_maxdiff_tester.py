@@ -316,9 +316,10 @@ if __name__ == '__main__':
     # save_crops(coords, 0.6, 'resnet', 1.0, 'scale', True)
     #
     # print('COMPLETED SCRIPT')
-    sample_ids = [363, 220, 162, 151, 474, 203, 176, 469, 112, 401, 389, 452, 45, 342, 206, 134, 166, 200, 242, 58, 54, 460, 350, 319, 292, 237, 433, 352, 21, 344]
-    for small_id in sample_ids:
-        coords = get_maxdiff_coordinates(small_id, small_id, 0.6, 'resnet', 1.0, 'scale')
-        save_crops(coords, 0.6, 'resnet', 1.0, 'scale', True)
+    sample_ids_resnet_large = [363, 220, 162, 151, 474, 203, 176, 469, 112, 401, 389, 452, 45, 342, 206, 134, 166, 200, 242, 58, 54, 460, 350, 319, 292, 237, 433, 352, 21, 344]
+    sample_ids_vgg_small = [208, 176, 489, 193, 385, 247, 254, 241, 314, 356, 125, 280, 192, 322, 57, 133, 181, 366, 293, 203, 72, 325, 237, 93, 216, 329, 376, 408, 270, 42]
+    for small_id in sample_ids_vgg_small:
+        coords = get_maxdiff_coordinates(small_id, small_id, 0.2, 'vgg16', 1.0, 'scale')
+        save_crops(coords, 0.2, 'vgg16', 1.0, 'scale', True)
 
 
