@@ -312,7 +312,8 @@ if __name__ == '__main__':
     # save_crops(coords, 0.6, 'resnet', 1.0, 'scale', True)
     #
     # print('COMPLETED SCRIPT')
-    for small_id in range(0, 1):
+    sample_ids = [363, 220, 162, 151, 474, 203, 176, 469, 112, 401, 389, 452, 45, 342, 206, 134, 166, 200, 242, 58, 54, 460, 350, 319, 292, 237, 433, 352, 21, 344]
+    for small_id in sample_ids:
         coords = get_maxdiff_coordinates(small_id, small_id, 0.6, 'resnet', 1.0, 'scale')
         save_crops(coords, 0.6, 'resnet', 1.0, 'scale', True)
 
