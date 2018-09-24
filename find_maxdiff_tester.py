@@ -69,6 +69,8 @@ def get_maxdiff_coordinates(start_id, end_id, crop_metric, model_name, image_sca
             # Find maxdiff pair by searching for maximally different pairs until one with different correctness is found (if diffcor. Else, this will terminate after one loop as the first pair found will be the maximally different one and therefore the right one for anycor.)
             while True:
 
+                print('ENTERED WHILE LOOP')
+
                 maxes = {corner: np.unravel_index(np.argmax(diffs[corner]), diffs[corner].shape) for corner in diffs}	# map each corner diff to its argmax (index of maximum confidence diff)
                 max_dir = max([corner for corner in maxes], key=lambda corner: diffs[corner][tuple(maxes[corner])])	# get the corner id of the diff whose max change is the highest out of the four max changes
                 # getting the indices of the maximal confidence increase. Indices are based on the size of the large crop size map. The first index is the index for the large crop, and the second is for the small crop.
