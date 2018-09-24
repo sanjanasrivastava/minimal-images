@@ -117,6 +117,9 @@ def get_maxdiff_coordinates(start_id, end_id, crop_metric, model_name, image_sca
             diffs = {'up': up_diff, 'down': down_diff, 'left': left_diff, 'right': right_diff}
 
             while True:
+
+                print('ENTERED WHILE LOOP')
+
                 maxes = {direction: np.unravel_index(np.argmax(diffs[direction]), diffs[direction].shape) for direction in diffs}	# map each directional diff to its argmax (index of its maximum confidence diff)
                 max_dir = max([direction for direction in maxes], key=lambda direction: diffs[direction][tuple(maxes[direction])])	# get the direction of the diff whose max confidence is the highest out of the four max confidences
                 # depending on the max-confidence direction, get the argmax of that direction. The more confident crop will be offset by 1 in a way that depends on the direction.
