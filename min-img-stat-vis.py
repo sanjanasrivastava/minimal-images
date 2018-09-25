@@ -380,7 +380,7 @@ def fig_imagenet(strictness, axis):
     ax2.get_xaxis().set_major_formatter(mpl.ticker.ScalarFormatter())
     ax2.set_title('DNN accuracy increases with crop size')
     ax2.set_xlabel('P (crop side length / image lesser dimension)')
-    ax2.set_ylabel('% Fragile recognition images correctly classified')
+    ax2.set_ylabel('% FRIs correctly classified')
     ax2.grid(True)
     ax2.legend(frameon = True, title="DNN", fontsize=fontsize * 0.7)
     for item in ([ax2.title, ax2.xaxis.label, ax2.yaxis.label] +
@@ -428,7 +428,7 @@ def pct_correct_in_bbx():
     plt.show()
 
 
-def pct_min_img_vs_bbx_size():
+def pct_min_img_vs_bbx_size(strictness, axis):
 
     '''
     line plot of % min imgs vs. bbx size (object size) - strict scale, all three models
@@ -437,8 +437,8 @@ def pct_min_img_vs_bbx_size():
 
     crop_metric = 0.2
     image_scale = 1.0
-    strictness = 'strict'
-    axis = 'scale'
+    # strictness = 'strict'
+    # axis = 'scale'
 
     all_dfs = []
     for model in models:
@@ -775,6 +775,7 @@ def pct_min_imgs_in_bbx_vs_outside():
             ax.set_ylabel('% FRIs within bound-in box')
             ax.set_title(strictness.title() + ' ' + axis + ' object overlap decreases')
             ax.grid(True)
+            plt.yticks([0, 10, 20, 30, 40])
             ax.legend(frameon = True, title="DNN", fontsize=legend_fontsize)
             for item in ([ax.title, ax.xaxis.label, ax.yaxis.label] +
                          ax.get_xticklabels() + ax.get_yticklabels()):
@@ -791,15 +792,17 @@ if __name__ == '__main__':
     # pct_minimal_images_vs_correctness(0.2, 1.0, 'loose', 'scale')
     # pct_correct_in_bbx()
     # pct_minimal_images_vs_crop_size()
-    for strictness in ['loose', 'strict']:
-        for axis in ['shift', 'scale']:
-            fig_imagenet(strictness, axis)
-    # pct_min_img_vs_bbx_size()
+    # for strictness in ['loose', 'strict']:
+    #     for axis in ['shift', 'scale']:
+    #         fig_imagenet(strictness, axis)
+    # for strictness in ['loose', 'strict']:
+    #     for axis in ['shift', 'scale']:
+    #         pct_min_img_vs_bbx_size(strictness, axis)
     # accuracy_vs_bbx_size()
     # fig_bbx_size()
     # pct_min_img_vs_category()
     # accuracy_vs_category()
     # pct_min_imgs_vs_non_min_imgs_in_bbx()
-    # pct_min_imgs_in_bbx_vs_outside()
+    pct_min_imgs_in_bbx_vs_outside()
     # accuracy_vs_crop_size()
     # pass
